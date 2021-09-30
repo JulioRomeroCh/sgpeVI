@@ -13,7 +13,7 @@ public class Conexion {
     try{
       Class.forName("com.mysql.cj.jdbc.Driver");
       //Cambiar contraseña de acceso a la base de datos
-      conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/sgpe","root","perrahijueputa*");
+      conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/sgpe","root","260301");
       System.out.println("Se conectó exitosamente a la base de datos");
     }
     catch(ClassNotFoundException | SQLException error){
