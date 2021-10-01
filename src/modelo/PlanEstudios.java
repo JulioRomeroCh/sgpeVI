@@ -17,7 +17,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   private int numeroPlan;
   private Date vigenciaPlan;
   //private ArrayList ArrayList<Curso> cursosBloque;
-  private Curso [][] cursosBloque;
+  //private Curso [][] cursosBloque;
 
   
   public PlanEstudios(){
@@ -26,7 +26,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   
   public PlanEstudios (int pNumeroPlan, Date pVigenciaPlan){
     
-    cursosBloque = new Curso[10][15];
+    //cursosBloque = new Curso[10][15];
     setNumeroPlan(pNumeroPlan);   
     setVigenciaPlan(pVigenciaPlan); 
   }
@@ -48,15 +48,18 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     this.vigenciaPlan = pVigenciaPlan;
   }
   
-  public void añadirCursos(Curso pCurso, int pBloque){
+  /*public void añadirCursos(Curso pCurso, int pBloque){
     //cursosBloque.(pCurso);
     try{
-    cursosBloque [pBloque][cursosBloque[pBloque].length]=pCurso;
+
+    cursosBloque [pBloque+1][cursosBloque[pBloque+1].length]=pCurso;
+
     }
     catch(Exception error){
-        System.out.println("Error:" + error);
+        System.out.println("Index matriz: " + pBloque+1);
+        System.out.println("Error: " + error);
     }
-  }
+  }*/
   
   
   public String toString(){

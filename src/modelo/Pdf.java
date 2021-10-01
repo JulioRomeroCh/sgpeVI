@@ -15,9 +15,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Pdf {
-  private int numeroPlan = 8050;
-    
-    public void crearPdf () throws Exception {
+  
+    public void crearPdf (int numeroPlan) throws Exception {
          try (PDDocument documento = new PDDocument ()) {
          PDPage pagina = new PDPage(PDRectangle.LETTER);
          documento.addPage(pagina);

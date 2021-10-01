@@ -115,18 +115,20 @@ public class Curso {//Inicio clase Curso
     }
   }*/
   
-  public void cargaEscuelaPropietaria(JComboBox BoxEscuelaPropietaria){
+  public void cargaEscuelaPropietaria(JComboBox BoxEscuelaPropietaria, JComboBox BoxEscuelaPropietariaConsultaPlan){
     ResultSet resultado;
     PreparedStatement consultaEscuela;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     BoxEscuelaPropietaria.removeAllItems();
+    BoxEscuelaPropietariaConsultaPlan.removeAllItems();
     try{
-      consultaEscuela = conectar.prepareStatement("SELECT escuela.codigoEscuela FROM escuela JOIN escuela_plan_estudios ON escuela.codigoEscuela = escuela_plan_estudios.codigoEscuela");
+      consultaEscuela = conectar.prepareStatement("SELECT DISTINCT escuela.codigoEscuela FROM escuela JOIN escuela_plan_estudios ON escuela.codigoEscuela = escuela_plan_estudios.codigoEscuela");
       resultado = consultaEscuela.executeQuery();
       while(resultado.next()){ 
         for(int indice = 1; indice<2; indice++){  
           BoxEscuelaPropietaria.addItem(resultado.getObject(indice));
+          BoxEscuelaPropietariaConsultaPlan.addItem(resultado.getObject(indice));
         }   
       } 
     }

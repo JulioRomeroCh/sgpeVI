@@ -22,10 +22,10 @@ public class Sgpe {
     
     //Prueba envío correo
     
-    Pdf pdf = new Pdf();
+    /*Pdf pdf = new Pdf();
     pdf.crearPdf();
     Email correo = new Email();
-    correo.enviarCorreo();
+    correo.enviarCorreo();*/
  
     nuevaVista.setVisible(true);
    

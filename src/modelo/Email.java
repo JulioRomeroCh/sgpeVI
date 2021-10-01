@@ -44,7 +44,7 @@ public class Email {
         MimeMessage mensaje = new MimeMessage(sesion);
         
         //Envía el correo al destinatario
-        mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress ("joseblanco1313@gmail.com"));
+        mensaje.addRecipient(Message.RecipientType.TO, new InternetAddress ("KevRjs172@gmail.com"));
         //Escribe el asunto
         mensaje.setSubject("Información del plan de estudios");
  
@@ -55,7 +55,7 @@ public class Email {
          mensajeTexto.setText("Consultas realizadas");
         //Archivo adjunto
         BodyPart adjunto = new MimeBodyPart();
-        adjunto.setDataHandler (new DataHandler (new FileDataSource("C:\\Users\\Jose Blanco\\Documents\\NetBeansProjects\\sgpe\\planEstudios.pdf")));
+        adjunto.setDataHandler (new DataHandler (new FileDataSource("C:\\Users\\KevRj\\OneDrive\\Documents\\NetBeansProjects\\sgpeVI\\planEstudios.pdf")));
         adjunto.setFileName("planEstudios.pdf");
         //Se une texto con PDF
         MimeMultipart multiparte = new MimeMultipart ();
