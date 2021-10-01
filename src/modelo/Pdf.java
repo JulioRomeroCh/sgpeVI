@@ -72,6 +72,13 @@ public class Pdf {
                contenido.moveTextPositionByAmount(100, pixelesY-100);
                contenido.showText("Total de cursos: " + datosTotalesCursosYCreditos.getObject(2));
                contenido.endText();
+               
+               contenido.beginText();
+               contenido.setFont(PDType1Font.TIMES_BOLD, 12);
+               contenido.moveTextPositionByAmount(100, pixelesY-150);
+               contenido.showText("Vigencia: " + datosTotalesCursosYCreditos.getObject(3));
+               contenido.endText();
+               
                }
                
                contenido.close();
