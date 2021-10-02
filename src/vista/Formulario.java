@@ -88,6 +88,8 @@ public class Formulario extends javax.swing.JFrame {
         botonRegistrarRequisito = new javax.swing.JButton();
         botonRegistrarCorrequisito = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        botonCargarCursoAsignarRequisito = new javax.swing.JButton();
+        botonCargarRequisitoCorrequisito = new javax.swing.JButton();
         frameConsultarPlan = new javax.swing.JFrame();
         jPanel3 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -116,7 +118,7 @@ public class Formulario extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         botonRegistrarPlanAEscuela = new javax.swing.JButton();
         jLabel24 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        botonRegistrarCoRequisito = new javax.swing.JButton();
         jLabel31 = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
 
@@ -528,6 +530,10 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
+        botonCargarCursoAsignarRequisito.setText("Cargar Cursos");
+
+        botonCargarRequisitoCorrequisito.setText("Cargar Requisitos/Correquisitos");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -572,13 +578,17 @@ public class Formulario extends javax.swing.JFrame {
                         .addGap(73, 73, 73)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(BoxEscuelaPropietariaAsignarReqCor, 0, 226, Short.MAX_VALUE)
-                            .addComponent(BoxCodigoCursoAsignarReqCor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(BoxCodigoCursoAsignarReqCor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(botonCargarCursoAsignarRequisito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botonCargarRequisitoCorrequisito, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(276, 276, 276)
                         .addComponent(botonRegistrarRequisito)
                         .addGap(140, 140, 140)
                         .addComponent(botonRegistrarCorrequisito)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -589,12 +599,15 @@ public class Formulario extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel18)
-                    .addComponent(BoxEscuelaPropietariaAsignarReqCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(BoxEscuelaPropietariaAsignarReqCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonCargarCursoAsignarRequisito)))
+                .addGap(36, 36, 36)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
-                    .addComponent(BoxCodigoCursoAsignarReqCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                    .addComponent(BoxCodigoCursoAsignarReqCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonCargarRequisitoCorrequisito))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel22)
                     .addComponent(jLabel23))
@@ -828,10 +841,10 @@ public class Formulario extends javax.swing.JFrame {
         jLabel24.setForeground(new java.awt.Color(0, 0, 0));
         jLabel24.setText("Registrar requisito/correquisito");
 
-        jButton6.setText("Registrar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        botonRegistrarCoRequisito.setText("Registrar");
+        botonRegistrarCoRequisito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                botonRegistrarCoRequisitoActionPerformed(evt);
             }
         });
 
@@ -871,7 +884,7 @@ public class Formulario extends javax.swing.JFrame {
                         .addGap(144, 144, 144)
                         .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton8)
-                            .addComponent(jButton6)
+                            .addComponent(botonRegistrarCoRequisito)
                             .addComponent(principalCurso)
                             .addComponent(principalRegistrarEscuela)
                             .addComponent(botonRegistrarPlanAEscuela))))
@@ -897,7 +910,7 @@ public class Formulario extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
-                    .addComponent(jButton6))
+                    .addComponent(botonRegistrarCoRequisito))
                 .addGap(35, 35, 35)
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31)
@@ -979,13 +992,13 @@ public class Formulario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonRegistrarCorrequisitoActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void botonRegistrarCoRequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarCoRequisitoActionPerformed
         this.setVisible(false);
         frameRegistrarCoRRequsito.setVisible(true);
         frameRegistrarCoRRequsito.pack();
         frameRegistrarCoRRequsito.setLocationRelativeTo(null);
         frameRegistrarCoRRequsito.setSize(900, 500);
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_botonRegistrarCoRequisitoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         frameRegistrarCoRRequsito.setVisible(false);
@@ -1057,10 +1070,13 @@ public class Formulario extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> BoxEscuelaPropietariaConsultaPlan;
     public javax.swing.JComboBox<String> BoxEscuelaPropietariaPlan;
     public javax.swing.JComboBox<String> BoxPlanRegistroCurso;
+    public javax.swing.JButton botonCargarCursoAsignarRequisito;
     public javax.swing.JButton botonCargarInformacionPlan;
     public javax.swing.JButton botonCargarPlanRegistroCursos;
     public javax.swing.JButton botonCargarPlanes;
+    public javax.swing.JButton botonCargarRequisitoCorrequisito;
     public javax.swing.JButton botonEnviarPDFCorreo;
+    public javax.swing.JButton botonRegistrarCoRequisito;
     public javax.swing.JButton botonRegistrarCorrequisito;
     public javax.swing.JButton botonRegistrarCurso;
     public javax.swing.JButton botonRegistrarEscuela;
@@ -1079,7 +1095,6 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;

@@ -16,8 +16,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     
   private int numeroPlan;
   private Date vigenciaPlan;
-  //private ArrayList ArrayList<Curso> cursosBloque;
-  //private Curso [][] cursosBloque;
+  private Curso [][] cursosBloque;
 
   
   public PlanEstudios(){
@@ -26,7 +25,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   
   public PlanEstudios (int pNumeroPlan, Date pVigenciaPlan){
     
-    //cursosBloque = new Curso[10][15];
+    cursosBloque = new Curso[12][20];
     setNumeroPlan(pNumeroPlan);   
     setVigenciaPlan(pVigenciaPlan); 
   }
@@ -48,18 +47,20 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     this.vigenciaPlan = pVigenciaPlan;
   }
   
-  /*public void añadirCursos(Curso pCurso, int pBloque){
-    //cursosBloque.(pCurso);
+  //AÑADIR ESTO AL CONTROLADOR
+  public void añadirCursos(Curso pCurso, int pBloque){
     try{
-
-    cursosBloque [pBloque+1][cursosBloque[pBloque+1].length]=pCurso;
-
+      System.err.println("Bloque: "+pBloque);
+      for(int contador=0;contador<=cursosBloque.length;contador++){
+        if (cursosBloque[pBloque][contador]==null){
+          cursosBloque[pBloque][contador]=pCurso;
+        }
+      }
     }
     catch(Exception error){
-        System.out.println("Index matriz: " + pBloque+1);
-        System.out.println("Error: " + error);
+      System.err.println("Error: " + error);
     }
-  }*/
+  }
   
   
   public String toString(){
@@ -69,7 +70,8 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     return salida;
   }
   
-  public void insertarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
+  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
+  public void agregarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{
@@ -86,68 +88,8 @@ public class PlanEstudios {//Inicio clase PlanEstudios
         System.out.println(error);
     }
   }
-  
-  public void cargaEscuelaRegistrarPlan(JComboBox BoxEscuelaPropietariaPlan){
-    ResultSet resultado;
-    PreparedStatement consultaEscuela;
-    Conexion nuevaConexion = new Conexion();
-    Connection conectar = nuevaConexion.conectar();
-    BoxEscuelaPropietariaPlan.removeAllItems();
-    try{
-      consultaEscuela = conectar.prepareStatement("SELECT codigoEscuela FROM escuela");
-      resultado = consultaEscuela.executeQuery();
-      while(resultado.next()){ 
-        for(int indice = 1; indice<2; indice++){  
-          BoxEscuelaPropietariaPlan.addItem(resultado.getObject(indice));
-        }   
-      } 
-    }
-    catch(Exception error){ 
-        System.out.println(error);
-    }
-  }
-  
-  public void cargaCodigosPlanes(JComboBox BoxCodigoPlanCursoPlan){
-    ResultSet resultado;
-    PreparedStatement consultaEscuela;
-    Conexion nuevaConexion = new Conexion();
-    Connection conectar = nuevaConexion.conectar();
-    BoxCodigoPlanCursoPlan.removeAllItems();
-    try{
-      consultaEscuela = conectar.prepareStatement("SELECT numeroPlan FROM plan_estudios;");
-      resultado = consultaEscuela.executeQuery();
-      while(resultado.next()){ 
-        for(int indice = 1; indice<2; indice++){  
-          BoxCodigoPlanCursoPlan.addItem(resultado.getObject(indice));
-        }   
-      } 
-    }
-    catch(Exception error){ 
-        System.out.println(error);
-    }
-  }
-  
-  public void cargaCodigosCursos(JComboBox BoxCodigoCursoCursoPlan){
-    ResultSet resultado;
-    PreparedStatement consultaEscuela;
-    Conexion nuevaConexion = new Conexion();
-    Connection conectar = nuevaConexion.conectar();
-    BoxCodigoCursoCursoPlan.removeAllItems();
-    try{
-      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM curso;");
-      resultado = consultaEscuela.executeQuery();
-      while(resultado.next()){ 
-        for(int indice = 1; indice<2; indice++){  
-          BoxCodigoCursoCursoPlan.addItem(resultado.getObject(indice));
-        }   
-      } 
-    }
-    catch(Exception error){ 
-        System.out.println(error);
-    }
-  }
-  
-   public void insertarCursoAPlan(int pNumeroPlan, String pCodigoCurso, String pNumeroBloque){
+  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
+  public void insertarCursoAPlan(int pNumeroPlan, String pCodigoCurso, String pNumeroBloque){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{

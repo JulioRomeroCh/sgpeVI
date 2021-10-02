@@ -45,16 +45,7 @@ public class Escuela {
   public void setNombreEscuela(String pNombreEscuela) {
     this.nombreEscuela = pNombreEscuela;
   }
-  /*
-  public ArrayList <Curso> getCursosAsociados() {
-    return cursosAsociados;
-  }
 
-
-  public void setCursosAsociados(ArrayList <Curso> cursosAsociados) {
-    this.cursosAsociados = cursosAsociados;
-  }
-  */
   public void crearPlanEstudios(int pNumeroPlan, Date pVigenciaPlan){
     PlanEstudios nuevoPlan = new PlanEstudios(pNumeroPlan, pVigenciaPlan);
     planes.add(nuevoPlan);
@@ -71,7 +62,12 @@ public class Escuela {
     cursosAsociados.add(pCurso);  
   }
   
-  public void insertarEscuela(String pCodigoEscuela, String pNombreEscuela){
+  public void asociarPlan(PlanEstudios pPlan){
+    planes.add(pPlan);  
+  }
+  
+  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
+  public void agregarEscuela(String pCodigoEscuela, String pNombreEscuela){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{

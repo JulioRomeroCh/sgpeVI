@@ -19,11 +19,13 @@ public class Curso {//Inicio clase Curso
   private ArrayList <Curso> correquisitos;
   
   public Curso(){
-      
+  
+
   }
   
   public Curso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHorasLectivas){
-    
+    requisitos = new ArrayList <Curso>();
+    correquisitos = new ArrayList <Curso>();
     setCodigoCurso(pCodigoCurso); 
     setNombreCurso(pNombreCurso);
     setCantidadCreditos(pCantidadCreditos);
@@ -81,6 +83,7 @@ public class Curso {//Inicio clase Curso
     return salida;
   }
    
+  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
   public void insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, String pCodigoEscuela){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
@@ -100,61 +103,95 @@ public class Curso {//Inicio clase Curso
         System.out.println(error);
     }
   }
-  /*
-    public void insertarCursoAEscuela(String pCodigoEscuela, String pCodigoCurso){
-    Conexion nuevaConexion = new Conexion();
-    Connection conectar = nuevaConexion.conectar();    
-    try{ 
-      CallableStatement asignarEscuela = conectar.prepareCall("{CALL insertEscuelaCurso(?,?)}");
-      asignarEscuela.setString(1, pCodigoEscuela);
-      asignarEscuela.setString(2, pCodigoCurso);
-      asignarEscuela.execute();
-    }
-    catch(Exception error){ 
-        System.out.println(error);
-    }
-  }*/
+
   
-  public void cargaEscuelaPropietaria(JComboBox BoxEscuelaPropietaria, JComboBox BoxEscuelaPropietariaConsultaPlan){
-    ResultSet resultado;
-    PreparedStatement consultaEscuela;
+  //--ESTOS FUCKING METODOS SE QUEDAN AQUÍ QUIETOS, COMO EN GENIALLY, FUNCIONALIDAD: BLOQUEAR--
+   public void anadirCorrequisito(String pCodigoCurso){
+     PreparedStatement insertar;
+     ResultSet resultado;
+     Conexion nuevaConexion = new Conexion();
+     Connection conectar = nuevaConexion.conectar();
+     try{
+       insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
+       insertar.setString(1, pCodigoCurso);
+       resultado = insertar.executeQuery();
+       while(resultado.next()){ 
+         String codigoCurso = String.valueOf(resultado.getObject(1));
+         String nombreCurso = String.valueOf(resultado.getObject(2));
+         int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
+         int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
+         Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
+         correquisitos.add(nuevoCurso);       
+       }
+     }
+     catch(Exception error){ 
+          System.err.println(error);
+     } 
+   }
+   
+  public void anadirRequisito(String pCodigoCurso){
+     PreparedStatement insertar;
+     ResultSet resultado;
+     Conexion nuevaConexion = new Conexion();
+     Connection conectar = nuevaConexion.conectar();
+     try{
+       insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
+       insertar.setString(1, pCodigoCurso);
+       resultado = insertar.executeQuery();
+       while(resultado.next()){ 
+         String codigoCurso = String.valueOf(resultado.getObject(1));
+         String nombreCurso = String.valueOf(resultado.getObject(2));
+         int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
+         int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
+         Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
+         requisitos.add(nuevoCurso);       
+       }
+     }
+     catch(Exception error){ 
+          System.err.println(error);
+     } 
+   }
+  
+     public void asignarRequisito(String pCodigoCurso, String pCodigoRequisito){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
-    BoxEscuelaPropietaria.removeAllItems();
-    BoxEscuelaPropietariaConsultaPlan.removeAllItems();
     try{
-      consultaEscuela = conectar.prepareStatement("SELECT DISTINCT escuela.codigoEscuela FROM escuela JOIN escuela_plan_estudios ON escuela.codigoEscuela = escuela_plan_estudios.codigoEscuela");
-      resultado = consultaEscuela.executeQuery();
-      while(resultado.next()){ 
-        for(int indice = 1; indice<2; indice++){  
-          BoxEscuelaPropietaria.addItem(resultado.getObject(indice));
-          BoxEscuelaPropietariaConsultaPlan.addItem(resultado.getObject(indice));
-        }   
-      } 
+      CallableStatement insertar = conectar.prepareCall("{CALL insertRequisitoCurso(?,?)}");
+      insertar.setString(1, pCodigoCurso);
+      insertar.setString(2, pCodigoRequisito);
+      insertar.execute();  
     }
     catch(Exception error){ 
         System.out.println(error);
     }
-  }
+     }
+ 
+    public void asignarCorrequisito(String pCodigoCurso, String pCodigoCorrequisito){
+      
+      
+      Conexion nuevaConexion = new Conexion();
+      Connection conectar = nuevaConexion.conectar();
+      try{
+        CallableStatement insertar = conectar.prepareCall("{CALL insertCorrequisitoCurso(?,?)}");
+        insertar.setString(1, pCodigoCurso);
+        insertar.setString(2, pCodigoCorrequisito);
+        insertar.execute();  
+
+      }
+      catch(Exception error){ 
+          System.out.println(error);
+      }       
+    }
   
-  public void cargaPlanesRegistrarCursos(JComboBox BoxPlanRegistroCurso){
-    ResultSet resultado;
-    PreparedStatement consultaEscuela;
-    Conexion nuevaConexion = new Conexion();
-    Connection conectar = nuevaConexion.conectar();
-    BoxPlanRegistroCurso.removeAllItems();
-    try{
-      consultaEscuela = conectar.prepareStatement("SELECT numeroPlan FROM plan_estudios");
-      resultado = consultaEscuela.executeQuery();
-      while(resultado.next()){ 
-        for(int indice = 1; indice<2; indice++){  
-          BoxPlanRegistroCurso.addItem(resultado.getObject(indice));
-        }   
-      } 
-    }
-    catch(Exception error){ 
-        System.out.println(error);
-    }
-  }
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
 
 }//Fin clase Curso
