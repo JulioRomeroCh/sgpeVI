@@ -63,6 +63,9 @@ public class Controlador implements ActionListener{
      this.vista.botonCargarRequisitoCorrequisito.addActionListener(this);
      this.vista.botonRegistrarRequisito.addActionListener(this);
      this.vista.botonRegistrarCorrequisito.addActionListener(this);
+     this.vista.botonBuscarPlanesCurso.addActionListener(this);
+     this.vista.botonBuscarRequisitosCurso.addActionListener(this);
+     this.vista.botonBuscarCorrequisitosCurso.addActionListener(this);
      this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan);
      //this.plan.cargaCodigosPlanes(vista.BoxCodigoPlanCursoPlan);
      //this.plan.cargaCodigosCursos(vista.BoxCodigoCursoCursoPlan);
@@ -75,196 +78,107 @@ public class Controlador implements ActionListener{
   }
  
   
-  public void cargarBaseDatos() throws SQLException, ParseException{
-   
-   //Consulta los cursos en la base de datos
-   ResultSet resultado;
-   PreparedStatement consultarCursos;
-   Conexion nuevaConexion = new Conexion();
-   Connection conectar = nuevaConexion.conectar(); 
-   consultarCursos = conectar.prepareStatement("SELECT * FROM curso");
-   resultado = consultarCursos.executeQuery(); 
-   
-   Curso nuevoCurso = new Curso();
-   while (resultado.next()){
-     for (int contador = 1; contador <= 4; contador++){
-       if (contador == 1){
-        nuevoCurso.setCodigoCurso(String.valueOf(resultado.getObject(1)));
-       }
-       
-       else if (contador == 2){
-         nuevoCurso.setNombreCurso(String.valueOf(resultado.getObject(2)));
-       }
-       
-       else if (contador ==3){
-          nuevoCurso.setCantidadCreditos(Integer.parseInt(String.valueOf(resultado.getObject(3))));
-       }
-       
-       else{
-          nuevoCurso.setCantidadHorasLectivas(Integer.parseInt(String.valueOf(resultado.getObject(4))));
-       }   
-     }
-     cursos.add(nuevoCurso);
+  public void primerConsulta(JTable tablaPrimerConsulta, String pCodigoCurso){
+      
+      DefaultTableModel modeloTabla = (DefaultTableModel) tablaPrimerConsulta.getModel();
+      modeloTabla.setRowCount(0);
+      PreparedStatement consultaInfo;
+      ResultSet resultado;
+      ResultSetMetaData datosResultado;
+      int columnas;
+      
+      try{
+          
+        Conexion nuevaConexion = new Conexion();
+        Connection conectar = nuevaConexion.conectar();
+        
+        consultaInfo = conectar.prepareStatement("SELECT plan_estudios.numeroPlan FROM plan_estudios JOIN plan_estudios_curso ON plan_estudios.numeroPlan = plan_estudios_curso.numeroPlan WHERE plan_estudios_curso.codigoCurso = (?)");
+        consultaInfo.setString(1, pCodigoCurso);
+        resultado = consultaInfo.executeQuery();
+        datosResultado = resultado.getMetaData();
+        columnas = datosResultado.getColumnCount();
+        
+        while(resultado.next()){
+          Object [] fila = new Object[columnas];
+          for(int indice = 0; indice<columnas; indice++){
+            fila[indice] = resultado.getObject(indice +1);
+          }
+          modeloTabla.addRow(fila);
+        }
+      }
+      catch(Exception error){
+          System.out.println(error);    
+      }
   }
-   
-   
-   //Carga la tabla Escuela de la base de datos
-   
-   ResultSet resultadoEscuela;
-   PreparedStatement consultarEscuelas;
-   consultarCursos = conectar.prepareStatement("SELECT * FROM escuela");
-   resultadoEscuela = consultarCursos.executeQuery(); 
-   
-   Escuela nuevaEscuela = new Escuela();
-   while (resultadoEscuela.next()){
-     for (int contador = 1; contador <= 2; contador++){
-         if (contador == 1){
-             nuevaEscuela.setCodigoEscuela(String.valueOf(resultadoEscuela.getObject(1)));
-         }
-         else{
-            nuevaEscuela.setNombreEscuela(String.valueOf(resultadoEscuela.getObject(2))); 
-         }
-   }
-     escuelas.add(nuevaEscuela); 
- }
-   
-   //Carga la tabla planes de estudio de la base de datos
-   ResultSet resultadoPlanes;
-   PreparedStatement consultarPlanes;
-   consultarPlanes = conectar.prepareStatement("SELECT * FROM plan_estudios");
-   resultadoPlanes = consultarPlanes.executeQuery(); 
-   
-   PlanEstudios nuevoPlan = new PlanEstudios();
-   while (resultadoPlanes.next()){
-     for (int contador = 1; contador <= 2; contador++){
-         if (contador == 1){
-             nuevoPlan.setNumeroPlan(Integer.parseInt(String.valueOf(resultadoPlanes.getObject(1))));
-         }
-         else{
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-            nuevoPlan.setVigenciaPlan(formatoFecha.parse(String.valueOf(resultadoPlanes.getObject(2)))); 
-         }
-   }
-     planes.add(nuevoPlan);
-   
- }
-   
-   //Carga la tabla intermedia escuelaPlanEstudios de la base de datos
-   ResultSet resultadoEscuelaPlan;
-   PreparedStatement consultarEscuelaPlan;
-   consultarEscuelaPlan = conectar.prepareStatement("SELECT * FROM escuela_plan_estudios");
-   resultadoEscuelaPlan = consultarEscuelaPlan.executeQuery(); 
-   
-   String codigoEscuela;
-   int numeroPlan;
-   while (resultadoEscuelaPlan.next()){
-     codigoEscuela = String.valueOf(resultadoEscuelaPlan.getObject(1));
-     for (int indice = 0; indice != escuelas.size(); indice++){
-       if (escuelas.get(indice).getCodigoEscuela().equalsIgnoreCase(codigoEscuela)){
-         for (int sumador = 0; sumador != planes.size(); sumador++){
-           if (planes.get(sumador).getNumeroPlan() == Integer.parseInt(String.valueOf(resultadoEscuelaPlan.getObject(2)))){
-             escuelas.get(indice).asociarPlan(planes.get(sumador));
-                     
-           }
-         }
-       }
-     }
-   }
-   
-
-   //Carga la tabla intermedia planEstudiosCurso de la base de datos
-   ResultSet resultadoPlanCurso;
-   PreparedStatement consultarPlanCurso;
-   consultarPlanCurso = conectar.prepareStatement("SELECT * FROM plan_estudios_curso");
-   resultadoPlanCurso = consultarPlanCurso.executeQuery(); 
-   
-   int numeroPlanDos;
-   String codigoCurso;
-   String numeroBloque;
-   
-   while (resultadoPlanCurso.next()){
-     numeroPlanDos = Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(1)));
-     for (int indice = 0; indice != planes.size(); indice++){
-       if (planes.get(indice).getNumeroPlan()==(numeroPlanDos)){
-         for (int sumador = 0; sumador != cursos.size(); sumador++){
-           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoPlanCurso.getObject(2)))){
-             planes.get(indice).añadirCursos(cursos.get(sumador),Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(3))));             
-           }
-         }
-       }
-     }
-   }
-   
-   //Carga la tabla intermedia escuelaCurso de la base de datos
-   ResultSet resultadoEscuelaCurso;
-   PreparedStatement consultarEscuelaCurso;
-   consultarEscuelaCurso = conectar.prepareStatement("SELECT * FROM escuela_curso");
-   resultadoEscuelaCurso = consultarEscuelaCurso.executeQuery(); 
-   
-   String codigoEscuelaDos;
-   String codigoCursoDos;
-   
-   while (resultadoEscuelaCurso.next()){
-     codigoEscuelaDos = String.valueOf(resultadoEscuelaCurso.getObject(1));
-     for (int indice = 0; indice != escuelas.size(); indice++){
-       if (escuelas.get(indice).getCodigoEscuela().equalsIgnoreCase(codigoEscuelaDos)){
-         for (int sumador = 0; sumador != cursos.size(); sumador++){
-           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoEscuelaCurso.getObject(2)))){
-             escuelas.get(indice).asociarCurso(cursos.get(sumador));             
-           }
-         }
-       }
-     }
-   }
-   
-   //Carga la tabla intermedia requisitoCurso de la base de datos
-   ResultSet resultadoRequisitoCurso;
-   PreparedStatement consultarRequisitoCurso;
-   consultarRequisitoCurso = conectar.prepareStatement("SELECT * FROM requisito_curso");
-   resultadoRequisitoCurso = consultarRequisitoCurso.executeQuery(); 
-   
-
-   String codigoCursoTres;
-   String codigoRequisito;
-   
-   while (resultadoRequisitoCurso.next()){
-     codigoCursoTres = String.valueOf(resultadoRequisitoCurso.getObject(1));
-     for (int indice = 0; indice != cursos.size(); indice++){
-       if (cursos.get(indice).getCodigoCurso().equalsIgnoreCase(codigoCursoTres)){
-         for (int sumador = 0; sumador != cursos.size(); sumador++){
-           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoRequisitoCurso.getObject(2)))){
-             cursos.get(indice).añadirRequisitos(cursos.get(sumador));             
-           }
-         }
-       }
-     }
-   }
-   
-   //Carga la tabla intermedia correquisitoCurso de la base de datos
-   ResultSet resultadoCorrequisitoCurso;
-   PreparedStatement consultarCorrequisitoCurso;
-   consultarCorrequisitoCurso = conectar.prepareStatement("SELECT * FROM correquisito_curso");
-   resultadoCorrequisitoCurso = consultarCorrequisitoCurso.executeQuery(); 
-   
-
-   String codigoCursoCuatro;
-   String codigoCorrequisito;
-   
-   while (resultadoCorrequisitoCurso.next()){
-     codigoCursoCuatro = String.valueOf(resultadoCorrequisitoCurso.getObject(1));
-     for (int indice = 0; indice != cursos.size(); indice++){
-       if (cursos.get(indice).getCodigoCurso().equalsIgnoreCase(codigoCursoCuatro)){
-         for (int sumador = 0; sumador != cursos.size(); sumador++){
-           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoCorrequisitoCurso.getObject(2)))){
-             cursos.get(indice).añadirCorrequisitos(cursos.get(sumador));             
-           }
-         }
-       }
-     }
-   }
-     
-}//Fin método PADRE
-   
+  
+  
+  public void segundaConsulta(JTable tablaSegundaConsulta, String pCodigoCurso){
+      
+      DefaultTableModel modeloTabla = (DefaultTableModel) tablaSegundaConsulta.getModel();
+      modeloTabla.setRowCount(0);
+      PreparedStatement consultaInfo;
+      ResultSet resultado;
+      ResultSetMetaData datosResultado;
+      int columnas;
+      
+      try{
+          
+        Conexion nuevaConexion = new Conexion();
+        Connection conectar = nuevaConexion.conectar();
+        
+        consultaInfo = conectar.prepareStatement("SELECT curso.codigoCurso, curso.nombreCurso, curso.cantidadCreditos, curso.cantidadHorasLectivas FROM curso WHERE codigoCurso = (SELECT requisito_curso.codigoRequisito FROM requisito_curso WHERE requisito_curso.codigoCurso = (?))");
+        consultaInfo.setString(1, pCodigoCurso);
+        resultado = consultaInfo.executeQuery();
+        datosResultado = resultado.getMetaData();
+        columnas = datosResultado.getColumnCount();
+        
+        while(resultado.next()){
+          Object [] fila = new Object[columnas];
+          for(int indice = 0; indice<columnas; indice++){
+            fila[indice] = resultado.getObject(indice +1);
+          }
+          modeloTabla.addRow(fila);
+        }
+      }
+      catch(Exception error){
+          System.out.println(error);    
+      }
+  }
+  
+  
+  public void tercerConsulta(JTable tablaTerceraConsulta, String pCodigoCurso){
+      
+      DefaultTableModel modeloTabla = (DefaultTableModel) tablaTerceraConsulta.getModel();
+      modeloTabla.setRowCount(0);
+      PreparedStatement consultaInfo;
+      ResultSet resultado;
+      ResultSetMetaData datosResultado;
+      int columnas;
+      
+      try{
+          
+        Conexion nuevaConexion = new Conexion();
+        Connection conectar = nuevaConexion.conectar();
+        
+        consultaInfo = conectar.prepareStatement("SELECT curso.codigoCurso, curso.nombreCurso, curso.cantidadCreditos, curso.cantidadHorasLectivas FROM curso WHERE codigoCurso = (SELECT correquisito_curso.codigoCorrequisito FROM correquisito_curso WHERE correquisito_curso.codigoCurso = (?))");
+        consultaInfo.setString(1, pCodigoCurso);
+        resultado = consultaInfo.executeQuery();
+        datosResultado = resultado.getMetaData();
+        columnas = datosResultado.getColumnCount();
+        
+        while(resultado.next()){
+          Object [] fila = new Object[columnas];
+          for(int indice = 0; indice<columnas; indice++){
+            fila[indice] = resultado.getObject(indice +1);
+          }
+          modeloTabla.addRow(fila);
+        }
+      }
+      catch(Exception error){
+          System.out.println(error);    
+      }
+  }
+  
   
   public void insertarCurso(){   
    curso.setCodigoCurso(vista.textCodigoCurso.getText());
@@ -697,6 +611,195 @@ public class Controlador implements ActionListener{
   
   //SI REGISTRO UN CURSO LO TENGO QUE AÑADIR AL ARRAYLIST DE ACÁ
   
+  public void cargarBaseDatos() throws SQLException, ParseException{
+   
+   //Consulta los cursos en la base de datos
+   ResultSet resultado;
+   PreparedStatement consultarCursos;
+   Conexion nuevaConexion = new Conexion();
+   Connection conectar = nuevaConexion.conectar(); 
+   consultarCursos = conectar.prepareStatement("SELECT * FROM curso");
+   resultado = consultarCursos.executeQuery(); 
+   
+   Curso nuevoCurso = new Curso();
+   while (resultado.next()){
+     for (int contador = 1; contador <= 4; contador++){
+       if (contador == 1){
+        nuevoCurso.setCodigoCurso(String.valueOf(resultado.getObject(1)));
+       }
+       
+       else if (contador == 2){
+         nuevoCurso.setNombreCurso(String.valueOf(resultado.getObject(2)));
+       }
+       
+       else if (contador ==3){
+          nuevoCurso.setCantidadCreditos(Integer.parseInt(String.valueOf(resultado.getObject(3))));
+       }
+       
+       else{
+          nuevoCurso.setCantidadHorasLectivas(Integer.parseInt(String.valueOf(resultado.getObject(4))));
+       }   
+     }
+     cursos.add(nuevoCurso);
+  }
+   
+   
+   //Carga la tabla Escuela de la base de datos
+   
+   ResultSet resultadoEscuela;
+   PreparedStatement consultarEscuelas;
+   consultarCursos = conectar.prepareStatement("SELECT * FROM escuela");
+   resultadoEscuela = consultarCursos.executeQuery(); 
+   
+   Escuela nuevaEscuela = new Escuela();
+   while (resultadoEscuela.next()){
+     for (int contador = 1; contador <= 2; contador++){
+         if (contador == 1){
+             nuevaEscuela.setCodigoEscuela(String.valueOf(resultadoEscuela.getObject(1)));
+         }
+         else{
+            nuevaEscuela.setNombreEscuela(String.valueOf(resultadoEscuela.getObject(2))); 
+         }
+   }
+     escuelas.add(nuevaEscuela); 
+ }
+   
+   //Carga la tabla planes de estudio de la base de datos
+   ResultSet resultadoPlanes;
+   PreparedStatement consultarPlanes;
+   consultarPlanes = conectar.prepareStatement("SELECT * FROM plan_estudios");
+   resultadoPlanes = consultarPlanes.executeQuery(); 
+   
+   PlanEstudios nuevoPlan = new PlanEstudios();
+   while (resultadoPlanes.next()){
+     for (int contador = 1; contador <= 2; contador++){
+         if (contador == 1){
+             nuevoPlan.setNumeroPlan(Integer.parseInt(String.valueOf(resultadoPlanes.getObject(1))));
+         }
+         else{
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            nuevoPlan.setVigenciaPlan(formatoFecha.parse(String.valueOf(resultadoPlanes.getObject(2)))); 
+         }
+   }
+     planes.add(nuevoPlan);
+   
+ }
+   
+   //Carga la tabla intermedia escuelaPlanEstudios de la base de datos
+   ResultSet resultadoEscuelaPlan;
+   PreparedStatement consultarEscuelaPlan;
+   consultarEscuelaPlan = conectar.prepareStatement("SELECT * FROM escuela_plan_estudios");
+   resultadoEscuelaPlan = consultarEscuelaPlan.executeQuery(); 
+   
+   String codigoEscuela;
+   int numeroPlan;
+   while (resultadoEscuelaPlan.next()){
+     codigoEscuela = String.valueOf(resultadoEscuelaPlan.getObject(1));
+     for (int indice = 0; indice != escuelas.size(); indice++){
+       if (escuelas.get(indice).getCodigoEscuela().equalsIgnoreCase(codigoEscuela)){
+         for (int sumador = 0; sumador != planes.size(); sumador++){
+           if (planes.get(sumador).getNumeroPlan() == Integer.parseInt(String.valueOf(resultadoEscuelaPlan.getObject(2)))){
+             escuelas.get(indice).asociarPlan(planes.get(sumador));
+                     
+           }
+         }
+       }
+     }
+   }
+   
+
+   //Carga la tabla intermedia planEstudiosCurso de la base de datos
+   ResultSet resultadoPlanCurso;
+   PreparedStatement consultarPlanCurso;
+   consultarPlanCurso = conectar.prepareStatement("SELECT * FROM plan_estudios_curso");
+   resultadoPlanCurso = consultarPlanCurso.executeQuery(); 
+   
+   int numeroPlanDos;
+   String codigoCurso;
+   String numeroBloque;
+   
+   while (resultadoPlanCurso.next()){
+     numeroPlanDos = Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(1)));
+     for (int indice = 0; indice != planes.size(); indice++){
+       if (planes.get(indice).getNumeroPlan()==(numeroPlanDos)){
+         for (int sumador = 0; sumador != cursos.size(); sumador++){
+           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoPlanCurso.getObject(2)))){
+             planes.get(indice).añadirCursos(cursos.get(sumador),Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(3))));             
+           }
+         }
+       }
+     }
+   }
+   
+   //Carga la tabla intermedia escuelaCurso de la base de datos
+   ResultSet resultadoEscuelaCurso;
+   PreparedStatement consultarEscuelaCurso;
+   consultarEscuelaCurso = conectar.prepareStatement("SELECT * FROM escuela_curso");
+   resultadoEscuelaCurso = consultarEscuelaCurso.executeQuery(); 
+   
+   String codigoEscuelaDos;
+   String codigoCursoDos;
+   
+   while (resultadoEscuelaCurso.next()){
+     codigoEscuelaDos = String.valueOf(resultadoEscuelaCurso.getObject(1));
+     for (int indice = 0; indice != escuelas.size(); indice++){
+       if (escuelas.get(indice).getCodigoEscuela().equalsIgnoreCase(codigoEscuelaDos)){
+         for (int sumador = 0; sumador != cursos.size(); sumador++){
+           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoEscuelaCurso.getObject(2)))){
+             escuelas.get(indice).asociarCurso(cursos.get(sumador));             
+           }
+         }
+       }
+     }
+   }
+   
+   //Carga la tabla intermedia requisitoCurso de la base de datos
+   ResultSet resultadoRequisitoCurso;
+   PreparedStatement consultarRequisitoCurso;
+   consultarRequisitoCurso = conectar.prepareStatement("SELECT * FROM requisito_curso");
+   resultadoRequisitoCurso = consultarRequisitoCurso.executeQuery(); 
+   
+
+   String codigoCursoTres;
+   String codigoRequisito;
+   
+   while (resultadoRequisitoCurso.next()){
+     codigoCursoTres = String.valueOf(resultadoRequisitoCurso.getObject(1));
+     for (int indice = 0; indice != cursos.size(); indice++){
+       if (cursos.get(indice).getCodigoCurso().equalsIgnoreCase(codigoCursoTres)){
+         for (int sumador = 0; sumador != cursos.size(); sumador++){
+           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoRequisitoCurso.getObject(2)))){
+             cursos.get(indice).añadirRequisitos(cursos.get(sumador));             
+           }
+         }
+       }
+     }
+   }
+   
+   //Carga la tabla intermedia correquisitoCurso de la base de datos
+   ResultSet resultadoCorrequisitoCurso;
+   PreparedStatement consultarCorrequisitoCurso;
+   consultarCorrequisitoCurso = conectar.prepareStatement("SELECT * FROM correquisito_curso");
+   resultadoCorrequisitoCurso = consultarCorrequisitoCurso.executeQuery(); 
+   
+
+   String codigoCursoCuatro;
+   String codigoCorrequisito;
+   
+   while (resultadoCorrequisitoCurso.next()){
+     codigoCursoCuatro = String.valueOf(resultadoCorrequisitoCurso.getObject(1));
+     for (int indice = 0; indice != cursos.size(); indice++){
+       if (cursos.get(indice).getCodigoCurso().equalsIgnoreCase(codigoCursoCuatro)){
+         for (int sumador = 0; sumador != cursos.size(); sumador++){
+           if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoCorrequisitoCurso.getObject(2)))){
+             cursos.get(indice).añadirCorrequisitos(cursos.get(sumador));             
+           }
+         }
+       }
+     }
+   }
+     
+}//Fin método PADRE
   
   @Override
   public void actionPerformed(ActionEvent e){
@@ -717,6 +820,18 @@ public class Controlador implements ActionListener{
 
       cargarPlanesRegistroCurso(vista.BoxPlanRegistroCurso, String.valueOf(vista.BoxEscuelaPropietaria.getSelectedItem()));    
       
+    }
+    
+    else if(e.getSource() == vista.botonBuscarPlanesCurso){
+      primerConsulta(vista.tablaPrimerConsulta, vista.textCodigoPrimerConsulta.getText());    
+    }
+    
+    else if(e.getSource() == vista.botonBuscarRequisitosCurso){
+      segundaConsulta(vista.tablaSegundaConsulta, vista.textCodigoSegundaConsulta.getText());    
+    }
+    
+    else if(e.getSource() == vista.botonBuscarCorrequisitosCurso){
+      tercerConsulta(vista.tablaTerceraConsulta, vista.textCodigoTercerConsulta.getText());        
     }
           
     else if(e.getSource() == vista.botonRegistrarPlanAEscuela){
