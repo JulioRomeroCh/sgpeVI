@@ -54,6 +54,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
       for(int contador=0;contador<=cursosBloque.length;contador++){
         if (cursosBloque[pBloque][contador]==null){
           cursosBloque[pBloque][contador]=pCurso;
+          break;
         }
       }
     }

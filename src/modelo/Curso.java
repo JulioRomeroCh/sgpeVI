@@ -70,9 +70,10 @@ public class Curso {//Inicio clase Curso
     requisitos.add(pRequisito);
   }
     
-  public void añadirCursos(Curso pCorrequisito){
+  public void añadirCorrequisitos(Curso pCorrequisito){
     correquisitos.add(pCorrequisito);
   }
+ 
   
   public String toString(){
     String salida = "";
@@ -82,7 +83,9 @@ public class Curso {//Inicio clase Curso
     salida+= "Cantidad horas lectivas: " + getCantidadHorasLectivas()+ "\n";
     return salida;
   }
-   
+  
+  
+  
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
   public void insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, String pCodigoEscuela){
     Conexion nuevaConexion = new Conexion();
@@ -129,6 +132,23 @@ public class Curso {//Inicio clase Curso
      } 
    }
    
+       public void asignarCorrequisito(String pCodigoCurso, String pCodigoCorrequisito){
+      
+      
+      Conexion nuevaConexion = new Conexion();
+      Connection conectar = nuevaConexion.conectar();
+      try{
+        CallableStatement insertar = conectar.prepareCall("{CALL insertCorrequisitoCurso(?,?)}");
+        insertar.setString(1, pCodigoCurso);
+        insertar.setString(2, pCodigoCorrequisito);
+        insertar.execute();  
+
+      }
+      catch(Exception error){ 
+          System.out.println(error);
+      }       
+    }
+   
   public void anadirRequisito(String pCodigoCurso){
      PreparedStatement insertar;
      ResultSet resultado;
@@ -166,22 +186,7 @@ public class Curso {//Inicio clase Curso
     }
      }
  
-    public void asignarCorrequisito(String pCodigoCurso, String pCodigoCorrequisito){
-      
-      
-      Conexion nuevaConexion = new Conexion();
-      Connection conectar = nuevaConexion.conectar();
-      try{
-        CallableStatement insertar = conectar.prepareCall("{CALL insertCorrequisitoCurso(?,?)}");
-        insertar.setString(1, pCodigoCurso);
-        insertar.setString(2, pCodigoCorrequisito);
-        insertar.execute();  
 
-      }
-      catch(Exception error){ 
-          System.out.println(error);
-      }       
-    }
   
   
   

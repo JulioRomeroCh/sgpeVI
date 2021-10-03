@@ -19,6 +19,7 @@ public class Sgpe {
     vista.Formulario nuevaVista = new vista.Formulario();
   
     Controlador controladores = new Controlador(modeloUno, modeloDos, modeloTres, nuevaVista);
+    controladores.cargarBaseDatos();
     controladores.iniciar();
     
     nuevaVista.setVisible(true);

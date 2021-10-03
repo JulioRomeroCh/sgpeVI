@@ -42,8 +42,8 @@ public class Pdf {
          }
          
          //Ciclo for para imprimir los datos en PDF
-         ResultSet datosPlan = seleccionarDatosDePlanEstudios(numeroPlan); //Cambiar por JTextfield
-         ResultSet datosTotalesCursosYCreditos = selecionarCursosYCreditosTotalesPlanEstudios(numeroPlan); //Cambiar por JTextfield
+         ResultSet datosPlan = seleccionarDatosDePlanEstudios(numeroPlan); 
+         ResultSet datosTotalesCursosYCreditos = selecionarCursosYCreditosTotalesPlanEstudios(numeroPlan);
              int pixelesX = 80;
              int pixelesY = 700;
          while(datosPlan.next()){ 
