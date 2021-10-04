@@ -66,6 +66,12 @@ public class Controlador implements ActionListener{
      this.vista.botonBuscarPlanesCurso.addActionListener(this);
      this.vista.botonBuscarRequisitosCurso.addActionListener(this);
      this.vista.botonBuscarCorrequisitosCurso.addActionListener(this);
+     this.vista.botonEliminaciones.addActionListener(this);
+     this.vista.botonCargarRequisitoEliminaciones.addActionListener(this);
+     this.vista.botonEliminarRequisito.addActionListener(this);
+     this.vista.botonEliminarCurso.addActionListener(this);
+     this.vista.botonCargarCursosEliminaciones.addActionListener(this);
+     this.vista.botonEliminarCursoDos.addActionListener(this);
      this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan);
      //this.plan.cargaCodigosPlanes(vista.BoxCodigoPlanCursoPlan);
      //this.plan.cargaCodigosCursos(vista.BoxCodigoCursoCursoPlan);
@@ -77,6 +83,15 @@ public class Controlador implements ActionListener{
    
   }
  
+  /*
+    DELETE FROM requisito_curso WHERE codigoCurso = 'TI1000' AND codigoRequisito = 'TI2000';
+
+    DELETE FROM plan_estudios_curso WHERE codigoCurso = 'AE1234' AND numeroPlan = '1800';
+
+    DELETE FROM curso WHERE codigoCurso = 'AE1234';
+  */
+  
+  
   
   public void primerConsulta(JTable tablaPrimerConsulta, String pCodigoCurso){
       
@@ -205,7 +220,8 @@ public class Controlador implements ActionListener{
    //
    unPlan.añadirCursos(nuevoCurso, vista.BoxBloqueRegistrarCurso.getSelectedIndex());
    unPlan.insertarCursoAPlan(Integer.parseInt(String.valueOf(vista.BoxPlanRegistroCurso.getSelectedItem())), codigoCurso, String.valueOf(vista.BoxBloqueRegistrarCurso.getSelectedItem())); 
-
+   
+   nuevoCurso.asociarPlan(unPlan);
   }
   
   
@@ -579,6 +595,98 @@ public class Controlador implements ActionListener{
   }
   
   
+  public void cargaEliminaciones(JComboBox boxCursoEliminaciones, JComboBox boxPlanEliminaciones, JComboBox boxCursoEliminacionesDos){
+    ResultSet primerResultado;
+    ResultSet segundoResultado;
+    ResultSet tercerResultado;
+    PreparedStatement primerConsulta;
+    PreparedStatement segundaConsulta;
+    PreparedStatement tercerConsulta;
+    
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    
+    boxCursoEliminaciones.removeAllItems();
+    boxPlanEliminaciones.removeAllItems();
+    boxCursoEliminacionesDos.removeAllItems();
+    
+    try{
+        
+      primerConsulta = conectar.prepareStatement("SELECT codigoCurso FROM curso");
+      primerResultado = primerConsulta.executeQuery();
+      while(primerResultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          boxCursoEliminaciones.addItem(primerResultado.getObject(indice));
+        }   
+      } 
+      
+      segundaConsulta = conectar.prepareStatement("SELECT numeroPlan FROM plan_estudios");
+      segundoResultado = segundaConsulta.executeQuery();
+      while(segundoResultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          boxPlanEliminaciones.addItem(segundoResultado.getObject(indice));
+        }   
+      } 
+      
+      tercerConsulta = conectar.prepareStatement("SELECT codigoCurso FROM curso");
+      tercerResultado = tercerConsulta.executeQuery();
+      while(tercerResultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          boxCursoEliminacionesDos.addItem(tercerResultado.getObject(indice));
+        }   
+      } 
+      
+    }
+    catch(Exception error){ 
+        System.out.println(error);
+    }
+  }
+  
+  
+  public void cargaRequisitosCurso(JComboBox boxRequisitoEliminaciones, String pCodigoCurso){
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    boxRequisitoEliminaciones.removeAllItems();
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoRequisito FROM requisito_curso WHERE codigoCurso = (?)");
+      consultaEscuela.setString(1, pCodigoCurso);
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          boxRequisitoEliminaciones.addItem(resultado.getObject(indice));
+        }   
+      } 
+    }
+    catch(Exception error){ 
+        System.out.println(error);
+    }
+  }
+  
+  
+  public void cargarCursosPlan(JComboBox boxCursosEliminaciones, String pnumeroPlan){
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    boxCursosEliminaciones.removeAllItems();
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM plan_estudios_curso WHERE numeroPlan = (?)");
+      consultaEscuela.setString(1, pnumeroPlan);
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          boxCursosEliminaciones.addItem(resultado.getObject(indice));
+        }   
+      } 
+    }
+    catch(Exception error){ 
+        System.out.println(error);
+    }    
+  }
+  
+  
   public void llamarMetodoAnadirRequisito(){
     Curso cursoCorrequisito = buscarCurso(String.valueOf(vista.BoxCodigoCursoAsignarReqCor));
     cursoCorrequisito.anadirRequisito(String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
@@ -598,6 +706,40 @@ public class Controlador implements ActionListener{
   
   public void llamarMetodoAsignarCorrequisito(){
     curso.asignarCorrequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), String.valueOf(vista.BoxAsignarCorrequisito.getSelectedItem()));
+  }
+  
+  
+  public void llamarMetodoEliminarRequisito(){
+    if (vista.boxRequisitoEliminaciones.getSelectedItem()==(null)){
+      JOptionPane.showMessageDialog(null, "Error! El curso no cuenta con un requisito");
+    }
+    else{
+      curso.eliminarRequisito(String.valueOf(vista.boxCursoEliminaciones.getSelectedItem()), String.valueOf(vista.boxRequisitoEliminaciones.getSelectedItem()));
+      JOptionPane.showMessageDialog(null, "Requisito eliminado con éxito");
+    }   
+  }
+
+  
+  public void llamarMetodoEliminarCursoDePlan(){   
+    if (vista.boxCursosEliminaciones.getSelectedItem()==(null)){
+      JOptionPane.showMessageDialog(null, "Error! No ha seleccionado un curso o el plan aún no cuenta con cursos");
+    }
+    else{
+      plan.eliminarCursoDePlan(String.valueOf(vista.boxCursosEliminaciones.getSelectedItem()), String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+      JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");    
+    }
+  }
+  
+  
+  public void llamarMetodoEliminarCurso(){
+
+      if(curso.eliminarCurso(String.valueOf(vista.boxCursoEliminacionesDos.getSelectedItem()))==true){
+        JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");    
+        vista.boxCursoEliminacionesDos.removeItem(String.valueOf(vista.boxCursoEliminacionesDos.getSelectedItem()));
+      }
+      else{
+        JOptionPane.showMessageDialog(null, "Error! el curso pertenece a un plan");     
+      }
   }
   
   
@@ -724,7 +866,8 @@ public class Controlador implements ActionListener{
        if (planes.get(indice).getNumeroPlan()==(numeroPlanDos)){
          for (int sumador = 0; sumador != cursos.size(); sumador++){
            if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoPlanCurso.getObject(2)))){
-             planes.get(indice).añadirCursos(cursos.get(sumador),Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(3))));             
+             planes.get(indice).añadirCursos(cursos.get(sumador),Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(3)))); 
+             cursos.get(sumador).asociarPlan(planes.get(indice));
            }
          }
        }
@@ -833,9 +976,33 @@ public class Controlador implements ActionListener{
     else if(e.getSource() == vista.botonBuscarCorrequisitosCurso){
       tercerConsulta(vista.tablaTerceraConsulta, vista.textCodigoTercerConsulta.getText());        
     }
+    
+    else if(e.getSource() == vista.botonEliminaciones){
+        cargaEliminaciones(vista.boxCursoEliminaciones, vista.boxPlanEliminaciones, vista.boxCursoEliminacionesDos);
+    }
+    
+    else if(e.getSource() == vista.botonCargarRequisitoEliminaciones){
+      cargaRequisitosCurso(vista.boxRequisitoEliminaciones, String.valueOf(vista.boxCursoEliminaciones.getSelectedItem()));    
+    }
           
     else if(e.getSource() == vista.botonRegistrarPlanAEscuela){
         cargarEscuelasConPlan(vista.BoxEscuelaPropietariaPlan);
+    }
+    
+    else if(e.getSource() == vista.botonCargarCursosEliminaciones){
+        cargarCursosPlan(vista.boxCursosEliminaciones, String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+    }
+    
+    else if(e.getSource() == vista.botonEliminarRequisito){
+      llamarMetodoEliminarRequisito();
+    }
+    
+    else if(e.getSource() == vista.botonEliminarCurso){
+      llamarMetodoEliminarCursoDePlan();
+    }
+    
+    else if(e.getSource() == vista.botonEliminarCursoDos){
+      llamarMetodoEliminarCurso();
     }
     
     else if(e.getSource() == vista.botonRegistrarCurso){

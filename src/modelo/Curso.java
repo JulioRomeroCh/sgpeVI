@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import vista.Formulario;
 
 public class Curso {//Inicio clase Curso
@@ -17,6 +18,7 @@ public class Curso {//Inicio clase Curso
   private int cantidadHorasLectivas;
   private ArrayList <Curso> requisitos;
   private ArrayList <Curso> correquisitos;
+  private ArrayList <PlanEstudios> planesAsociados;
   
   public Curso(){
   
@@ -26,6 +28,7 @@ public class Curso {//Inicio clase Curso
   public Curso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHorasLectivas){
     requisitos = new ArrayList <Curso>();
     correquisitos = new ArrayList <Curso>();
+    planesAsociados = new ArrayList<PlanEstudios>();
     setCodigoCurso(pCodigoCurso); 
     setNombreCurso(pNombreCurso);
     setCantidadCreditos(pCantidadCreditos);
@@ -84,7 +87,53 @@ public class Curso {//Inicio clase Curso
     return salida;
   }
   
+  public void asociarPlan(PlanEstudios pPlan){
+    planesAsociados.add(pPlan);
+  }
   
+  
+  
+  
+  public void eliminarRequisito(String pCodigoCurso, String pCodigoRequisito){
+    int resultado;
+    PreparedStatement consultaCurso;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar(); 
+    
+    try{  
+      consultaCurso = conectar.prepareStatement("DELETE FROM requisito_curso WHERE codigoCurso = (?) AND codigoRequisito = (?)"); 
+      consultaCurso.setString(1, pCodigoCurso);
+      consultaCurso.setString(2, pCodigoRequisito);
+      resultado = consultaCurso.executeUpdate();
+    }
+
+    catch(Exception error){ 
+        System.out.println(error);
+    }
+  }
+  
+  public boolean eliminarCurso(String pCodigoCurso){
+    int resultado;
+    boolean salida = true;
+    PreparedStatement consultaCurso;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar(); 
+    
+    try{  
+      consultaCurso = conectar.prepareStatement("DELETE FROM curso WHERE codigoCurso = (?)"); 
+      consultaCurso.setString(1, pCodigoCurso);
+      resultado = consultaCurso.executeUpdate();
+      //JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");
+    }
+
+    catch(Exception error){ 
+      salida = false;
+      //JOptionPane.showMessageDialog(null, "Error! el curso pertenece a un plan");
+    } 
+    return salida;
+  }
+  
+
   
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
   public void insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, String pCodigoEscuela){

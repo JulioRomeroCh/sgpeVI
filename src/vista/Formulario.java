@@ -146,6 +146,30 @@ public class Formulario extends javax.swing.JFrame {
         tablaTerceraConsulta = new javax.swing.JTable();
         jLabel45 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
+        frameEliminaciones = new javax.swing.JFrame();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel46 = new javax.swing.JLabel();
+        boxCursoEliminaciones = new javax.swing.JComboBox<>();
+        botonCargarRequisitoEliminaciones = new javax.swing.JButton();
+        jLabel48 = new javax.swing.JLabel();
+        boxRequisitoEliminaciones = new javax.swing.JComboBox<>();
+        botonEliminarRequisito = new javax.swing.JButton();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel49 = new javax.swing.JLabel();
+        boxPlanEliminaciones = new javax.swing.JComboBox<>();
+        botonCargarCursosEliminaciones = new javax.swing.JButton();
+        jLabel50 = new javax.swing.JLabel();
+        boxCursosEliminaciones = new javax.swing.JComboBox<>();
+        botonEliminarCurso = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jPanel11 = new javax.swing.JPanel();
+        jLabel51 = new javax.swing.JLabel();
+        boxCursoEliminacionesDos = new javax.swing.JComboBox<>();
+        botonEliminarCursoDos = new javax.swing.JButton();
+        jLabel47 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
         panelPrincipal = new javax.swing.JPanel();
         principalRegistrarEscuela = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -160,6 +184,8 @@ public class Formulario extends javax.swing.JFrame {
         jButton8 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         botonConsultar = new javax.swing.JButton();
+        jLabel54 = new javax.swing.JLabel();
+        botonEliminaciones = new javax.swing.JButton();
 
         panelRegistrarEscuela.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -1035,13 +1061,13 @@ public class Formulario extends javax.swing.JFrame {
 
         tablaSegundaConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Requisitos"
+                "Código", "Nombre", "Créditos", "Horas lectivas"
             }
         ));
         jScrollPane3.setViewportView(tablaSegundaConsulta);
@@ -1124,13 +1150,13 @@ public class Formulario extends javax.swing.JFrame {
 
         tablaTerceraConsulta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Correquisitos"
+                "Codigo", "Nombre", "Créditos", "Horas lectivas"
             }
         ));
         jScrollPane4.setViewportView(tablaTerceraConsulta);
@@ -1194,6 +1220,212 @@ public class Formulario extends javax.swing.JFrame {
         frameConsultaTresLayout.setVerticalGroup(
             frameConsultaTresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel8.setBackground(new java.awt.Color(204, 204, 204));
+
+        jPanel9.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel46.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel46.setText("Curso:");
+
+        botonCargarRequisitoEliminaciones.setText("Cargar Requisitos");
+
+        jLabel48.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel48.setText("Requisitos:");
+
+        botonEliminarRequisito.setText("Eliminar Requisito");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel46, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxCursoEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonCargarRequisitoEliminaciones)
+                .addGap(39, 39, 39)
+                .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxRequisitoEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(botonEliminarRequisito, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(86, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel46)
+                    .addComponent(boxCursoEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonCargarRequisitoEliminaciones)
+                    .addComponent(jLabel48)
+                    .addComponent(boxRequisitoEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonEliminarRequisito))
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
+        jPanel10.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel49.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel49.setText("Plan:");
+
+        botonCargarCursosEliminaciones.setText("Cargar cursos");
+
+        jLabel50.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel50.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel50.setText("Cursos:");
+
+        botonEliminarCurso.setText("Eliminar curso");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxPlanEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonCargarCursosEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxCursosEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(botonEliminarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(105, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel49)
+                    .addComponent(boxPlanEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonCargarCursosEliminaciones)
+                    .addComponent(jLabel50)
+                    .addComponent(boxCursosEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonEliminarCurso))
+                .addGap(51, 51, 51))
+        );
+
+        jButton11.setText("Regresar");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
+
+        jPanel11.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel51.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel51.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel51.setText("Curso:");
+
+        botonEliminarCursoDos.setText("Eliminar curso");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(boxCursoEliminacionesDos, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(botonEliminarCursoDos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
+                .addContainerGap(64, Short.MAX_VALUE)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel51)
+                    .addComponent(boxCursoEliminacionesDos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botonEliminarCursoDos))
+                .addGap(57, 57, 57))
+        );
+
+        jLabel47.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel47.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel47.setText("Eliminar un curso de un plan");
+
+        jLabel52.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel52.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel52.setText("Eliminar requisitos de un curso");
+
+        jLabel53.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
+        jLabel53.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel53.setText("Eliminar un curso");
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton11))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel47)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel53))))
+                .addContainerGap(69, Short.MAX_VALUE))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(72, 72, 72)
+                    .addComponent(jLabel52)
+                    .addContainerGap(768, Short.MAX_VALUE)))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(jLabel47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(jLabel53)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
+            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createSequentialGroup()
+                    .addGap(76, 76, 76)
+                    .addComponent(jLabel52)
+                    .addContainerGap(603, Short.MAX_VALUE)))
+        );
+
+        javax.swing.GroupLayout frameEliminacionesLayout = new javax.swing.GroupLayout(frameEliminaciones.getContentPane());
+        frameEliminaciones.getContentPane().setLayout(frameEliminacionesLayout);
+        frameEliminacionesLayout.setHorizontalGroup(
+            frameEliminacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        frameEliminacionesLayout.setVerticalGroup(
+            frameEliminacionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1265,6 +1497,16 @@ public class Formulario extends javax.swing.JFrame {
             }
         });
 
+        jLabel54.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel54.setText("Eliminaciones");
+
+        botonEliminaciones.setText("Eliminaciones");
+        botonEliminaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminacionesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
         panelPrincipal.setLayout(panelPrincipalLayout);
         panelPrincipalLayout.setHorizontalGroup(
@@ -1297,9 +1539,15 @@ public class Formulario extends javax.swing.JFrame {
                             .addComponent(botonRegistrarPlanAEscuela)))
                     .addGroup(panelPrincipalLayout.createSequentialGroup()
                         .addGap(284, 284, 284)
-                        .addComponent(jLabel13)
-                        .addGap(188, 188, 188)
-                        .addComponent(botonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(jLabel54)
+                                .addGap(191, 191, 191)
+                                .addComponent(botonEliminaciones))
+                            .addGroup(panelPrincipalLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addGap(188, 188, 188)
+                                .addComponent(botonConsultar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(301, Short.MAX_VALUE))
         );
         panelPrincipalLayout.setVerticalGroup(
@@ -1331,7 +1579,11 @@ public class Formulario extends javax.swing.JFrame {
                 .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(botonConsultar))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel54)
+                    .addComponent(botonEliminaciones))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1508,6 +1760,22 @@ public class Formulario extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botonBuscarRequisitosCursoActionPerformed
 
+    private void botonEliminacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminacionesActionPerformed
+        this.setVisible(false);
+        frameEliminaciones.setVisible(true);
+        frameEliminaciones.pack();
+        frameEliminaciones.setLocationRelativeTo(null);
+        frameEliminaciones.setSize(1100, 700);
+    }//GEN-LAST:event_botonEliminacionesActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        frameEliminaciones.setVisible(false);
+        this.setVisible(true);
+        this.pack();
+        this.setLocationRelativeTo(null);
+        this.setSize(900, 500);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1558,11 +1826,17 @@ public class Formulario extends javax.swing.JFrame {
     public javax.swing.JButton botonBuscarPlanesCurso;
     public javax.swing.JButton botonBuscarRequisitosCurso;
     public javax.swing.JButton botonCargarCursoAsignarRequisito;
+    public javax.swing.JButton botonCargarCursosEliminaciones;
     public javax.swing.JButton botonCargarInformacionPlan;
     public javax.swing.JButton botonCargarPlanRegistroCursos;
     public javax.swing.JButton botonCargarPlanes;
     public javax.swing.JButton botonCargarRequisitoCorrequisito;
+    public javax.swing.JButton botonCargarRequisitoEliminaciones;
     public javax.swing.JButton botonConsultar;
+    public javax.swing.JButton botonEliminaciones;
+    public javax.swing.JButton botonEliminarCurso;
+    public javax.swing.JButton botonEliminarCursoDos;
+    public javax.swing.JButton botonEliminarRequisito;
     public javax.swing.JButton botonEnviarPDFCorreo;
     public javax.swing.JButton botonPrimerConsulta;
     public javax.swing.JButton botonRegistrarCoRequisito;
@@ -1576,11 +1850,17 @@ public class Formulario extends javax.swing.JFrame {
     public javax.swing.JButton botonTercerConsulta;
     public javax.swing.JComboBox<String> boxCantidadHoras;
     public javax.swing.JComboBox<String> boxCodigoPlanConsulta;
+    public javax.swing.JComboBox<String> boxCursoEliminaciones;
+    public javax.swing.JComboBox<String> boxCursoEliminacionesDos;
+    public javax.swing.JComboBox<String> boxCursosEliminaciones;
+    public javax.swing.JComboBox<String> boxPlanEliminaciones;
+    public javax.swing.JComboBox<String> boxRequisitoEliminaciones;
     private javax.swing.JFrame frameConsultaDos;
     private javax.swing.JFrame frameConsultaTres;
     private javax.swing.JFrame frameConsultaUno;
     private javax.swing.JFrame frameConsultarPlan;
     private javax.swing.JFrame frameConsultas;
+    private javax.swing.JFrame frameEliminaciones;
     public javax.swing.JFrame framePrincipal;
     private javax.swing.JFrame frameRegistrarCoRRequsito;
     public javax.swing.JFrame frameRegistrarCurso;
@@ -1588,6 +1868,7 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JFrame frameRegistrarPlan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1636,18 +1917,31 @@ public class Formulario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
+    private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
+    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

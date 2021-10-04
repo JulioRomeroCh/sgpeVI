@@ -71,6 +71,24 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     return salida;
   }
   
+  public void eliminarCursoDePlan(String pCodigoCurso, String pNumeroPlan){
+    int resultado;
+    PreparedStatement consultaCurso;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar(); 
+    
+    try{  
+      consultaCurso = conectar.prepareStatement("DELETE FROM plan_estudios_curso WHERE codigoCurso = (?) AND numeroPlan = (?)"); 
+      consultaCurso.setString(1, pCodigoCurso);
+      consultaCurso.setString(2, pNumeroPlan);
+      resultado = consultaCurso.executeUpdate();
+    }
+
+    catch(Exception error){ 
+        System.out.println(error);
+    }
+  }
+  
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
   public void agregarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
     Conexion nuevaConexion = new Conexion();
