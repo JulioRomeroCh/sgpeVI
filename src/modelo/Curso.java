@@ -5,6 +5,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -22,7 +23,9 @@ public class Curso {//Inicio clase Curso
   
   public Curso(){
   
-
+  requisitos = new ArrayList <Curso>();
+    correquisitos = new ArrayList <Curso>();
+    planesAsociados = new ArrayList<PlanEstudios>();
   }
   
   public Curso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHorasLectivas){
@@ -105,6 +108,12 @@ public class Curso {//Inicio clase Curso
       consultaCurso.setString(1, pCodigoCurso);
       consultaCurso.setString(2, pCodigoRequisito);
       resultado = consultaCurso.executeUpdate();
+      
+      for (int contador = 0; requisitos.size() != contador; contador++){
+        if (requisitos.get(contador).getCodigoCurso().equalsIgnoreCase(pCodigoRequisito)){
+          requisitos.remove(requisitos.get(contador));
+        }
+     }
     }
 
     catch(Exception error){ 
@@ -112,21 +121,35 @@ public class Curso {//Inicio clase Curso
     }
   }
   
-  public boolean eliminarCurso(String pCodigoCurso){
+  public boolean eliminarCurso(String pCodigoCurso) throws Exception{
     int resultado;
     boolean salida = true;
     PreparedStatement consultaCurso;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar(); 
     
-    try{  
+
+    
+    if (planesAsociados != null || planesAsociados.isEmpty() == false){
+      for (int indice = 0; planesAsociados.size() != indice; indice++){
+        if (planesAsociados.get(indice) != null){
+          salida = false;
+          break;
+        }
+        else{
+          salida = true;
+      }
+    }
+   }
+    if (salida == true){ 
       consultaCurso = conectar.prepareStatement("DELETE FROM curso WHERE codigoCurso = (?)"); 
       consultaCurso.setString(1, pCodigoCurso);
       resultado = consultaCurso.executeUpdate();
       //JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");
     }
-
-    catch(Exception error){ 
+      
+     
+    else{
       salida = false;
       //JOptionPane.showMessageDialog(null, "Error! el curso pertenece a un plan");
     } 
@@ -173,7 +196,8 @@ public class Curso {//Inicio clase Curso
          int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
          int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
          Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
-         correquisitos.add(nuevoCurso);       
+         correquisitos.add(nuevoCurso);   
+
        }
      }
      catch(Exception error){ 

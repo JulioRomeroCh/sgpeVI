@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -42,9 +43,6 @@ public class Controlador implements ActionListener{
 
   public Controlador (Curso pCurso, Escuela pEscuela, PlanEstudios pPlan, Formulario pVista){
      
-     this.cursos = new ArrayList<Curso>();
-     this.escuelas = new ArrayList<Escuela>();
-     this.planes = new ArrayList<PlanEstudios>();
      this.curso = pCurso;
      this.escuela = pEscuela;
      this.plan = pPlan;
@@ -73,6 +71,9 @@ public class Controlador implements ActionListener{
      this.vista.botonCargarCursosEliminaciones.addActionListener(this);
      this.vista.botonEliminarCursoDos.addActionListener(this);
      this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan);
+     this.cursos = new ArrayList<Curso>();
+     this.escuelas = new ArrayList<Escuela>();
+     this.planes = new ArrayList<PlanEstudios>();
      //this.plan.cargaCodigosPlanes(vista.BoxCodigoPlanCursoPlan);
      //this.plan.cargaCodigosCursos(vista.BoxCodigoCursoCursoPlan);
      //public void cargaPlanesRegistrarCursos(JComboBox BoxPlanRegistroCurso){
@@ -91,7 +92,7 @@ public class Controlador implements ActionListener{
     DELETE FROM curso WHERE codigoCurso = 'AE1234';
   */
   
-  
+
   
   public void primerConsulta(JTable tablaPrimerConsulta, String pCodigoCurso){
       
@@ -714,26 +715,39 @@ public class Controlador implements ActionListener{
       JOptionPane.showMessageDialog(null, "Error! El curso no cuenta con un requisito");
     }
     else{
-      curso.eliminarRequisito(String.valueOf(vista.boxCursoEliminaciones.getSelectedItem()), String.valueOf(vista.boxRequisitoEliminaciones.getSelectedItem()));
+      Curso nuevoCurso = buscarCurso(String.valueOf(vista.boxCursoEliminaciones.getSelectedItem()));
+      nuevoCurso.eliminarRequisito(String.valueOf(vista.boxCursoEliminaciones.getSelectedItem()), String.valueOf(vista.boxRequisitoEliminaciones.getSelectedItem()));
       JOptionPane.showMessageDialog(null, "Requisito eliminado con éxito");
     }   
   }
 
   
   public void llamarMetodoEliminarCursoDePlan(){   
-    if (vista.boxCursosEliminaciones.getSelectedItem()==(null)){
+    if (vista.boxCursosEliminacionesDos.getSelectedItem()==(null)){
       JOptionPane.showMessageDialog(null, "Error! No ha seleccionado un curso o el plan aún no cuenta con cursos");
     }
     else{
-      plan.eliminarCursoDePlan(String.valueOf(vista.boxCursosEliminaciones.getSelectedItem()), String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+      PlanEstudios nuevoPlan = buscarPlanEstudios(String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+      nuevoPlan.eliminarCursoDePlan(String.valueOf(vista.boxCursosEliminacionesDos.getSelectedItem()), String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
       JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");    
     }
   }
   
   
-  public void llamarMetodoEliminarCurso(){
+  public void llamarMetodoEliminarCurso() throws Exception{
+ 
+     /*for (int indice = 0; cursos.size() != indice; indice++){
+        System.err.println(cursos.get(indice).toString());
+     }*/ 
 
-      if(curso.eliminarCurso(String.valueOf(vista.boxCursoEliminacionesDos.getSelectedItem()))==true){
+     
+    Curso nuevoCurso = buscarCurso(String.valueOf(vista.boxCursoEliminacionesDos.getSelectedItem()));
+    if(nuevoCurso.eliminarCurso(String.valueOf(vista.boxCursoEliminacionesDos.getSelectedItem()))==true){
+        for (int indice = 0; cursos.size() != indice; indice++){
+          if(cursos.get(indice).getCodigoCurso().equalsIgnoreCase(nuevoCurso.getCodigoCurso())){
+            cursos.remove(cursos.get(indice));
+          }
+        }
         JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");    
         vista.boxCursoEliminacionesDos.removeItem(String.valueOf(vista.boxCursoEliminacionesDos.getSelectedItem()));
       }
@@ -752,7 +766,13 @@ public class Controlador implements ActionListener{
   
   
   //SI REGISTRO UN CURSO LO TENGO QUE AÑADIR AL ARRAYLIST DE ACÁ
+  public void recorreArrayList(){
+    System.out.println("PRUEBA:" + cursos.get(0).toString());
+  }
   
+  Curso nuevoCurso = new Curso();
+  Escuela nuevaEscuela = new Escuela();
+  PlanEstudios nuevoPlan = new PlanEstudios();
   public void cargarBaseDatos() throws SQLException, ParseException{
    
    //Consulta los cursos en la base de datos
@@ -763,48 +783,40 @@ public class Controlador implements ActionListener{
    consultarCursos = conectar.prepareStatement("SELECT * FROM curso");
    resultado = consultarCursos.executeQuery(); 
    
-   Curso nuevoCurso = new Curso();
    while (resultado.next()){
-     for (int contador = 1; contador <= 4; contador++){
-       if (contador == 1){
-        nuevoCurso.setCodigoCurso(String.valueOf(resultado.getObject(1)));
-       }
-       
-       else if (contador == 2){
-         nuevoCurso.setNombreCurso(String.valueOf(resultado.getObject(2)));
-       }
-       
-       else if (contador ==3){
-          nuevoCurso.setCantidadCreditos(Integer.parseInt(String.valueOf(resultado.getObject(3))));
-       }
-       
-       else{
-          nuevoCurso.setCantidadHorasLectivas(Integer.parseInt(String.valueOf(resultado.getObject(4))));
-       }   
-     }
-     cursos.add(nuevoCurso);
-  }
+         String codigoCurso = (String.valueOf(resultado.getObject(1)));
+         String nombreCurso = (String.valueOf(resultado.getObject(2)));
+         int cantidadCreditos = (Integer.parseInt(String.valueOf(resultado.getObject(3))));
+         int cantidadHoras = (Integer.parseInt(String.valueOf(resultado.getObject(4))));
+         Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
+         cursos.add(nuevoCurso);  
+   }
    
-   
+
+   /*for(int indice = 0; indice!=cursos.size(); indice++){
+       System.out.println(cursos.get(indice).toString());
+   }*/
+
+
    //Carga la tabla Escuela de la base de datos
-   
    ResultSet resultadoEscuela;
    PreparedStatement consultarEscuelas;
    consultarCursos = conectar.prepareStatement("SELECT * FROM escuela");
    resultadoEscuela = consultarCursos.executeQuery(); 
    
-   Escuela nuevaEscuela = new Escuela();
+   
    while (resultadoEscuela.next()){
-     for (int contador = 1; contador <= 2; contador++){
-         if (contador == 1){
-             nuevaEscuela.setCodigoEscuela(String.valueOf(resultadoEscuela.getObject(1)));
-         }
-         else{
-            nuevaEscuela.setNombreEscuela(String.valueOf(resultadoEscuela.getObject(2))); 
-         }
+       String codigoEscuela = (String.valueOf(resultadoEscuela.getObject(1)));
+       String nombreEscuela = (String.valueOf(resultadoEscuela.getObject(2))); 
+       Escuela nuevaEscuela = new Escuela(codigoEscuela, nombreEscuela);
+       escuelas.add(nuevaEscuela); 
    }
-     escuelas.add(nuevaEscuela); 
- }
+   
+
+   /*for(int indice = 0; indice!=escuelas.size(); indice++){
+       System.out.println(escuelas.get(indice).toString());
+   }*/
+
    
    //Carga la tabla planes de estudio de la base de datos
    ResultSet resultadoPlanes;
@@ -812,20 +824,23 @@ public class Controlador implements ActionListener{
    consultarPlanes = conectar.prepareStatement("SELECT * FROM plan_estudios");
    resultadoPlanes = consultarPlanes.executeQuery(); 
    
-   PlanEstudios nuevoPlan = new PlanEstudios();
+   
    while (resultadoPlanes.next()){
-     for (int contador = 1; contador <= 2; contador++){
-         if (contador == 1){
-             nuevoPlan.setNumeroPlan(Integer.parseInt(String.valueOf(resultadoPlanes.getObject(1))));
-         }
-         else{
-            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
-            nuevoPlan.setVigenciaPlan(formatoFecha.parse(String.valueOf(resultadoPlanes.getObject(2)))); 
-         }
-   }
+     
+     SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+     int numeroPlan = (Integer.parseInt(String.valueOf(resultadoPlanes.getObject(1))));
+     Date vigenciaPlan = (formatoFecha.parse(String.valueOf(resultadoPlanes.getObject(2)))); 
+     
+     PlanEstudios nuevoPlan = new PlanEstudios(numeroPlan, vigenciaPlan);
      planes.add(nuevoPlan);
    
- }
+   }
+   
+
+   /*for(int indice = 0; indice!=planes.size(); indice++){
+       System.out.println(planes.get(indice).toString());
+   }*/
+
    
    //Carga la tabla intermedia escuelaPlanEstudios de la base de datos
    ResultSet resultadoEscuelaPlan;
@@ -834,15 +849,14 @@ public class Controlador implements ActionListener{
    resultadoEscuelaPlan = consultarEscuelaPlan.executeQuery(); 
    
    String codigoEscuela;
-   int numeroPlan;
+   //int numeroPlan;
    while (resultadoEscuelaPlan.next()){
      codigoEscuela = String.valueOf(resultadoEscuelaPlan.getObject(1));
      for (int indice = 0; indice != escuelas.size(); indice++){
        if (escuelas.get(indice).getCodigoEscuela().equalsIgnoreCase(codigoEscuela)){
          for (int sumador = 0; sumador != planes.size(); sumador++){
            if (planes.get(sumador).getNumeroPlan() == Integer.parseInt(String.valueOf(resultadoEscuelaPlan.getObject(2)))){
-             escuelas.get(indice).asociarPlan(planes.get(sumador));
-                     
+               escuelas.get(indice).asociarPlan(planes.get(sumador));                
            }
          }
        }
@@ -857,8 +871,6 @@ public class Controlador implements ActionListener{
    resultadoPlanCurso = consultarPlanCurso.executeQuery(); 
    
    int numeroPlanDos;
-   String codigoCurso;
-   String numeroBloque;
    
    while (resultadoPlanCurso.next()){
      numeroPlanDos = Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(1)));
@@ -866,7 +878,62 @@ public class Controlador implements ActionListener{
        if (planes.get(indice).getNumeroPlan()==(numeroPlanDos)){
          for (int sumador = 0; sumador != cursos.size(); sumador++){
            if (cursos.get(sumador).getCodigoCurso().equalsIgnoreCase(String.valueOf(resultadoPlanCurso.getObject(2)))){
-             planes.get(indice).añadirCursos(cursos.get(sumador),Integer.parseInt(String.valueOf(resultadoPlanCurso.getObject(3)))); 
+             String bloque = String.valueOf(resultadoPlanCurso.getObject(3));
+             int numeroBloque = 0;
+             
+             if(bloque.equalsIgnoreCase("I Semestre")){
+               numeroBloque = 0;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("II Semestre")){
+               numeroBloque = 1;   
+             }
+             
+            else if(bloque.equalsIgnoreCase("III Semestre")){
+               numeroBloque = 2;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("IV Semestre")){
+               numeroBloque = 3;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("V Semestre")){
+               numeroBloque = 4;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("VI Semestre")){
+               numeroBloque = 5;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("VII Semestre")){
+               numeroBloque = 6;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("VIII Semestre")){
+               numeroBloque = 7;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("IX Semestre")){
+               numeroBloque = 8;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("X Semestre")){
+               numeroBloque = 9;   
+             }
+             
+             else if(bloque.equalsIgnoreCase("XI Semestre")){
+               numeroBloque = 10;   
+             }
+             
+            else if(bloque.equalsIgnoreCase("XII Semestre")){
+               numeroBloque = 11;   
+             }
+             
+            else if(bloque.equalsIgnoreCase("XIII Semestre")){
+               numeroBloque = 12;   
+             }
+             
+             planes.get(indice).añadirCursos(cursos.get(sumador), numeroBloque); 
              cursos.get(sumador).asociarPlan(planes.get(indice));
            }
          }
@@ -990,7 +1057,7 @@ public class Controlador implements ActionListener{
     }
     
     else if(e.getSource() == vista.botonCargarCursosEliminaciones){
-        cargarCursosPlan(vista.boxCursosEliminaciones, String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+        cargarCursosPlan(vista.boxCursosEliminacionesDos, String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
     }
     
     else if(e.getSource() == vista.botonEliminarRequisito){
@@ -1002,7 +1069,13 @@ public class Controlador implements ActionListener{
     }
     
     else if(e.getSource() == vista.botonEliminarCursoDos){
-      llamarMetodoEliminarCurso();
+      try{
+        llamarMetodoEliminarCurso();    
+      }
+      catch(Exception error){
+          System.out.println("ERROR: " + error);
+      }
+      
     }
     
     else if(e.getSource() == vista.botonRegistrarCurso){

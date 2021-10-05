@@ -17,16 +17,19 @@ public class Escuela {
   private ArrayList<Curso> cursosAsociados;
   
   public Escuela(){
+    
+    cursosAsociados = new ArrayList<Curso>();  
     planes = new ArrayList<PlanEstudios>();
-    cursosAsociados = new ArrayList<Curso>();   
   }
   
   public Escuela (String pCodigoEscuela, String pNombreEscuela){
       
-    //planes = new ArrayList<PlanEstudios>();
-    //cursosAsociados = new ArrayList<Curso>();
+    planes = new ArrayList<PlanEstudios>();
+    cursosAsociados = new ArrayList<Curso>();
     setCodigoEscuela(pCodigoEscuela);  
     setNombreEscuela(pNombreEscuela);
+    //cursosAsociados = new ArrayList<Curso>();  
+    //planes = new ArrayList<PlanEstudios>();
   }
 
   public String getCodigoEscuela() {

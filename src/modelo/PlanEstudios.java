@@ -50,7 +50,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   //AÑADIR ESTO AL CONTROLADOR
   public void añadirCursos(Curso pCurso, int pBloque){
     try{
-      System.err.println("Bloque: "+pBloque);
+      //System.err.println("Bloque: "+pBloque);
       for(int contador=0;contador<=cursosBloque.length;contador++){
         if (cursosBloque[pBloque][contador]==null){
           cursosBloque[pBloque][contador]=pCurso;
@@ -82,8 +82,20 @@ public class PlanEstudios {//Inicio clase PlanEstudios
       consultaCurso.setString(1, pCodigoCurso);
       consultaCurso.setString(2, pNumeroPlan);
       resultado = consultaCurso.executeUpdate();
+      
+      for (int contador = 0; cursosBloque.length != contador; contador++){
+       if (cursosBloque[contador] != null){
+        for (int columna = 0; cursosBloque[contador].length != columna; columna++){
+          if (cursosBloque[contador][columna] != null){
+            if (cursosBloque[contador][columna].getCodigoCurso().equalsIgnoreCase(pCodigoCurso)){
+              cursosBloque[contador][columna] = null;
+            }
+         }   
+          
+        }
+       }
+      }
     }
-
     catch(Exception error){ 
         System.out.println(error);
     }
