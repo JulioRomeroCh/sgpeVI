@@ -159,8 +159,9 @@ public class Curso {//Inicio clase Curso
 
   
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
-  public void insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, String pCodigoEscuela){
-    Conexion nuevaConexion = new Conexion();
+  public boolean insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, String pCodigoEscuela){
+    boolean salida = true;
+      Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{
       CallableStatement insertar = conectar.prepareCall("{CALL insertCurso(?,?,?,?)}");
@@ -173,10 +174,12 @@ public class Curso {//Inicio clase Curso
       asignarEscuela.setString(1, pCodigoEscuela);
       asignarEscuela.setString(2, pCodigoCurso);
       asignarEscuela.execute();
+      salida = true;
     }
     catch(Exception error){ 
-        System.out.println(error);
+        salida = false;
     }
+    return salida;
   }
 
   

@@ -70,7 +70,8 @@ public class Escuela {
   }
   
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
-  public void agregarEscuela(String pCodigoEscuela, String pNombreEscuela){
+  public boolean agregarEscuela(String pCodigoEscuela, String pNombreEscuela){
+    boolean salida = true;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{
@@ -78,10 +79,13 @@ public class Escuela {
       insertar.setString(1, pCodigoEscuela);
       insertar.setString(2, pNombreEscuela);
       insertar.execute(); 
+      salida = true;
     }
     catch(SQLException error){ 
-        System.out.println(error);
+        //System.out.println(error);
+        salida = false;
     }
+    return salida;
   }
 
   

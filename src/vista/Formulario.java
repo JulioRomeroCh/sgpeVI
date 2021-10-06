@@ -65,13 +65,13 @@ public class Formulario extends javax.swing.JFrame {
         frameRegistrarPlan = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         textNumeroPlan = new javax.swing.JTextField();
-        textVigencia = new javax.swing.JTextField();
         botonRegistrarPlan = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         BoxEscuelaPropietariaPlan = new javax.swing.JComboBox<>();
+        textVigencia = new com.toedter.calendar.JCalendar();
         frameRegistrarCoRRequsito = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
@@ -195,7 +195,23 @@ public class Formulario extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Nombre de la escuela:");
 
+        textCodigoEscuela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textCodigoEscuelaActionPerformed(evt);
+            }
+        });
+        textCodigoEscuela.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textCodigoEscuelaKeyTyped(evt);
+            }
+        });
+
         botonRegistrarEscuela.setText("Registrar Escuela");
+        botonRegistrarEscuela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistrarEscuelaActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Regresar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -492,10 +508,6 @@ public class Formulario extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(botonRegistrarPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(355, 355, 355))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -509,12 +521,15 @@ public class Formulario extends javax.swing.JFrame {
                                 .addComponent(jLabel26)
                                 .addComponent(jLabel27)))
                         .addGap(54, 54, 54)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textNumeroPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                                .addComponent(BoxEscuelaPropietariaPlan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(textVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textNumeroPlan, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                            .addComponent(BoxEscuelaPropietariaPlan, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(textVigencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(182, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(botonRegistrarPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(366, 366, 366))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -529,13 +544,16 @@ public class Formulario extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
                     .addComponent(textNumeroPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26)
-                    .addComponent(textVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(jLabel26))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(textVigencia, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addComponent(botonRegistrarPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                .addGap(49, 49, 49))
         );
 
         javax.swing.GroupLayout frameRegistrarPlanLayout = new javax.swing.GroupLayout(frameRegistrarPlan.getContentPane());
@@ -1776,6 +1794,27 @@ public class Formulario extends javax.swing.JFrame {
         this.setSize(900, 500);
     }//GEN-LAST:event_jButton11ActionPerformed
 
+    private void botonRegistrarEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarEscuelaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRegistrarEscuelaActionPerformed
+
+    private void textCodigoEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCodigoEscuelaActionPerformed
+
+        
+    }//GEN-LAST:event_textCodigoEscuelaActionPerformed
+
+    private void textCodigoEscuelaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEscuelaKeyTyped
+        int key = evt.getKeyChar();
+        boolean mayusculas = key >= 65 && key <=90;
+        boolean minusculas = key >= 97 && key <=122;
+        boolean espacio = key == 32;
+        boolean extras = key>= 160 && key <=164;
+        
+        if(!(minusculas || mayusculas || espacio || extras)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_textCodigoEscuelaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -1967,7 +2006,7 @@ public class Formulario extends javax.swing.JFrame {
     public javax.swing.JTextField textNombreCurso;
     public javax.swing.JTextField textNombreEscuela;
     public javax.swing.JTextField textNumeroPlan;
-    public javax.swing.JTextField textVigencia;
+    public com.toedter.calendar.JCalendar textVigencia;
     public javax.swing.JTextField textVigenciaPlanConsultaPlan;
     // End of variables declaration//GEN-END:variables
 }

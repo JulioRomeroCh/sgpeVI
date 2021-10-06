@@ -102,7 +102,8 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   }
   
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
-  public void agregarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
+  public boolean agregarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
+    boolean salida = true;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{
@@ -114,10 +115,12 @@ public class PlanEstudios {//Inicio clase PlanEstudios
       insertarPlanEscuela.setString(1, pCodigoEscuela);
       insertarPlanEscuela.setInt(2,  pNumeroPlan);
       insertarPlanEscuela.execute();
+      salida = true;
     }
     catch(Exception error){ 
-        System.out.println(error);
+        salida = false;
     }
+    return salida;
   }
   //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
   public void insertarCursoAPlan(int pNumeroPlan, String pCodigoCurso, String pNumeroBloque){

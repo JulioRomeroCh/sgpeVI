@@ -84,183 +84,235 @@ public class Controlador implements ActionListener{
    
   }
  
-  /*
-    DELETE FROM requisito_curso WHERE codigoCurso = 'TI1000' AND codigoRequisito = 'TI2000';
-
-    DELETE FROM plan_estudios_curso WHERE codigoCurso = 'AE1234' AND numeroPlan = '1800';
-
-    DELETE FROM curso WHERE codigoCurso = 'AE1234';
-  */
-  
-
   
   public void primerConsulta(JTable tablaPrimerConsulta, String pCodigoCurso){
-      
-      DefaultTableModel modeloTabla = (DefaultTableModel) tablaPrimerConsulta.getModel();
-      modeloTabla.setRowCount(0);
-      PreparedStatement consultaInfo;
-      ResultSet resultado;
-      ResultSetMetaData datosResultado;
-      int columnas;
-      
-      try{
-          
-        Conexion nuevaConexion = new Conexion();
-        Connection conectar = nuevaConexion.conectar();
-        
-        consultaInfo = conectar.prepareStatement("SELECT plan_estudios.numeroPlan FROM plan_estudios JOIN plan_estudios_curso ON plan_estudios.numeroPlan = plan_estudios_curso.numeroPlan WHERE plan_estudios_curso.codigoCurso = (?)");
-        consultaInfo.setString(1, pCodigoCurso);
-        resultado = consultaInfo.executeQuery();
-        datosResultado = resultado.getMetaData();
-        columnas = datosResultado.getColumnCount();
-        
-        while(resultado.next()){
-          Object [] fila = new Object[columnas];
-          for(int indice = 0; indice<columnas; indice++){
-            fila[indice] = resultado.getObject(indice +1);
+      if(vista.textCodigoPrimerConsulta.getText().equalsIgnoreCase("")){
+        JOptionPane.showMessageDialog(null, "Error, debe indicar el código del curso");   
+      }
+      else{
+       
+          DefaultTableModel modeloTabla = (DefaultTableModel) tablaPrimerConsulta.getModel();
+          modeloTabla.setRowCount(0);
+          PreparedStatement consultaInfo;
+          ResultSet resultado;
+          ResultSetMetaData datosResultado;
+          int columnas;
+
+          try{
+
+            Conexion nuevaConexion = new Conexion();
+            Connection conectar = nuevaConexion.conectar();
+
+            consultaInfo = conectar.prepareStatement("SELECT plan_estudios.numeroPlan FROM plan_estudios JOIN plan_estudios_curso ON plan_estudios.numeroPlan = plan_estudios_curso.numeroPlan WHERE plan_estudios_curso.codigoCurso = (?)");
+            consultaInfo.setString(1, pCodigoCurso);
+            resultado = consultaInfo.executeQuery();
+            datosResultado = resultado.getMetaData();
+            columnas = datosResultado.getColumnCount();
+
+            while(resultado.next()){
+              Object [] fila = new Object[columnas];
+              for(int indice = 0; indice<columnas; indice++){
+                fila[indice] = resultado.getObject(indice +1);
+              }
+              modeloTabla.addRow(fila);
+            }
           }
-          modeloTabla.addRow(fila);
-        }
+          catch(Exception error){
+              System.out.println(error);    
+          }
       }
-      catch(Exception error){
-          System.out.println(error);    
-      }
+
   }
   
   
   public void segundaConsulta(JTable tablaSegundaConsulta, String pCodigoCurso){
-      
-      DefaultTableModel modeloTabla = (DefaultTableModel) tablaSegundaConsulta.getModel();
-      modeloTabla.setRowCount(0);
-      PreparedStatement consultaInfo;
-      ResultSet resultado;
-      ResultSetMetaData datosResultado;
-      int columnas;
-      
-      try{
-          
-        Conexion nuevaConexion = new Conexion();
-        Connection conectar = nuevaConexion.conectar();
-        
-        consultaInfo = conectar.prepareStatement("SELECT curso.codigoCurso, curso.nombreCurso, curso.cantidadCreditos, curso.cantidadHorasLectivas FROM curso WHERE codigoCurso = (SELECT requisito_curso.codigoRequisito FROM requisito_curso WHERE requisito_curso.codigoCurso = (?))");
-        consultaInfo.setString(1, pCodigoCurso);
-        resultado = consultaInfo.executeQuery();
-        datosResultado = resultado.getMetaData();
-        columnas = datosResultado.getColumnCount();
-        
-        while(resultado.next()){
-          Object [] fila = new Object[columnas];
-          for(int indice = 0; indice<columnas; indice++){
-            fila[indice] = resultado.getObject(indice +1);
-          }
-          modeloTabla.addRow(fila);
-        }
+      if(vista.textCodigoSegundaConsulta.getText().equalsIgnoreCase("")){
+        JOptionPane.showMessageDialog(null, "Error, debe indicar el código del curso");   
       }
-      catch(Exception error){
-          System.out.println(error);    
+      else{
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaSegundaConsulta.getModel();
+        modeloTabla.setRowCount(0);
+        PreparedStatement consultaInfo;
+        ResultSet resultado;
+        ResultSetMetaData datosResultado;
+        int columnas;
+
+        try{
+
+          Conexion nuevaConexion = new Conexion();
+          Connection conectar = nuevaConexion.conectar();
+
+          consultaInfo = conectar.prepareStatement("SELECT curso.codigoCurso, curso.nombreCurso, curso.cantidadCreditos, curso.cantidadHorasLectivas FROM curso WHERE codigoCurso = (SELECT requisito_curso.codigoRequisito FROM requisito_curso WHERE requisito_curso.codigoCurso = (?))");
+          consultaInfo.setString(1, pCodigoCurso);
+          resultado = consultaInfo.executeQuery();
+          datosResultado = resultado.getMetaData();
+          columnas = datosResultado.getColumnCount();
+
+          while(resultado.next()){
+            Object [] fila = new Object[columnas];
+            for(int indice = 0; indice<columnas; indice++){
+              fila[indice] = resultado.getObject(indice +1);
+            }
+            modeloTabla.addRow(fila);
+          }
+        }
+        catch(Exception error){
+            System.out.println(error);    
+        }
       }
   }
   
   
   public void tercerConsulta(JTable tablaTerceraConsulta, String pCodigoCurso){
-      
-      DefaultTableModel modeloTabla = (DefaultTableModel) tablaTerceraConsulta.getModel();
-      modeloTabla.setRowCount(0);
-      PreparedStatement consultaInfo;
-      ResultSet resultado;
-      ResultSetMetaData datosResultado;
-      int columnas;
-      
-      try{
-          
-        Conexion nuevaConexion = new Conexion();
-        Connection conectar = nuevaConexion.conectar();
-        
-        consultaInfo = conectar.prepareStatement("SELECT curso.codigoCurso, curso.nombreCurso, curso.cantidadCreditos, curso.cantidadHorasLectivas FROM curso WHERE codigoCurso = (SELECT correquisito_curso.codigoCorrequisito FROM correquisito_curso WHERE correquisito_curso.codigoCurso = (?))");
-        consultaInfo.setString(1, pCodigoCurso);
-        resultado = consultaInfo.executeQuery();
-        datosResultado = resultado.getMetaData();
-        columnas = datosResultado.getColumnCount();
-        
-        while(resultado.next()){
-          Object [] fila = new Object[columnas];
-          for(int indice = 0; indice<columnas; indice++){
-            fila[indice] = resultado.getObject(indice +1);
-          }
-          modeloTabla.addRow(fila);
-        }
+      if(vista.textCodigoTercerConsulta.getText().equalsIgnoreCase("")){
+        JOptionPane.showMessageDialog(null, "Error, debe indicar el código del curso");   
       }
-      catch(Exception error){
-          System.out.println(error);    
+      else{
+        DefaultTableModel modeloTabla = (DefaultTableModel) tablaTerceraConsulta.getModel();
+        modeloTabla.setRowCount(0);
+        PreparedStatement consultaInfo;
+        ResultSet resultado;
+        ResultSetMetaData datosResultado;
+        int columnas;
+
+        try{
+
+          Conexion nuevaConexion = new Conexion();
+          Connection conectar = nuevaConexion.conectar();
+
+          consultaInfo = conectar.prepareStatement("SELECT curso.codigoCurso, curso.nombreCurso, curso.cantidadCreditos, curso.cantidadHorasLectivas FROM curso WHERE codigoCurso = (SELECT correquisito_curso.codigoCorrequisito FROM correquisito_curso WHERE correquisito_curso.codigoCurso = (?))");
+          consultaInfo.setString(1, pCodigoCurso);
+          resultado = consultaInfo.executeQuery();
+          datosResultado = resultado.getMetaData();
+          columnas = datosResultado.getColumnCount();
+
+          while(resultado.next()){
+            Object [] fila = new Object[columnas];
+            for(int indice = 0; indice<columnas; indice++){
+              fila[indice] = resultado.getObject(indice +1);
+            }
+            modeloTabla.addRow(fila);
+          }
+        }
+        catch(Exception error){
+            System.out.println(error);    
+        }
       }
   }
   
   
   public void insertarCurso(){   
-   curso.setCodigoCurso(vista.textCodigoCurso.getText());
-   curso.setNombreCurso(vista.textNombreCurso.getText());
-   curso.setCantidadCreditos(Integer.parseInt(String.valueOf(vista.BoxCantidadCreditos.getSelectedItem())));
-   curso.setCantidadHorasLectivas(Integer.parseInt(String.valueOf(vista.boxCantidadHoras.getSelectedItem()))); 
-   
-   String codigoCurso = curso.getCodigoCurso();
-   String nombreCurso = curso.getNombreCurso();
-   int cantidadCreditos = curso.getCantidadCreditos();
-   int cantidadHoras = curso.getCantidadHorasLectivas();
-   String codigoEscuela = String.valueOf(vista.BoxEscuelaPropietaria.getSelectedItem());
-   
-   Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
-   cursos.add(nuevoCurso);
-   curso.insertarCurso(codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras, codigoEscuela);
+   if(vista.textCodigoCurso.getText().equalsIgnoreCase("") || vista.textNombreCurso.getText().equalsIgnoreCase("") || vista.BoxPlanRegistroCurso.getSelectedItem() == (null)){
+  
+       JOptionPane.showMessageDialog(null, "Curso NO registrado verifique los datos");
+   }
+   else if((vista.textCodigoCurso.getText().length() > 6 || vista.textNombreCurso.getText().length() >50)){
+     JOptionPane.showMessageDialog(null, "Curso NO registrada, el código excede los seis caracteres o el nombre excede los cincuenta caracteres");     
+  }
+   else{
+        curso.setCodigoCurso(vista.textCodigoCurso.getText());
+        curso.setNombreCurso(vista.textNombreCurso.getText());
+        curso.setCantidadCreditos(Integer.parseInt(String.valueOf(vista.BoxCantidadCreditos.getSelectedItem())));
+        curso.setCantidadHorasLectivas(Integer.parseInt(String.valueOf(vista.boxCantidadHoras.getSelectedItem()))); 
 
-   Escuela unaEscuela = buscarEscuela(String.valueOf(vista.BoxEscuelaPropietaria.getSelectedItem()));
-   unaEscuela.asociarCurso(nuevoCurso);
+        String codigoCurso = curso.getCodigoCurso();
+        String nombreCurso = curso.getNombreCurso();
+        int cantidadCreditos = curso.getCantidadCreditos();
+        int cantidadHoras = curso.getCantidadHorasLectivas();
+        String codigoEscuela = String.valueOf(vista.BoxEscuelaPropietaria.getSelectedItem());
+
+        Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
+        cursos.add(nuevoCurso);
+        if(curso.insertarCurso(codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras, codigoEscuela) == true){
+                  Escuela unaEscuela = buscarEscuela(String.valueOf(vista.BoxEscuelaPropietaria.getSelectedItem()));
+        unaEscuela.asociarCurso(nuevoCurso);
+
+        PlanEstudios unPlan = buscarPlanEstudios(String.valueOf(vista.BoxPlanRegistroCurso.getSelectedItem()));
+        unaEscuela.asociarPlan(unPlan);
    
-   PlanEstudios unPlan = buscarPlanEstudios(String.valueOf(vista.BoxPlanRegistroCurso.getSelectedItem()));
-   unaEscuela.asociarPlan(unPlan);
-   
-   //
-   unPlan.añadirCursos(nuevoCurso, vista.BoxBloqueRegistrarCurso.getSelectedIndex());
-   unPlan.insertarCursoAPlan(Integer.parseInt(String.valueOf(vista.BoxPlanRegistroCurso.getSelectedItem())), codigoCurso, String.valueOf(vista.BoxBloqueRegistrarCurso.getSelectedItem())); 
-   
-   nuevoCurso.asociarPlan(unPlan);
+        unPlan.añadirCursos(nuevoCurso, vista.BoxBloqueRegistrarCurso.getSelectedIndex());
+        unPlan.insertarCursoAPlan(Integer.parseInt(String.valueOf(vista.BoxPlanRegistroCurso.getSelectedItem())), codigoCurso, String.valueOf(vista.BoxBloqueRegistrarCurso.getSelectedItem())); 
+
+        nuevoCurso.asociarPlan(unPlan);
+        JOptionPane.showMessageDialog(null, "Curso registrado y asociado con éxito");    
+        }
+        else{
+         JOptionPane.showMessageDialog(null, "Se presento un error, favor verifique los datos");   
+        }
+
+   }
+
   }
   
   
   public void insertarPlan() throws ParseException{  
-   SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");  
-   plan.setNumeroPlan(Integer.parseInt(vista.textNumeroPlan.getText()));
-   plan.setVigenciaPlan(formatoFecha.parse(vista.textVigencia.getText()));
    
-   int numeroPlan = plan.getNumeroPlan();
-   String codigoEscuela = String.valueOf(vista.BoxEscuelaPropietariaPlan.getSelectedItem());
-   Date vigencia = formatoFecha.parse(plan.getVigenciaPlan());
-   java.sql.Date fechaSQl = new java.sql.Date(vigencia.getTime());
-   
-   plan.agregarPlanEstudios(numeroPlan, fechaSQl, codigoEscuela);
-   PlanEstudios nuevoPlan = new PlanEstudios(numeroPlan, vigencia);
-   planes.add(nuevoPlan);
+   if(vista.textNumeroPlan.getText().equalsIgnoreCase("")){
+     JOptionPane.showMessageDialog(null, "Verifique los datos, indique un número de plan");     
+   }
+   else{
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");  
+        plan.setNumeroPlan(Integer.parseInt(vista.textNumeroPlan.getText()));
+        String vigenciaFormatoBarras = formatoFecha.format(vista.textVigencia.getDate());
+        Date vigenciaFormatoNecesitado = formatoFecha.parse(vigenciaFormatoBarras);
 
-   this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan);
+        plan.setVigenciaPlan(vigenciaFormatoNecesitado);
+
+        int numeroPlan = plan.getNumeroPlan();
+        String codigoEscuela = String.valueOf(vista.BoxEscuelaPropietariaPlan.getSelectedItem());
+        Date vigencia = formatoFecha.parse(plan.getVigenciaPlan());
+        java.sql.Date fechaSQl = new java.sql.Date(vigencia.getTime());
+
+        if(plan.agregarPlanEstudios(numeroPlan, fechaSQl, codigoEscuela)==true){
+            PlanEstudios nuevoPlan = new PlanEstudios(numeroPlan, vigencia);
+            planes.add(nuevoPlan);
+            this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan); 
+            JOptionPane.showMessageDialog(null, "Plan registrado con éxito");
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Plan NO registrado verifique los datos");
+        }
+ 
+   }
+
   }
   
   
   public void insertarEscuela(){ 
-   escuela.setCodigoEscuela(vista.textCodigoEscuela.getText());
-   escuela.setNombreEscuela(vista.textNombreEscuela.getText());
-   String codigoEscuela = escuela.getCodigoEscuela();
-   String nombreEscuela = escuela.getNombreEscuela();  
-   if(vista.textCodigoEscuela.getText().length() >2){
-     JOptionPane.showMessageDialog(null, "Escuela NO registrada, el código excede los dos caracteres");  
+
+   if(vista.textCodigoEscuela.getText().equalsIgnoreCase("") || vista.textNombreEscuela.getText().equalsIgnoreCase("")){
+     JOptionPane.showMessageDialog(null, "Por favor, verifique que no existan campos vacíos"); 
+     
    }
+
    else{
-     escuela.agregarEscuela(codigoEscuela, nombreEscuela);  
-     Escuela nuevaEscuela = new Escuela(codigoEscuela, nombreEscuela);
-     escuelas.add(nuevaEscuela);
-     JOptionPane.showMessageDialog(null, "Escuela registrada con éxito");
-     this.cargaEscuelaRegistrarPlan(vista.BoxEscuelaPropietariaPlan);
-     vista.textCodigoEscuela.setText("");
-     vista.textNombreEscuela.setText("");
-   }  
+       
+ 
+        if(vista.textCodigoEscuela.getText().length() >2 || vista.textNombreEscuela.getText().length() >100){
+          JOptionPane.showMessageDialog(null, "Escuela NO registrada, el código excede los dos caracteres o la escuela excede los cien caracteres");  
+        }
+        else{
+                    escuela.setCodigoEscuela(vista.textCodigoEscuela.getText());
+        escuela.setNombreEscuela(vista.textNombreEscuela.getText());
+        String codigoEscuela = escuela.getCodigoEscuela();
+        String nombreEscuela = escuela.getNombreEscuela(); 
+          if(escuela.agregarEscuela(codigoEscuela, nombreEscuela) == true){
+                      Escuela nuevaEscuela = new Escuela(codigoEscuela, nombreEscuela);
+          escuelas.add(nuevaEscuela);
+          JOptionPane.showMessageDialog(null, "Escuela registrada con éxito");
+          this.cargaEscuelaRegistrarPlan(vista.BoxEscuelaPropietariaPlan);
+          vista.textCodigoEscuela.setText("");
+          vista.textNombreEscuela.setText("");    
+          }
+          else{
+            JOptionPane.showMessageDialog(null, "Escuela NO registrada verifique los datos");    
+          }
+         
+
+        }  
+       
+   }
+
   }
   
   
@@ -298,62 +350,68 @@ public class Controlador implements ActionListener{
   
   
   public void cargarInformacionPlan(JTable tablaInformacionPlan, String pCodigoPlan){
-      DefaultTableModel modeloTabla = (DefaultTableModel) tablaInformacionPlan.getModel();
-      modeloTabla.setRowCount(0);
-      PreparedStatement consultaInfo;
-      PreparedStatement consultaVigencia;
-      PreparedStatement consultaCreditos;
-      PreparedStatement consultaCursos;
-      ResultSet resultado;
-      ResultSet resultadoVigencia;
-      ResultSet resultadoCreditos;
-      ResultSet resultadoCursos;
-      ResultSetMetaData datosResultado;
-      int columnas;
-      try{
-        Conexion nuevaConexion = new Conexion();
-        Connection conectar = nuevaConexion.conectar();
-        
-        consultaInfo = conectar.prepareCall("{CALL selectPlanEstudiosParaPDF (?)}");
-        consultaInfo.setString(1, pCodigoPlan);
-        resultado = consultaInfo.executeQuery();
-        datosResultado = resultado.getMetaData();
-        columnas = datosResultado.getColumnCount();
-        
-        while(resultado.next()){
-          Object [] fila = new Object[columnas];
-          for(int indice = 0; indice<columnas; indice++){
-            fila[indice] = resultado.getObject(indice +1);
-          }
-          modeloTabla.addRow(fila);
-        }
+      if(vista.boxCodigoPlanConsulta.getSelectedItem() == null){
+          JOptionPane.showMessageDialog(null, "Error, primeramente debe seleccionar el plan de estudios"); 
+      }
+      else{
+            DefaultTableModel modeloTabla = (DefaultTableModel) tablaInformacionPlan.getModel();
+            modeloTabla.setRowCount(0);
+            PreparedStatement consultaInfo;
+            PreparedStatement consultaVigencia;
+            PreparedStatement consultaCreditos;
+            PreparedStatement consultaCursos;
+            ResultSet resultado;
+            ResultSet resultadoVigencia;
+            ResultSet resultadoCreditos;
+            ResultSet resultadoCursos;
+            ResultSetMetaData datosResultado;
+            int columnas;
+            try{
+              Conexion nuevaConexion = new Conexion();
+              Connection conectar = nuevaConexion.conectar();
 
-        consultaVigencia = conectar.prepareStatement("SELECT vigenciaPlan FROM plan_estudios WHERE numeroPlan = (?)");
-        consultaVigencia.setString(1, pCodigoPlan);
-        resultadoVigencia = consultaVigencia.executeQuery();
-        while(resultadoVigencia.next()){
-            vista.textVigenciaPlanConsultaPlan.setText(String.valueOf(resultadoVigencia.getObject(1)));
-        }
-        
-        consultaCreditos = conectar.prepareCall("{CALL totalCreditos (?)}");
-        consultaCreditos.setString(1, pCodigoPlan);
-        resultadoCreditos = consultaCreditos.executeQuery();
-        while(resultadoCreditos.next()){
-          vista.labelTotalCreditos.setText(String.valueOf(resultadoCreditos.getObject(1)));
-        }
-        
-        consultaCursos = conectar.prepareCall("{CALL totalCursos (?)}");
-        consultaCursos.setString(1, pCodigoPlan);
-        resultadoCursos = consultaCursos.executeQuery();
-        while(resultadoCursos.next()){
-          vista.labelTotalCursos.setText(String.valueOf(resultadoCursos.getObject(1)));
-        }
-        
-        
+              consultaInfo = conectar.prepareCall("{CALL selectPlanEstudiosParaPDF (?)}");
+              consultaInfo.setString(1, pCodigoPlan);
+              resultado = consultaInfo.executeQuery();
+              datosResultado = resultado.getMetaData();
+              columnas = datosResultado.getColumnCount();
+
+              while(resultado.next()){
+                Object [] fila = new Object[columnas];
+                for(int indice = 0; indice<columnas; indice++){
+                  fila[indice] = resultado.getObject(indice +1);
+                }
+                modeloTabla.addRow(fila);
+              }
+
+              consultaVigencia = conectar.prepareStatement("SELECT vigenciaPlan FROM plan_estudios WHERE numeroPlan = (?)");
+              consultaVigencia.setString(1, pCodigoPlan);
+              resultadoVigencia = consultaVigencia.executeQuery();
+              while(resultadoVigencia.next()){
+                  vista.textVigenciaPlanConsultaPlan.setText(String.valueOf(resultadoVigencia.getObject(1)));
+              }
+
+              consultaCreditos = conectar.prepareCall("{CALL totalCreditos (?)}");
+              consultaCreditos.setString(1, pCodigoPlan);
+              resultadoCreditos = consultaCreditos.executeQuery();
+              while(resultadoCreditos.next()){
+                vista.labelTotalCreditos.setText(String.valueOf(resultadoCreditos.getObject(1)));
+              }
+
+              consultaCursos = conectar.prepareCall("{CALL totalCursos (?)}");
+              consultaCursos.setString(1, pCodigoPlan);
+              resultadoCursos = consultaCursos.executeQuery();
+              while(resultadoCursos.next()){
+                vista.labelTotalCursos.setText(String.valueOf(resultadoCursos.getObject(1)));
+              }
+
+
+            }
+            catch(Exception error){
+                System.out.println(error);    
+            }   
       }
-      catch(Exception error){
-          System.out.println(error);    
-      }
+
   }
   
 
@@ -472,7 +530,15 @@ public class Controlador implements ActionListener{
     Connection conectar = nuevaConexion.conectar();
     BoxAsignarRequisito.removeAllItems();
     BoxAsignarCorrequisito.removeAllItems();
+    if(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem() == null){
+       JOptionPane.showMessageDialog(null, "Error, primeramente debe cargar los cursos");      
+    }
+    else{
+    
+        
+        
     try{
+
       consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM escuela_curso WHERE codigoCurso != (?)");
       consultaEscuela.setString(1, codigoCurso);
       resultado = consultaEscuela.executeQuery();
@@ -486,6 +552,8 @@ public class Controlador implements ActionListener{
     catch(Exception error){ 
         System.out.println(error);
     }
+    }
+
   }
 
   
@@ -695,7 +763,14 @@ public class Controlador implements ActionListener{
   
   
   public void llamarMetodoAsignarRequisito(){
-    curso.asignarRequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
+    if(vista.BoxAsignarRequisito.getSelectedItem() == null){
+       JOptionPane.showMessageDialog(null, "Error, primeramente debe cargar los requisitos");    
+    }
+    else{
+      curso.asignarRequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
+      JOptionPane.showMessageDialog(null, "Requisito registrado con éxito");
+    }
+    
   }
   
   
@@ -706,13 +781,21 @@ public class Controlador implements ActionListener{
   
   
   public void llamarMetodoAsignarCorrequisito(){
-    curso.asignarCorrequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), String.valueOf(vista.BoxAsignarCorrequisito.getSelectedItem()));
+    
+    
+    if(vista.BoxAsignarCorrequisito.getSelectedItem() == null){
+       JOptionPane.showMessageDialog(null, "Error, primeramente debe cargar los correquisitos");    
+    }
+    else{
+      curso.asignarCorrequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), String.valueOf(vista.BoxAsignarCorrequisito.getSelectedItem()));
+      JOptionPane.showMessageDialog(null, "Correquisito registrado con éxito");
+    }
   }
   
   
   public void llamarMetodoEliminarRequisito(){
     if (vista.boxRequisitoEliminaciones.getSelectedItem()==(null)){
-      JOptionPane.showMessageDialog(null, "Error! El curso no cuenta con un requisito");
+      JOptionPane.showMessageDialog(null, "Error! El curso no cuenta con un requisito o no ha cargado los requisitos");
     }
     else{
       Curso nuevoCurso = buscarCurso(String.valueOf(vista.boxCursoEliminaciones.getSelectedItem()));
@@ -758,10 +841,17 @@ public class Controlador implements ActionListener{
   
   
   public void enviarPDFCorreo() throws Exception{
-    Pdf archivo = new Pdf();
-    Email correo = new Email();
-    archivo.crearPdf(Integer.parseInt(String.valueOf(vista.boxCodigoPlanConsulta.getSelectedItem())));
-    correo.enviarCorreo();
+    if(vista.textVigenciaPlanConsultaPlan.getText().equalsIgnoreCase("")){
+        JOptionPane.showMessageDialog(null, "Error, primeramente debe cargar la información del plan"); 
+    }
+    else{
+        Pdf archivo = new Pdf();
+        Email correo = new Email();
+        archivo.crearPdf(Integer.parseInt(String.valueOf(vista.boxCodigoPlanConsulta.getSelectedItem())));
+        correo.enviarCorreo();    
+        JOptionPane.showMessageDialog(null, "Correo enviado con éxito"); 
+    }
+
   }
   
   
@@ -1081,8 +1171,7 @@ public class Controlador implements ActionListener{
     else if(e.getSource() == vista.botonRegistrarCurso){
       try{
         insertarCurso();
-        JOptionPane.showMessageDialog(null, "Curso registrado con éxito"); 
-        JOptionPane.showMessageDialog(null, "Curso asociado con éxito"); 
+
       }  
       catch(Exception error){
           System.err.println(error);
@@ -1098,14 +1187,14 @@ public class Controlador implements ActionListener{
     }
     
     else if(e.getSource() == vista.botonRegistrarRequisito){
-      llamarMetodoAsignarRequisito();    
-      JOptionPane.showMessageDialog(null, "Requisito registrado con éxito");
+      llamarMetodoAsignarRequisito();  
+      llamarMetodoAnadirRequisito();
+      
     }
     
     else if(e.getSource() == vista.botonRegistrarCorrequisito){
       llamarMetodoAsignarCorrequisito();
       llamarMetodoAnadirCorrequisito();
-      JOptionPane.showMessageDialog(null, "Correquisito registrado con éxito");
     }
     
     else if(e.getSource() == vista.botonCargarCursoAsignarRequisito){
@@ -1129,7 +1218,7 @@ public class Controlador implements ActionListener{
     else if(e.getSource() == vista.botonRegistrarPlan){
         try {
             insertarPlan();
-            JOptionPane.showMessageDialog(null, "Plan registrado con éxito");
+            
         } 
         catch (ParseException ex) {
             Logger.getLogger(Controlador.class.getName()).log(Level.SEVERE, null, ex);
