@@ -21,13 +21,24 @@ public class Curso {//Inicio clase Curso
   private ArrayList <Curso> correquisitos;
   private ArrayList <PlanEstudios> planesAsociados;
   
+  /**
+   * 
+   */
   public Curso(){
   
-  requisitos = new ArrayList <Curso>();
+    requisitos = new ArrayList <Curso>();
     correquisitos = new ArrayList <Curso>();
     planesAsociados = new ArrayList<PlanEstudios>();
+    
   }
   
+  /**
+   * 
+   * @param pCodigoCurso
+   * @param pNombreCurso
+   * @param pCantidadCreditos
+   * @param pCantidadHorasLectivas 
+   */
   public Curso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHorasLectivas){
     requisitos = new ArrayList <Curso>();
     correquisitos = new ArrayList <Curso>();
@@ -36,10 +47,10 @@ public class Curso {//Inicio clase Curso
     setNombreCurso(pNombreCurso);
     setCantidadCreditos(pCantidadCreditos);
     setCantidadHorasLectivas(pCantidadHorasLectivas);
-    //setEscuelaAsociada(pEscuela);
-    
+    //setEscuelaAsociada(pEscuela);  
   }
 
+  //Métodos accesores
   public String getCodigoCurso() {
     return codigoCurso;
   }
@@ -80,7 +91,10 @@ public class Curso {//Inicio clase Curso
     correquisitos.add(pCorrequisito);
   }
  
-  
+  /**
+   * 
+   * @return salida
+   */
   public String toString(){
     String salida = "";
     salida+= "Código curso: " + getCodigoCurso()+ "\n";
@@ -90,13 +104,19 @@ public class Curso {//Inicio clase Curso
     return salida;
   }
   
+  /**
+   * 
+   * @param pPlan 
+   */
   public void asociarPlan(PlanEstudios pPlan){
     planesAsociados.add(pPlan);
   }
   
-  
-  
-  
+  /**
+   * 
+   * @param pCodigoCurso
+   * @param pCodigoRequisito 
+   */
   public void eliminarRequisito(String pCodigoCurso, String pCodigoRequisito){
     int resultado;
     PreparedStatement consultaCurso;
@@ -110,26 +130,33 @@ public class Curso {//Inicio clase Curso
       resultado = consultaCurso.executeUpdate();
       
       for (int contador = 0; requisitos.size() != contador; contador++){
+          
         if (requisitos.get(contador).getCodigoCurso().equalsIgnoreCase(pCodigoRequisito)){
           requisitos.remove(requisitos.get(contador));
         }
+        
      }
+      
     }
-
+    
     catch(Exception error){ 
         System.out.println(error);
     }
   }
   
+  /**
+   * 
+   * @param pCodigoCurso
+   * @return salida
+   * @throws Exception 
+   */
   public boolean eliminarCurso(String pCodigoCurso) throws Exception{
     int resultado;
     boolean salida = true;
     PreparedStatement consultaCurso;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar(); 
-    
-
-    
+   
     if (planesAsociados != null || planesAsociados.isEmpty() == false){
       for (int indice = 0; planesAsociados.size() != indice; indice++){
         if (planesAsociados.get(indice) != null){
@@ -138,30 +165,34 @@ public class Curso {//Inicio clase Curso
         }
         else{
           salida = true;
+        }
       }
     }
-   }
     if (salida == true){ 
       consultaCurso = conectar.prepareStatement("DELETE FROM curso WHERE codigoCurso = (?)"); 
       consultaCurso.setString(1, pCodigoCurso);
       resultado = consultaCurso.executeUpdate();
-      //JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");
     }
-      
-     
+ 
     else{
       salida = false;
-      //JOptionPane.showMessageDialog(null, "Error! el curso pertenece a un plan");
     } 
     return salida;
   }
   
-
-  
-  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
-  public boolean insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, String pCodigoEscuela){
+  /**
+   * 
+   * @param pCodigoCurso
+   * @param pNombreCurso
+   * @param pCantidadCreditos
+   * @param pCantidadHoras
+   * @param pCodigoEscuela
+   * @return salida
+   */
+  public boolean insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, 
+      String pCodigoEscuela){
     boolean salida = true;
-      Conexion nuevaConexion = new Conexion();
+    Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{
       CallableStatement insertar = conectar.prepareCall("{CALL insertCurso(?,?,?,?)}");
@@ -182,73 +213,92 @@ public class Curso {//Inicio clase Curso
     return salida;
   }
 
-  
-  //--ESTOS FUCKING METODOS SE QUEDAN AQUÍ QUIETOS, COMO EN GENIALLY, FUNCIONALIDAD: BLOQUEAR--
-   public void anadirCorrequisito(String pCodigoCurso){
-     PreparedStatement insertar;
-     ResultSet resultado;
-     Conexion nuevaConexion = new Conexion();
-     Connection conectar = nuevaConexion.conectar();
-     try{
-       insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
-       insertar.setString(1, pCodigoCurso);
-       resultado = insertar.executeQuery();
-       while(resultado.next()){ 
-         String codigoCurso = String.valueOf(resultado.getObject(1));
-         String nombreCurso = String.valueOf(resultado.getObject(2));
-         int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
-         int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
-         Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
-         correquisitos.add(nuevoCurso);   
-
-       }
-     }
-     catch(Exception error){ 
-          System.err.println(error);
-     } 
-   }
-   
-       public void asignarCorrequisito(String pCodigoCurso, String pCodigoCorrequisito){
+  /**
+   * 
+   * @param pCodigoCurso 
+   */
+  public void anadirCorrequisito(String pCodigoCurso){
       
-      
-      Conexion nuevaConexion = new Conexion();
-      Connection conectar = nuevaConexion.conectar();
-      try{
-        CallableStatement insertar = conectar.prepareCall("{CALL insertCorrequisitoCurso(?,?)}");
-        insertar.setString(1, pCodigoCurso);
-        insertar.setString(2, pCodigoCorrequisito);
-        insertar.execute();  
-
+    PreparedStatement insertar;
+    ResultSet resultado;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    try{
+      insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
+      insertar.setString(1, pCodigoCurso);
+      resultado = insertar.executeQuery();
+      while(resultado.next()){ 
+        String codigoCurso = String.valueOf(resultado.getObject(1));
+        String nombreCurso = String.valueOf(resultado.getObject(2));
+        int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
+        int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
+        Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
+        correquisitos.add(nuevoCurso);   
       }
-      catch(Exception error){ 
-          System.out.println(error);
-      }       
     }
-   
-  public void anadirRequisito(String pCodigoCurso){
-     PreparedStatement insertar;
-     ResultSet resultado;
-     Conexion nuevaConexion = new Conexion();
-     Connection conectar = nuevaConexion.conectar();
-     try{
-       insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
-       insertar.setString(1, pCodigoCurso);
-       resultado = insertar.executeQuery();
-       while(resultado.next()){ 
-         String codigoCurso = String.valueOf(resultado.getObject(1));
-         String nombreCurso = String.valueOf(resultado.getObject(2));
-         int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
-         int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
-         Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
-         requisitos.add(nuevoCurso);       
-       }
-     }
-     catch(Exception error){ 
+    catch(Exception error){ 
           System.err.println(error);
-     } 
-   }
+    } 
+    
+  }
+   
+  /**
+   * 
+   * @param pCodigoCurso
+   * @param pCodigoCorrequisito 
+   */
+  public void asignarCorrequisito(String pCodigoCurso, String pCodigoCorrequisito){
+      
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    try{
+      CallableStatement insertar = conectar.prepareCall("{CALL insertCorrequisitoCurso(?,?)}");
+      insertar.setString(1, pCodigoCurso);
+      insertar.setString(2, pCodigoCorrequisito);
+      insertar.execute(); 
+    }
+    catch(Exception error){ 
+      System.out.println(error);
+    } 
+    
+  }
+   
+  /**
+   * 
+   * @param pCodigoCurso 
+   */
+  public void anadirRequisito(String pCodigoCurso){
+      
+    PreparedStatement insertar;
+    ResultSet resultado;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    try{
+      insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
+      insertar.setString(1, pCodigoCurso);
+      resultado = insertar.executeQuery();
+      while(resultado.next()){ 
+        String codigoCurso = String.valueOf(resultado.getObject(1));
+        String nombreCurso = String.valueOf(resultado.getObject(2));
+        int cantidadCreditos = Integer.parseInt(String.valueOf(resultado.getObject(3)));
+        int cantidadHoras = Integer.parseInt(String.valueOf(resultado.getObject(4)));       
+        Curso nuevoCurso = new Curso (codigoCurso, nombreCurso, cantidadCreditos, cantidadHoras);
+        requisitos.add(nuevoCurso);       
+      }
+    }
+    catch(Exception error){ 
+      System.err.println(error);
+    } 
+    
+  }
   
-     public void asignarRequisito(String pCodigoCurso, String pCodigoRequisito){
+  /**
+   * 
+   * @param pCodigoCurso
+   * @param pCodigoRequisito 
+   */
+  public void asignarRequisito(String pCodigoCurso, String pCodigoRequisito){
+      
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
     try{
@@ -258,21 +308,9 @@ public class Curso {//Inicio clase Curso
       insertar.execute();  
     }
     catch(Exception error){ 
-        System.out.println(error);
+      System.out.println(error);
     }
-     }
- 
-
+    
+  }
   
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-
 }//Fin clase Curso

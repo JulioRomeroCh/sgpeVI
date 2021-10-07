@@ -11,25 +11,32 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import modelo.Curso;
 
-
 public class PlanEstudios {//Inicio clase PlanEstudios
     
+  //Atributos de la clase
   private int numeroPlan;
   private Date vigenciaPlan;
   private Curso [][] cursosBloque;
 
-  
+  /**
+   * 
+   */
   public PlanEstudios(){
       
   }
   
+  /**
+   * 
+   * @param pNumeroPlan
+   * @param pVigenciaPlan 
+   */
   public PlanEstudios (int pNumeroPlan, Date pVigenciaPlan){
-    
     cursosBloque = new Curso[12][20];
     setNumeroPlan(pNumeroPlan);   
     setVigenciaPlan(pVigenciaPlan); 
   }
 
+  //Métodos accesores
   public int getNumeroPlan() {
     return numeroPlan;
   }
@@ -47,10 +54,13 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     this.vigenciaPlan = pVigenciaPlan;
   }
   
-  //AÑADIR ESTO AL CONTROLADOR
+  /**
+   * 
+   * @param pCurso
+   * @param pBloque 
+   */
   public void añadirCursos(Curso pCurso, int pBloque){
     try{
-      //System.err.println("Bloque: "+pBloque);
       for(int contador=0;contador<=cursosBloque.length;contador++){
         if (cursosBloque[pBloque][contador]==null){
           cursosBloque[pBloque][contador]=pCurso;
@@ -63,7 +73,10 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     }
   }
   
-  
+  /**
+   * 
+   * @return salida
+   */
   public String toString(){
     String salida = "";
     salida+= "Número plan: " + getNumeroPlan()+ "\n";
@@ -71,6 +84,11 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     return salida;
   }
   
+  /**
+   * 
+   * @param pCodigoCurso
+   * @param pNumeroPlan 
+   */
   public void eliminarCursoDePlan(String pCodigoCurso, String pNumeroPlan){
     int resultado;
     PreparedStatement consultaCurso;
@@ -84,24 +102,29 @@ public class PlanEstudios {//Inicio clase PlanEstudios
       resultado = consultaCurso.executeUpdate();
       
       for (int contador = 0; cursosBloque.length != contador; contador++){
-       if (cursosBloque[contador] != null){
-        for (int columna = 0; cursosBloque[contador].length != columna; columna++){
-          if (cursosBloque[contador][columna] != null){
-            if (cursosBloque[contador][columna].getCodigoCurso().equalsIgnoreCase(pCodigoCurso)){
-              cursosBloque[contador][columna] = null;
-            }
-         }   
-          
+        if (cursosBloque[contador] != null){
+          for (int columna = 0; cursosBloque[contador].length != columna; columna++){
+            if (cursosBloque[contador][columna] != null){
+              if (cursosBloque[contador][columna].getCodigoCurso().equalsIgnoreCase(pCodigoCurso)){
+                cursosBloque[contador][columna] = null;
+              }
+            }     
+          }
         }
-       }
       }
     }
     catch(Exception error){ 
-        System.out.println(error);
+      System.out.println(error);
     }
   }
   
-  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
+  /**
+   * 
+   * @param pNumeroPlan
+   * @param pVigenciaPlan
+   * @param pCodigoEscuela
+   * @return salida
+   */
   public boolean agregarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
     boolean salida = true;
     Conexion nuevaConexion = new Conexion();
@@ -118,11 +141,17 @@ public class PlanEstudios {//Inicio clase PlanEstudios
       salida = true;
     }
     catch(Exception error){ 
-        salida = false;
+      salida = false;
     }
     return salida;
   }
-  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
+  
+  /**
+   * 
+   * @param pNumeroPlan
+   * @param pCodigoCurso
+   * @param pNumeroBloque 
+   */
   public void insertarCursoAPlan(int pNumeroPlan, String pCodigoCurso, String pNumeroBloque){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
@@ -134,7 +163,7 @@ public class PlanEstudios {//Inicio clase PlanEstudios
       insertar.execute();  
     }
     catch(Exception error){ 
-        System.out.println(error);
+      System.out.println(error);
     }
   }
   

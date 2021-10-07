@@ -9,19 +9,29 @@ import modelo.PlanEstudios;
 import modelo.Conexion;
 import modelo.Curso;
 
-public class Escuela {
+public class Escuela {//Inicio de la clase Escuela
     
+  //Atributos de la clase  
   private String codigoEscuela;
   private String nombreEscuela;
   private ArrayList<PlanEstudios> planes;
   private ArrayList<Curso> cursosAsociados;
   
+  /**
+   * 
+   */
   public Escuela(){
-    
+      
     cursosAsociados = new ArrayList<Curso>();  
     planes = new ArrayList<PlanEstudios>();
+    
   }
   
+  /**
+   * 
+   * @param pCodigoEscuela
+   * @param pNombreEscuela 
+   */
   public Escuela (String pCodigoEscuela, String pNombreEscuela){
       
     planes = new ArrayList<PlanEstudios>();
@@ -30,8 +40,10 @@ public class Escuela {
     setNombreEscuela(pNombreEscuela);
     //cursosAsociados = new ArrayList<Curso>();  
     //planes = new ArrayList<PlanEstudios>();
+    
   }
 
+  //Métodos accesores
   public String getCodigoEscuela() {
     return codigoEscuela;
   }
@@ -43,17 +55,15 @@ public class Escuela {
   public String getNombreEscuela() {
     return nombreEscuela;
   }
-
-
+  
   public void setNombreEscuela(String pNombreEscuela) {
     this.nombreEscuela = pNombreEscuela;
   }
 
-  public void crearPlanEstudios(int pNumeroPlan, Date pVigenciaPlan){
-    PlanEstudios nuevoPlan = new PlanEstudios(pNumeroPlan, pVigenciaPlan);
-    planes.add(nuevoPlan);
-  }
-  
+  /**
+   * 
+   * @return salida
+   */
   public String toString(){
     String salida = "";
     salida+= "Código escuela: " + getCodigoEscuela() + "\n";
@@ -61,16 +71,40 @@ public class Escuela {
     return salida;
   }
   
+  /**
+   * 
+   * @param pNumeroPlan
+   * @param pVigenciaPlan 
+   */
+  public void crearPlanEstudios(int pNumeroPlan, Date pVigenciaPlan){
+    PlanEstudios nuevoPlan = new PlanEstudios(pNumeroPlan, pVigenciaPlan);
+    planes.add(nuevoPlan);
+  }
+  
+  /**
+   * 
+   * @param pCurso 
+   */
   public void asociarCurso(Curso pCurso){
     cursosAsociados.add(pCurso);  
   }
   
+  /**
+   * 
+   * @param pPlan 
+   */
   public void asociarPlan(PlanEstudios pPlan){
     planes.add(pPlan);  
   }
   
-  //--¿¿HABRÁ QUE ARREGLAR ESTA PICHA??--
+  /**
+   * 
+   * @param pCodigoEscuela
+   * @param pNombreEscuela
+   * @return 
+   */
   public boolean agregarEscuela(String pCodigoEscuela, String pNombreEscuela){
+      
     boolean salida = true;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
@@ -82,12 +116,10 @@ public class Escuela {
       salida = true;
     }
     catch(SQLException error){ 
-        //System.out.println(error);
-        salida = false;
+      salida = false;
     }
     return salida;
+    
   }
 
-  
-
-}
+}//Fin de la clase Escuela

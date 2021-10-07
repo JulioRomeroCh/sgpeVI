@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 import modelo.Escuela;
 import modelo.Curso;
 import controlador.Sgpe;
+
 /**
- *
- * @author Jose Blanco
+ * 
+ * @author KevRj
  */
 public class Formulario extends javax.swing.JFrame {
 
     /**
-     * Creates new form Formulario
+     * Creaun nuevo Formulario (Interfaz)
      */
     public Formulario() {
         initComponents();
@@ -477,6 +473,12 @@ public class Formulario extends javax.swing.JFrame {
         );
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        textNumeroPlan.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textNumeroPlanKeyTyped(evt);
+            }
+        });
 
         botonRegistrarPlan.setText("Registrar");
         botonRegistrarPlan.addActionListener(new java.awt.event.ActionListener() {
@@ -1619,11 +1621,11 @@ public class Formulario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void principalRegistrarEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_principalRegistrarEscuelaActionPerformed
-        this.setVisible(false);
-        frameRegistrarEscuela.setVisible(true);
-        frameRegistrarEscuela.pack();
-        frameRegistrarEscuela.setLocationRelativeTo(null);
-        frameRegistrarEscuela.setSize(900, 500);
+      this.setVisible(false);
+      frameRegistrarEscuela.setVisible(true);
+      frameRegistrarEscuela.pack();
+      frameRegistrarEscuela.setLocationRelativeTo(null);
+      frameRegistrarEscuela.setSize(900, 500);
     }//GEN-LAST:event_principalRegistrarEscuelaActionPerformed
 
     private void botonRegistrarCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarCursoActionPerformed
@@ -1631,11 +1633,11 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistrarCursoActionPerformed
 
     private void principalCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_principalCursoActionPerformed
-        this.setVisible(false);
-        frameRegistrarCurso.setVisible(true);
-        frameRegistrarCurso.pack();
-        frameRegistrarCurso.setLocationRelativeTo(null);
-        frameRegistrarCurso.setSize(1000, 600);
+      this.setVisible(false);
+      frameRegistrarCurso.setVisible(true);
+      frameRegistrarCurso.pack();
+      frameRegistrarCurso.setLocationRelativeTo(null);
+      frameRegistrarCurso.setSize(1000, 600);
     }//GEN-LAST:event_principalCursoActionPerformed
 
     private void botonRegistrarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarPlanActionPerformed
@@ -1643,35 +1645,35 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistrarPlanActionPerformed
 
     private void botonRegistrarPlanAEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarPlanAEscuelaActionPerformed
-        this.setVisible(false);
-        frameRegistrarPlan.setVisible(true);
-        frameRegistrarPlan.pack();
-        frameRegistrarPlan.setLocationRelativeTo(null);
-        frameRegistrarPlan.setSize(900, 500);
+      this.setVisible(false);
+      frameRegistrarPlan.setVisible(true);
+      frameRegistrarPlan.pack();
+      frameRegistrarPlan.setLocationRelativeTo(null);
+      frameRegistrarPlan.setSize(900, 500);
     }//GEN-LAST:event_botonRegistrarPlanAEscuelaActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        frameRegistrarEscuela.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameRegistrarEscuela.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        frameRegistrarCurso.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameRegistrarCurso.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        frameRegistrarPlan.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameRegistrarPlan.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void botonRegistrarCorrequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarCorrequisitoActionPerformed
@@ -1679,99 +1681,99 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_botonRegistrarCorrequisitoActionPerformed
 
     private void botonRegistrarCoRequisitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarCoRequisitoActionPerformed
-        this.setVisible(false);
-        frameRegistrarCoRRequsito.setVisible(true);
-        frameRegistrarCoRRequsito.pack();
-        frameRegistrarCoRRequsito.setLocationRelativeTo(null);
-        frameRegistrarCoRRequsito.setSize(900, 500);
+      this.setVisible(false);
+      frameRegistrarCoRRequsito.setVisible(true);
+      frameRegistrarCoRRequsito.pack();
+      frameRegistrarCoRRequsito.setLocationRelativeTo(null);
+      frameRegistrarCoRRequsito.setSize(900, 500);
     }//GEN-LAST:event_botonRegistrarCoRequisitoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        frameRegistrarCoRRequsito.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameRegistrarCoRRequsito.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        frameConsultarPlan.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameConsultarPlan.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        this.setVisible(false);
-        frameConsultarPlan.setVisible(true);
-        frameConsultarPlan.pack();
-        frameConsultarPlan.setLocationRelativeTo(null);
-        frameConsultarPlan.setSize(1100, 650);
+      this.setVisible(false);
+      frameConsultarPlan.setVisible(true);
+      frameConsultarPlan.pack();
+      frameConsultarPlan.setLocationRelativeTo(null);
+      frameConsultarPlan.setSize(1100, 650);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void botonConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConsultarActionPerformed
-        this.setVisible(false);
-        frameConsultas.setVisible(true);
-        frameConsultas.pack();
-        frameConsultas.setLocationRelativeTo(null);
-        frameConsultas.setSize(900, 500);
+      this.setVisible(false);
+      frameConsultas.setVisible(true);
+      frameConsultas.pack();
+      frameConsultas.setLocationRelativeTo(null);
+      frameConsultas.setSize(900, 500);
     }//GEN-LAST:event_botonConsultarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        frameConsultas.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameConsultas.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void botonPrimerConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPrimerConsultaActionPerformed
-        frameConsultas.setVisible(false);
-        frameConsultaUno.setVisible(true);
-        frameConsultaUno.pack();
-        frameConsultaUno.setLocationRelativeTo(null);
-        frameConsultaUno.setSize(900, 500);
+      frameConsultas.setVisible(false);
+      frameConsultaUno.setVisible(true);
+      frameConsultaUno.pack();
+      frameConsultaUno.setLocationRelativeTo(null);
+      frameConsultaUno.setSize(900, 500);
     }//GEN-LAST:event_botonPrimerConsultaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        frameConsultaUno.setVisible(false);
-        frameConsultas.setVisible(true);
-        frameConsultas.pack();
-        frameConsultas.setLocationRelativeTo(null);
-        frameConsultas.setSize(900, 500);
+      frameConsultaUno.setVisible(false);
+      frameConsultas.setVisible(true);
+      frameConsultas.pack();
+      frameConsultas.setLocationRelativeTo(null);
+      frameConsultas.setSize(900, 500);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void botonSegundaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSegundaConsultaActionPerformed
-        frameConsultas.setVisible(false);
-        frameConsultaDos.setVisible(true);
-        frameConsultaDos.pack();
-        frameConsultaDos.setLocationRelativeTo(null);
-        frameConsultaDos.setSize(900, 500);
+      frameConsultas.setVisible(false);
+      frameConsultaDos.setVisible(true);
+      frameConsultaDos.pack();
+      frameConsultaDos.setLocationRelativeTo(null);
+      frameConsultaDos.setSize(900, 500);
     }//GEN-LAST:event_botonSegundaConsultaActionPerformed
 
     private void botonTercerConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonTercerConsultaActionPerformed
-        frameConsultas.setVisible(false);
-        frameConsultaTres.setVisible(true);
-        frameConsultaTres.pack();
-        frameConsultaTres.setLocationRelativeTo(null);
-        frameConsultaTres.setSize(900, 500);
+      frameConsultas.setVisible(false);
+      frameConsultaTres.setVisible(true);
+      frameConsultaTres.pack();
+      frameConsultaTres.setLocationRelativeTo(null);
+      frameConsultaTres.setSize(900, 500);
     }//GEN-LAST:event_botonTercerConsultaActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        frameConsultaDos.setVisible(false);
-        frameConsultas.setVisible(true);
-        frameConsultas.pack();
-        frameConsultas.setLocationRelativeTo(null);
-        frameConsultas.setSize(900, 500);
+      frameConsultaDos.setVisible(false);
+      frameConsultas.setVisible(true);
+      frameConsultas.pack();
+      frameConsultas.setLocationRelativeTo(null);
+      frameConsultas.setSize(900, 500);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        frameConsultaTres.setVisible(false);
-        frameConsultas.setVisible(true);
-        frameConsultas.pack();
-        frameConsultas.setLocationRelativeTo(null);
-        frameConsultas.setSize(900, 500);
+      frameConsultaTres.setVisible(false);
+      frameConsultas.setVisible(true);
+      frameConsultas.pack();
+      frameConsultas.setLocationRelativeTo(null);
+      frameConsultas.setSize(900, 500);
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void botonBuscarRequisitosCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarRequisitosCursoActionPerformed
@@ -1779,19 +1781,19 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_botonBuscarRequisitosCursoActionPerformed
 
     private void botonEliminacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminacionesActionPerformed
-        this.setVisible(false);
-        frameEliminaciones.setVisible(true);
-        frameEliminaciones.pack();
-        frameEliminaciones.setLocationRelativeTo(null);
-        frameEliminaciones.setSize(1100, 700);
+      this.setVisible(false);
+      frameEliminaciones.setVisible(true);
+      frameEliminaciones.pack();
+      frameEliminaciones.setLocationRelativeTo(null);
+      frameEliminaciones.setSize(1100, 700);
     }//GEN-LAST:event_botonEliminacionesActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        frameEliminaciones.setVisible(false);
-        this.setVisible(true);
-        this.pack();
-        this.setLocationRelativeTo(null);
-        this.setSize(900, 500);
+      frameEliminaciones.setVisible(false);
+      this.setVisible(true);
+      this.pack();
+      this.setLocationRelativeTo(null);
+      this.setSize(900, 500);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void botonRegistrarEscuelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistrarEscuelaActionPerformed
@@ -1804,16 +1806,23 @@ public class Formulario extends javax.swing.JFrame {
     }//GEN-LAST:event_textCodigoEscuelaActionPerformed
 
     private void textCodigoEscuelaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoEscuelaKeyTyped
-        int key = evt.getKeyChar();
-        boolean mayusculas = key >= 65 && key <=90;
-        boolean minusculas = key >= 97 && key <=122;
-        boolean espacio = key == 32;
-        boolean extras = key>= 160 && key <=164;
-        
-        if(!(minusculas || mayusculas || espacio || extras)){
-            evt.consume();
-        }
+      int key = evt.getKeyChar();
+      boolean mayusculas = key >= 65 && key <=90;
+      boolean minusculas = key >= 97 && key <=122;
+      boolean espacio = key == 32;
+      boolean extras = key>= 160 && key <=164; 
+      if(!(minusculas || mayusculas || espacio || extras)){
+        evt.consume();
+      }
     }//GEN-LAST:event_textCodigoEscuelaKeyTyped
+
+    private void textNumeroPlanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNumeroPlanKeyTyped
+      int key = evt.getKeyChar();
+      boolean numero = key >= 48 && key <= 57;
+      if(!(numero)){
+        evt.consume();
+      }
+    }//GEN-LAST:event_textNumeroPlanKeyTyped
 
     /**
      * @param args the command line arguments
