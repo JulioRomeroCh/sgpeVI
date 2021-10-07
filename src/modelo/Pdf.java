@@ -96,7 +96,7 @@ public class Pdf {//Inicio de la clase PDF
    * @return
    * @throws Exception 
    */
-  public ResultSet seleccionarDatosDePlanEstudios(int pNumeroPlan) throws Exception{ //Cambiar por JTextField ¿?????? -- Kevin
+  public ResultSet seleccionarDatosDePlanEstudios(int pNumeroPlan) throws Exception{
       
     ResultSet resultado;
     CallableStatement consultarPlanEstudios;
@@ -110,7 +110,7 @@ public class Pdf {//Inicio de la clase PDF
     
   }
     
-  public ResultSet selecionarCursosYCreditosTotalesPlanEstudios(int pNumeroPlan) throws Exception{ //Cambiar por JTextField ¿?-- Kevin
+  public ResultSet selecionarCursosYCreditosTotalesPlanEstudios(int pNumeroPlan) throws Exception{
       
     ResultSet resultado;
     CallableStatement consultarPlanEstudios;

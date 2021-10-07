@@ -1,5 +1,6 @@
 package controlador;
 
+//Se realizan imports fundamentales
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.CallableStatement;
@@ -28,6 +29,7 @@ import vista.Formulario;
 import modelo.Pdf;
 import modelo.Email;
 
+
 public class Controlador implements ActionListener{//Inicio de la clase Controlador
   
   //Atributos de la clase
@@ -38,13 +40,14 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   private Escuela escuela;
   private PlanEstudios plan;
   private Formulario vista;
-    
+   
+  
   /**
-   * 
-   * @param pCurso
-   * @param pEscuela
-   * @param pPlan
-   * @param pVista 
+   *<p>Método constructor: Inicializa a todos los atributos de la clase 
+   * @param pCurso: Objeto tipo Curso, representa un curso
+   * @param pEscuela: Objeto tipo Escuela, representa una escuela
+   * @param pPlan: Objeto tipo PlanEstudios, representa un plan de estudios
+   * @param pVista: Elemento tipo Formulario, se refiere a la interfaz gráfica de usuario
    */
   public Controlador (Curso pCurso, Escuela pEscuela, PlanEstudios pPlan, Formulario pVista){
      
@@ -86,16 +89,16 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
-   * 
+   *<p>Método iniciar: Ejecuta al controlador 
    */
   public void iniciar(){
    
   }
  
   /**
-   * 
-   * @param tablaPrimerConsulta
-   * @param pCodigoCurso 
+   *<p>Método primerConsulta: Carga todos los planes de estudios que comparten un curso en común  
+   * @param tablaPrimerConsulta: Tabla donde se cargará la información
+   * @param pCodigoCurso: String que representa el código del curso por buscar
    */
   public void primerConsulta(JTable tablaPrimerConsulta, String pCodigoCurso){
     if(vista.textCodigoPrimerConsulta.getText().equalsIgnoreCase("")){
@@ -135,10 +138,11 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
 
   }
   
+  
   /**
-   * 
-   * @param tablaSegundaConsulta
-   * @param pCodigoCurso 
+   *<p>Método segundaConsulta: Carga los datos de los cursos que son requisito de otro curso 
+   * @param tablaSegundaConsulta: Tabla donde se cargará la información de los requisitos de un curso
+   * @param pCodigoCurso: String que representa el código del curso por buscar 
    */
   public void segundaConsulta(JTable tablaSegundaConsulta, String pCodigoCurso){
     if(vista.textCodigoSegundaConsulta.getText().equalsIgnoreCase("")){
@@ -177,10 +181,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
-   * 
-   * @param tablaTerceraConsulta
-   * @param pCodigoCurso 
+   *<p>Método tercerConsulta: Carga los datos de los cursos que son correquisito de otro curso 
+   * @param tablaTerceraConsulta: Tabla donde se cargará la información de los correquisitos de un curso
+   * @param pCodigoCurso: String que representa el código del curso por buscar 
    */
   public void tercerConsulta(JTable tablaTerceraConsulta, String pCodigoCurso){
     if(vista.textCodigoTercerConsulta.getText().equalsIgnoreCase("")){
@@ -219,8 +225,11 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
   /**
-   * 
+   *<p>Método insertarCurso: Accede a los datos insertados por el usuario en la interfaz gráfica, luego
+   *    llama a los métodos accesores (set), crea un curso y añade el curso al ArrayList de cursos.
+   *     Posteriormente, lo asocia a una escuela y a un plan
    */
   public void insertarCurso(){   
     if(vista.textCodigoCurso.getText().equalsIgnoreCase("") || vista.textNombreCurso.getText().equalsIgnoreCase("") || 
@@ -267,9 +276,14 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
 
   }
   
+  
+  
   /**
+   *<p>Método insertarPlan: Accede a los datos insertados por el usuario en la interfaz gráfica, luego
+   *    llama a los métodos accesores (set), crea un plan de estudios y añade el plan al ArrayList
+   *     de planes.
    * 
-   * @throws ParseException 
+   * @throws ParseException: Excepción en caso de que no se pueda convertir de tipo Date a String 
    */
   public void insertarPlan() throws ParseException{  
    
@@ -307,8 +321,10 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     
   }
   
+  
   /**
-   * 
+   *<p>Método insertarEscuela: Accede a los datos insertados por el usuario en la interfaz gráfica, luego
+   *    llama a los métodos accesores (set), crea una escuela y la añade al ArrayList de escuelas.
    */
   public void insertarEscuela(){ 
 
@@ -342,9 +358,10 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
+   *<p>Método buscarCurso: Busca un curso en el ArrayList de cursos, si lo encuentra, lo retorna
    * 
-   * @param codigoCurso
-   * @return 
+   * @param codigoCurso: String que representa el código de un curso
+   * @return curso: Objeto de tipo Curso, representa el curso buscado
    */
   public Curso buscarCurso(String codigoCurso){
     Curso curso = new Curso();
@@ -357,9 +374,10 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
+   *<p>Método buscarEscuela: Busca una escuela en el ArrayList de escuelas, si la encuentra, la retorna 
    * 
-   * @param codigoEscuela
-   * @return 
+   * @param codigoEscuela: String que representa el identificador de la escuela
+   * @return escuela: Objeto de tipo Escuela, representa la escuela buscada 
    */
   public Escuela buscarEscuela(String codigoEscuela){
     Escuela escuela = new Escuela();
@@ -372,9 +390,9 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
-   * 
-   * @param numeroPlan
-   * @return 
+   *<p>Busca un plan de estudios  en el ArrayList de planes, si lo encuentra, lo retorna
+   * @param numeroPlan: String que representa el identificador del plan
+   * @return plan: Objeto de tipo PlanEstudios, representa el plan buscado
    */
   public PlanEstudios buscarPlanEstudios(String numeroPlan){
     PlanEstudios plan = new PlanEstudios();
@@ -386,10 +404,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     return plan;
   }
   
+  
   /**
+   *<p>Método cargarInformacionPlan: Carga la información de un plan de estudios en una tabla
    * 
-   * @param tablaInformacionPlan
-   * @param pCodigoPlan 
+   * @param tablaInformacionPlan: Tabla en la cual se caragará la información del plan de estudios
+   * @param pCodigoPlan: String que representa el identificador del curso por buscar
    */
   public void cargarInformacionPlan(JTable tablaInformacionPlan, String pCodigoPlan){
     if(vista.boxCodigoPlanConsulta.getSelectedItem() == null){
@@ -454,10 +474,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
 
   }
   
+  
   /**
+   *<p>Método cargarPlanesConsulta: Carga los planes de estudio de una escuela en una lista desplegable
    * 
-   * @param boxCodigoPlanConsulta
-   * @param codigoEscuela 
+   * @param boxCodigoPlanConsulta: Lista desplegable donde se cargarán los planes
+   * @param codigoEscuela: String que representa el código de la escuela, la cual se está buscando
    */
   public void cargarPlanesConsulta(JComboBox boxCodigoPlanConsulta, String codigoEscuela){
     ResultSet resultado;
@@ -480,10 +502,13 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }   
   }
   
+  
   /**
+   *<p>Método cargarPlanesRegistroCurso: Carga los planes de una escuela en una lista desplegable al
+   *     momento de registrar un curso
    * 
-   * @param BoxEscuelaPropietaria
-   * @param codigoEscuela 
+   * @param BoxEscuelaPropietaria: Combobox donde se cargarán los planes
+   * @param codigoEscuela: String que representa el código de la escuela que contiene los planes
    */
   public void cargarPlanesRegistroCurso(JComboBox BoxEscuelaPropietaria, String codigoEscuela){
     ResultSet resultado;
@@ -506,9 +531,11 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }   
   }
   
+  
   /**
+   *<p>Método cargarEscuelasConPlan: Carga todas las escuelas en un combobox
    * 
-   * @param BoxEscuelaPropietariaPlan 
+   * @param BoxEscuelaPropietariaPlan: Combobox donde se cargarán las escuelas 
    */
   public void cargarEscuelasConPlan(JComboBox BoxEscuelaPropietariaPlan){
     ResultSet resultado;
@@ -530,9 +557,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
   /**
+   *<p>Método cargarEscuelaAsignarCorrequisito: Carga las escuelas en un combobos al asignar un
+   *     correquisito
    * 
-   * @param BoxEscuelaPropietariaAsignarReqCor 
+   * @param BoxEscuelaPropietariaAsignarReqCor: Combobox donde se cargarán las escuelas 
    */
   public void cargarEscuelaAsignarCorrequisito(JComboBox BoxEscuelaPropietariaAsignarReqCor){
     ResultSet resultado;
@@ -555,10 +585,13 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>Método cargarCursosAsignarCorrequisito: Carga todos los cursos asociados a una escuela
    * 
-   * @param BoxCodigoCursoAsignarReqCor
-   * @param codigoEscuela 
+   * @param BoxCodigoCursoAsignarReqCor: Combobox donde se cargarán los cursos
+   * @param codigoEscuela: String que representa el codigo de la escuela dueña de los cursos
    */
   public void cargarCursosAsignarCorrequisito(JComboBox BoxCodigoCursoAsignarReqCor, String codigoEscuela){
     ResultSet resultado;
@@ -581,13 +614,19 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
   /**
+   *<p>Método cargarRequisitosCorrequisitos: Carga los cursos disponibles a dos combobox diferentes, con
+   *    el objetivo de establecerle un requisito o correquisito
    * 
-   * @param BoxAsignarRequisito
-   * @param BoxAsignarCorrequisito
-   * @param codigoCurso 
+   * @param BoxAsignarRequisito: Combobox donde se cargan los cursos para ser requisitos
+   * @param BoxAsignarCorrequisito: Combobox donde ser cargan los cursos para ser correquisitos
+   * @param codigoCurso: String que representa el código del curso al cual se le asignarán los
+   *     requisitos o correquisitos
    */
-  public void cargarRequisitosCorrequitos(JComboBox BoxAsignarRequisito, JComboBox BoxAsignarCorrequisito, String codigoCurso){
+  public void cargarRequisitosCorrequitos(JComboBox BoxAsignarRequisito, JComboBox BoxAsignarCorrequisito, 
+              String codigoCurso){
+      
     ResultSet resultado;
     PreparedStatement consultaEscuela;
     Conexion nuevaConexion = new Conexion();
@@ -617,9 +656,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
 
   }
 
+  
+  
   /**
+   *<p>Método cargaPlanesRequistrarCursos: Carga los planes de estudio disponibles en un Combobox
    * 
-   * @param BoxPlanRegistroCurso 
+   * @param BoxPlanRegistroCurso: Combobox donde se cargarán los planes 
    */
   public void cargaPlanesRegistrarCursos(JComboBox BoxPlanRegistroCurso){
     ResultSet resultado;
@@ -641,10 +683,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
   /**
+   *<p>Método cargaEscuelaPropietaria: Carga las escuelas que tienen planes de estudio en un Combobox
    * 
-   * @param BoxEscuelaPropietaria
-   * @param BoxEscuelaPropietariaConsultaPlan 
+   * @param BoxEscuelaPropietaria: Combobox donde se cargarán las escuelas
+   * @param BoxEscuelaPropietariaConsultaPlan: Combobox adicional donde se cargarán las escuelas
    */
   public void cargaEscuelaPropietaria(JComboBox BoxEscuelaPropietaria, JComboBox BoxEscuelaPropietariaConsultaPlan){
     ResultSet resultado;
@@ -669,9 +713,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>Método cargaCodigosCursos; Carga los códigos de un curso en un Combobox
    * 
-   * @param BoxCodigoCursoCursoPlan 
+   * @param BoxCodigoCursoCursoPlan: Combobox donde se cargarán los cursos 
    */
   public void cargaCodigosCursos(JComboBox BoxCodigoCursoCursoPlan){
     ResultSet resultado;
@@ -693,9 +740,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>Método cargaCodiigosPlanes: Carga los códigos de los planes de estudio en un Combobox
    * 
-   * @param BoxCodigoPlanCursoPlan 
+   * @param BoxCodigoPlanCursoPlan: Combobox donde se cargarán los planes 
    */
   public void cargaCodigosPlanes(JComboBox BoxCodigoPlanCursoPlan){
     ResultSet resultado;
@@ -717,9 +767,13 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>MétodoCargarEscuelaRegistrarPlan: Carga las escuelas disponibles en un Combobox, esto para
+   *    registrarle un plan
    * 
-   * @param BoxEscuelaPropietariaPlan 
+   * @param BoxEscuelaPropietariaPlan: Combobox donde se cargarán los planes 
    */
   public void cargaEscuelaRegistrarPlan(JComboBox BoxEscuelaPropietariaPlan){
     ResultSet resultado;
@@ -741,11 +795,15 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>Método cargaEliminaciones: Carga los cursos y planes de estudio en tres Combobox para las 
+   *    respectivas consultas de eliminación
    * 
-   * @param boxCursoEliminaciones
-   * @param boxPlanEliminaciones
-   * @param boxCursoEliminacionesDos 
+   * @param boxCursoEliminaciones: Combobox donde se cargarán los cursos para eliminar un requisito
+   * @param boxPlanEliminaciones: Combobox donde se cargarán los planes para eliminarlos
+   * @param boxCursoEliminacionesDos: Combobox donde se cargarán los cursos para eliminarlos  
    */
   public void cargaEliminaciones(JComboBox boxCursoEliminaciones, JComboBox boxPlanEliminaciones, JComboBox boxCursoEliminacionesDos){
     ResultSet primerResultado;
@@ -794,10 +852,14 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     
   }
   
+  
+  
   /**
+   *<p>Método CargaRequisitosCurso: Carga los requisitos de un curso en un Combobox  
    * 
-   * @param boxRequisitoEliminaciones
-   * @param pCodigoCurso 
+   * @param boxRequisitoEliminaciones: Combobox donde se cargarán los requisitos del curso
+   * @param pCodigoCurso: String que representa el código del curso del cual
+   *     se están buscando los requisitos 
    */
   public void cargaRequisitosCurso(JComboBox boxRequisitoEliminaciones, String pCodigoCurso){
     ResultSet resultado;
@@ -820,10 +882,13 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>Método cargarCursosPlan: Carga los cursos que estén en un plan de estudios en un Combobox
    * 
-   * @param boxCursosEliminaciones
-   * @param pnumeroPlan 
+   * @param boxCursosEliminaciones: Combobox donde se cargarán los cursos del plan
+   * @param pnumeroPlan: String que representa el código del plan buscado 
    */
   public void cargarCursosPlan(JComboBox boxCursosEliminaciones, String pnumeroPlan){
     ResultSet resultado;
@@ -846,16 +911,21 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }    
   }
   
+  
+  
   /**
-   * 
+   *<p>Método llamarMetodoAnadirRequisito: Busca un curso y le añade un requsito con los datos
+   *    ingresados en la GUI en el ArrayList de requisitos
    */
   public void llamarMetodoAnadirRequisito(){
     Curso cursoCorrequisito = buscarCurso(String.valueOf(vista.BoxCodigoCursoAsignarReqCor));
     cursoCorrequisito.anadirRequisito(String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
   }
   
+  
   /**
-   * 
+   *<p>Método llamarMetodoAsignarRequisito: Busca un curso y le añade un requsito con los datos
+   *    ingresados en la GUI en la base de datos
    */
   public void llamarMetodoAsignarRequisito(){
     if(vista.BoxAsignarRequisito.getSelectedItem() == null){
@@ -870,7 +940,8 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
-   * 
+   *<p>Método llamarMetodoAnadirCorrequisito: Busca un curso y le añade un requsito con los datos
+   *    ingresados en la GUI en el ArrayList correquisitos
    */
   public void llamarMetodoAnadirCorrequisito(){
     Curso cursoCorrequisito = buscarCurso(String.valueOf(vista.BoxCodigoCursoAsignarReqCor));
@@ -878,7 +949,8 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
-   * 
+   *<p>Método llamarMetodoAsignarCorrequisito: Busca un curso y le añade un requsito con los datos
+   *    ingresados en la GUI en la base de datos
    */
   public void llamarMetodoAsignarCorrequisito(){
 
@@ -892,8 +964,11 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
-   * 
+   *<p>Método llamarMetodoEliminarRequisito: Elimina un requisito de un curso de la base de datos y del
+   *     ArrayList requisitos
    */
   public void llamarMetodoEliminarRequisito(){
     if (vista.boxRequisitoEliminaciones.getSelectedItem()==(null)){
@@ -908,7 +983,8 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
 
   /**
-   * 
+   *<p>Método llamarMetodoEliminarCursoDePlan: Elimina un curso de un plan de estudios de la base de
+   *     datos y del ArrayList cursosBloque en la clase PlanEstudios
    */
   public void llamarMetodoEliminarCursoDePlan(){   
     if (vista.boxCursosEliminacionesDos.getSelectedItem()==(null)){
@@ -923,8 +999,10 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
   }
   
   /**
+   *<p>Método llamarMetodoEliminarCurso: Elimina un curso de la base de datos
    * 
-   * @throws Exception 
+   * @throws Exception: Se declara una execpción de tipo Exception por si ocurriera una de tipo
+   *     SQL
    */
   public void llamarMetodoEliminarCurso() throws Exception{
  
@@ -943,9 +1021,13 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
   }
   
+  
+  
   /**
+   *<p>Método enviarPDFCorreo: Envia un correo electrónico con un PDF que contiene un plan de estudios
    * 
-   * @throws Exception 
+   * @throws Exception: Se declara un excepción de tipo Exception por si no existiera una dirección
+   *     de correo electrónico o algún error con el mensaje enviado
    */
   public void enviarPDFCorreo() throws Exception{
     if(vista.textVigenciaPlanConsultaPlan.getText().equalsIgnoreCase("")){
@@ -961,15 +1043,18 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
 
   }
   
-  //Instanciaciones...
+  //Instanciaciones de un curso, escuela y plan de estudios
   Curso nuevoCurso = new Curso();
   Escuela nuevaEscuela = new Escuela();
   PlanEstudios nuevoPlan = new PlanEstudios();
 
   /**
+   *<p>Método cargarBaseDatos: Al ejecutar el sistema, este método lee toda la base de datos,
+   *     carga las tablas de todas las entidades y las intermedias. Posteriormente, las añade a 
+   *     los respectivos ArrayList y realiza las respectivas asociaciones.
    * 
-   * @throws SQLException
-   * @throws ParseException 
+   * @throws SQLException: Declara una excepción por si hubiese algún error en las consultas SQL
+   * @throws ParseException: Declara una excepción por si hubiese algún error de conversión de datos 
    */
   public void cargarBaseDatos() throws SQLException, ParseException{//Inicio del método cargarBaseDatos
    
@@ -1169,9 +1254,12 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
      
 }//Fin del método cargarBaseDatos
   
+  
+  
   /**
+   *<p>método actionPerformed: Ejecuta los eventos sobre los elementos en la interfaz gráfica
    * 
-   * @param evento 
+   * @param evento: Evento que sucede en la interfaz gráfica 
    */
   @Override
   public void actionPerformed(ActionEvent evento){
