@@ -118,30 +118,30 @@ public class Formulario extends javax.swing.JFrame {
         frameConsultaUno = new javax.swing.JFrame();
         jPanel5 = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
-        textCodigoPrimerConsulta = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaPrimerConsulta = new javax.swing.JTable();
         jLabel41 = new javax.swing.JLabel();
         botonBuscarPlanesCurso = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        textCodigoPrimerConsulta = new javax.swing.JComboBox<>();
         frameConsultaDos = new javax.swing.JFrame();
         jPanel6 = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
-        textCodigoSegundaConsulta = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaSegundaConsulta = new javax.swing.JTable();
         jLabel43 = new javax.swing.JLabel();
         botonBuscarRequisitosCurso = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
+        textCodigoSegundaConsulta = new javax.swing.JComboBox<>();
         frameConsultaTres = new javax.swing.JFrame();
         jPanel7 = new javax.swing.JPanel();
         jLabel44 = new javax.swing.JLabel();
-        textCodigoTercerConsulta = new javax.swing.JTextField();
         botonBuscarCorrequisitosCurso = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaTerceraConsulta = new javax.swing.JTable();
         jLabel45 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
+        textCodigoTercerConsulta = new javax.swing.JComboBox<>();
         frameEliminaciones = new javax.swing.JFrame();
         jPanel8 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
@@ -334,6 +334,18 @@ public class Formulario extends javax.swing.JFrame {
 
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Cantidad horas lectivas");
+
+        textCodigoCurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textCodigoCursoKeyTyped(evt);
+            }
+        });
+
+        textNombreCurso.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textNombreCursoKeyTyped(evt);
+            }
+        });
 
         botonRegistrarCurso.setText("Registrar Curso");
         botonRegistrarCurso.addActionListener(new java.awt.event.ActionListener() {
@@ -1034,15 +1046,15 @@ public class Formulario extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton6))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(132, 132, 132)
                         .addComponent(jLabel40)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(textCodigoPrimerConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(73, 73, 73)
-                        .addComponent(botonBuscarPlanesCurso))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton6)))
+                        .addComponent(botonBuscarPlanesCurso)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -1053,8 +1065,8 @@ public class Formulario extends javax.swing.JFrame {
                 .addGap(62, 62, 62)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel40)
-                    .addComponent(textCodigoPrimerConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonBuscarPlanesCurso))
+                    .addComponent(botonBuscarPlanesCurso)
+                    .addComponent(textCodigoPrimerConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(58, 58, 58)
                 .addComponent(jLabel41)
                 .addGap(35, 35, 35)
@@ -1123,9 +1135,9 @@ public class Formulario extends javax.swing.JFrame {
                             .addComponent(jLabel43)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addComponent(jLabel42)
-                                .addGap(27, 27, 27)
-                                .addComponent(textCodigoSegundaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(55, 55, 55)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textCodigoSegundaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(80, 80, 80)
                                 .addComponent(botonBuscarRequisitosCurso))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addContainerGap()
@@ -1140,8 +1152,8 @@ public class Formulario extends javax.swing.JFrame {
                 .addGap(52, 52, 52)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42)
-                    .addComponent(textCodigoSegundaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonBuscarRequisitosCurso))
+                    .addComponent(botonBuscarRequisitosCurso)
+                    .addComponent(textCodigoSegundaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(70, 70, 70)
                 .addComponent(jLabel43)
                 .addGap(36, 36, 36)
@@ -1222,8 +1234,8 @@ public class Formulario extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel44)
-                    .addComponent(textCodigoTercerConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botonBuscarCorrequisitosCurso))
+                    .addComponent(botonBuscarCorrequisitosCurso)
+                    .addComponent(textCodigoTercerConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(jLabel45)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1824,6 +1836,31 @@ public class Formulario extends javax.swing.JFrame {
       }
     }//GEN-LAST:event_textNumeroPlanKeyTyped
 
+    private void textCodigoCursoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textCodigoCursoKeyTyped
+      int key = evt.getKeyChar();            
+      boolean mayusculas = key >= 65 && key <=90;
+      boolean minusculas = key >= 97 && key <=122;
+      boolean espacio = key == 32;
+      boolean extras = key>= 160 && key <=164; 
+      boolean numero = key >= 48 && key <= 57;
+      if (!(minusculas || mayusculas || espacio || extras || numero)){
+        evt.consume();  
+      }
+ 
+    }//GEN-LAST:event_textCodigoCursoKeyTyped
+
+    private void textNombreCursoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNombreCursoKeyTyped
+      int key = evt.getKeyChar();            
+      boolean mayusculas = key >= 65 && key <=90;
+      boolean minusculas = key >= 97 && key <=122;
+      boolean espacio = key == 32;
+      boolean extras = key>= 160 && key <=164; 
+      boolean numero = key >= 48 && key <= 57;
+      if (!(minusculas || mayusculas || espacio || extras || numero)){
+        evt.consume();  
+      }
+    }//GEN-LAST:event_textNombreCursoKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -2009,9 +2046,9 @@ public class Formulario extends javax.swing.JFrame {
     public javax.swing.JTable tablaTerceraConsulta;
     public javax.swing.JTextField textCodigoCurso;
     public javax.swing.JTextField textCodigoEscuela;
-    public javax.swing.JTextField textCodigoPrimerConsulta;
-    public javax.swing.JTextField textCodigoSegundaConsulta;
-    public javax.swing.JTextField textCodigoTercerConsulta;
+    public javax.swing.JComboBox<String> textCodigoPrimerConsulta;
+    public javax.swing.JComboBox<String> textCodigoSegundaConsulta;
+    public javax.swing.JComboBox<String> textCodigoTercerConsulta;
     public javax.swing.JTextField textNombreCurso;
     public javax.swing.JTextField textNombreEscuela;
     public javax.swing.JTextField textNumeroPlan;

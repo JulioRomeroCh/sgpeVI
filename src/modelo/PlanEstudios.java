@@ -19,17 +19,19 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   private Curso [][] cursosBloque;
 
   /**
-   * 
-   */
+  *<p> Método PlanEstudios: constructor que crea un objeto de tipo PlanEstudios.
+  * 
+  */
   public PlanEstudios(){
       
   }
   
   /**
-   * 
-   * @param pNumeroPlan
-   * @param pVigenciaPlan 
-   */
+  *<p> Método PlanEstudios: constructor que crea una matriz para almacenar los cursos de los bloques, además
+  *    usa los métodos set de los atributos.
+  *@param pNumeroPlan: int que representa el número que tiene el plan.
+  *@param pVigenciaPlan: Date que representa la fecha de vigencia del plan de estudios.
+  */
   public PlanEstudios (int pNumeroPlan, Date pVigenciaPlan){
     cursosBloque = new Curso[12][20];
     setNumeroPlan(pNumeroPlan);   
@@ -55,10 +57,10 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   }
   
   /**
-   * 
-   * @param pCurso
-   * @param pBloque 
-   */
+  *<p> Método añadirCursos: método que añade un curso a la matriz cursosBloque.
+  * @param pCurso: objeto de tipo Curso que se añade a la matriz cursosBloque.
+  * @param pBloque: int que representa el bloque del curso, el cual se agrega usando como índice este parámetro.
+  */
   public void añadirCursos(Curso pCurso, int pBloque){
     try{
       for(int contador=0;contador<=cursosBloque.length;contador++){
@@ -74,9 +76,10 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   }
   
   /**
-   * 
-   * @return salida
-   */
+  *<p> Método toString: llama a los métodos get de los atributos para colocarlos en 
+  *    una misma cadena de caracteres.
+  * @return salida: String que posee los valores de cada atributo.
+  */
   public String toString(){
     String salida = "";
     salida+= "Número plan: " + getNumeroPlan()+ "\n";
@@ -85,10 +88,10 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   }
   
   /**
-   * 
-   * @param pCodigoCurso
-   * @param pNumeroPlan 
-   */
+  *<p> Método eliminarCursoDePlan: Método que elimina un curso de la matriz cursosBloque y de la base de datos. 
+  *@param pCodigoCurso: String que representa el código del curso que se va a eliminar del plan de estudios.
+  *@param pNumeroPlan: String que representa el número del plan al cual se le va a eliminar un curso.
+  */
   public void eliminarCursoDePlan(String pCodigoCurso, String pNumeroPlan){
     int resultado;
     PreparedStatement consultaCurso;
@@ -116,15 +119,20 @@ public class PlanEstudios {//Inicio clase PlanEstudios
     catch(Exception error){ 
       System.out.println(error);
     }
+    
   }
   
+  
+  
+  
   /**
-   * 
-   * @param pNumeroPlan
-   * @param pVigenciaPlan
-   * @param pCodigoEscuela
-   * @return salida
-   */
+  *<p> Método agregarPlanEstudios: método que inserta un plan de estudios a la base de datos, además se le asocia
+  *    una escuela.
+  * @param pNumeroPlan: int que representa el número del plan que se va a insertar.
+  * @param pVigenciaPlan: Date que representa la fecha de vigencia del plan de estudios.
+  * @param pCodigoEscuela: String que representa la escuela a la cual pertenece el plan de estudios
+  * @return salida: Booleano que representa el éxito o fracaso de la inserción.
+  */
   public boolean agregarPlanEstudios(int pNumeroPlan, Date pVigenciaPlan, String pCodigoEscuela){
     boolean salida = true;
     Conexion nuevaConexion = new Conexion();
@@ -147,11 +155,11 @@ public class PlanEstudios {//Inicio clase PlanEstudios
   }
   
   /**
-   * 
-   * @param pNumeroPlan
-   * @param pCodigoCurso
-   * @param pNumeroBloque 
-   */
+  *<p> Método insertarCursosAPlan: método que asocia un curso a un plan de estudios en la base de datos.
+  * @param pNumeroPlan: int que representa el número del plan a la que se asocia el curso.
+  * @param pCodigoCurso: String que representa el código del curso al cual se le asocia un plan de estudios.
+  * @param pNumeroBloque:String que representa el bloque del curso dentro del plan de estudios.
+  */
   public void insertarCursoAPlan(int pNumeroPlan, String pCodigoCurso, String pNumeroBloque){
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();

@@ -16,10 +16,11 @@ import java.util.ArrayList;
 public class Pdf {//Inicio de la clase PDF
   
   /**
-   * 
-   * @param numeroPlan
-   * @throws Exception 
-   */  
+  *<p> Método que crea la estructura del documento pdf, se añaden columnas, coloca los resultados de las consultas en
+  *    forma de filas y se añade formato, formando una tabla. Seguidamente guarda el documento en una dirección local.
+  * @param numeroPlan: int que representa el número de plan que se desea consultar.
+  * @throws Exception: Excepción que surge en caso de presentarse un error durante la ejecución del método.
+  */ 
   public void crearPdf (int numeroPlan) throws Exception {
       
     try (PDDocument documento = new PDDocument ()) {
@@ -91,11 +92,11 @@ public class Pdf {//Inicio de la clase PDF
   }
    
   /**
-   * 
-   * @param pNumeroPlan
-   * @return
-   * @throws Exception 
-   */
+  *<p> Método seleccionarDatosDePlanEstudios: consulta a la base de datos los cursos que pertenecen a un plan de estudios.
+  * @param pNumeroPlan: int que representa el número de plan que se desea consultar.
+  * @return Resultado: ResultSet que contiene el resultado de la consulta a la base de datos.
+  * @throws Exception: Excepción que surge en caso de presentarse un error durante la ejecución del método.
+  */
   public ResultSet seleccionarDatosDePlanEstudios(int pNumeroPlan) throws Exception{
       
     ResultSet resultado;
@@ -109,7 +110,14 @@ public class Pdf {//Inicio de la clase PDF
     return resultado;
     
   }
-    
+  
+  /**
+  *<p> Método selecionarCursosYCreditosTotalesPlanEstudios: Realiza las consultas a la base de datos
+  *    acerca de los cursos y créditos de un plan de estudios
+  * @param pNumeroPlan: int que representa el número de plan que se desea consultar.
+  * @return ResultSet que contiene el resultado de la consulta a la base de datos.
+  * @throws Exception: Excepción que surge en caso de presentarse un error durante la ejecución del método.
+  */  
   public ResultSet selecionarCursosYCreditosTotalesPlanEstudios(int pNumeroPlan) throws Exception{
       
     ResultSet resultado;

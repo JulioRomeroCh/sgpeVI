@@ -23,6 +23,13 @@ public class Email {//Inicio de la clase Email
   private final String usuarioAdmi = "sgpepoojjk@gmail.com";
   private final String contraseña = "sgpe1234";
     
+  /**
+  *<p> Método enviarCorreo: Método que envía un correo al usuario con información del plan
+  *    de estudios, para lo cual se realiza la autenticación por medio de credenciales y
+  *    se adjunta un documento PDF con la información requerida.
+  *@throws AdressException: Excepción en caso de que se presente una falla con la dirección de email.
+  *@throws MessagingException: Excepción que se lanza cuando el método de conexión falla debido a un error de autenticación
+  */
   public void enviarCorreo () throws AddressException, MessagingException {
         
     //Instanciar un objeto de tipo properties (propiedades del correo)

@@ -77,6 +77,9 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     this.vista.botonEliminarCurso.addActionListener(this);
     this.vista.botonCargarCursosEliminaciones.addActionListener(this);
     this.vista.botonEliminarCursoDos.addActionListener(this);
+    this.vista.botonPrimerConsulta.addActionListener(this);
+    this.vista.botonSegundaConsulta.addActionListener(this);
+    this.vista.botonTercerConsulta.addActionListener(this);
     this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan);
     this.cursos = new ArrayList<Curso>();
     this.escuelas = new ArrayList<Escuela>();
@@ -101,7 +104,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    * @param pCodigoCurso: String que representa el código del curso por buscar
    */
   public void primerConsulta(JTable tablaPrimerConsulta, String pCodigoCurso){
-    if(vista.textCodigoPrimerConsulta.getText().equalsIgnoreCase("")){
+    if(vista.textCodigoPrimerConsulta.getSelectedItem() == null){
       JOptionPane.showMessageDialog(null, "Error, debe indicar el código del curso");   
     }
     else{
@@ -145,7 +148,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    * @param pCodigoCurso: String que representa el código del curso por buscar 
    */
   public void segundaConsulta(JTable tablaSegundaConsulta, String pCodigoCurso){
-    if(vista.textCodigoSegundaConsulta.getText().equalsIgnoreCase("")){
+    if(vista.textCodigoSegundaConsulta.getSelectedItem() == null){
       JOptionPane.showMessageDialog(null, "Error, debe indicar el código del curso");   
     }
     else{
@@ -189,7 +192,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    * @param pCodigoCurso: String que representa el código del curso por buscar 
    */
   public void tercerConsulta(JTable tablaTerceraConsulta, String pCodigoCurso){
-    if(vista.textCodigoTercerConsulta.getText().equalsIgnoreCase("")){
+    if(vista.textCodigoTercerConsulta.getSelectedItem() == null){
       JOptionPane.showMessageDialog(null, "Error, debe indicar el código del curso");   
     }
     else{
@@ -236,10 +239,14 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
         vista.BoxPlanRegistroCurso.getSelectedItem() == (null)){
       JOptionPane.showMessageDialog(null, "Curso NO registrado verifique los datos");
     }
-    else if((vista.textCodigoCurso.getText().length() > 6 || vista.textNombreCurso.getText().length() >50)){
+    else if((vista.textCodigoCurso.getText().length() > 6 || vista.textCodigoCurso.getText().length() < 6||vista.textNombreCurso.getText().length() >50)){
       JOptionPane.showMessageDialog(null, "Curso NO registrada, el código excede los seis caracteres o el nombre excede los "
           + "cincuenta caracteres");     
     }
+    else if(validarEntrada(vista.textCodigoCurso.getText()) == false){
+      JOptionPane.showMessageDialog(null, "Verifique el código del curso");    
+    }
+    
     else{
       curso.setCodigoCurso(vista.textCodigoCurso.getText());
       curso.setNombreCurso(vista.textNombreCurso.getText());
@@ -266,7 +273,9 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
             String.valueOf(vista.BoxBloqueRegistrarCurso.getSelectedItem())); 
 
         nuevoCurso.asociarPlan(unPlan);
-        JOptionPane.showMessageDialog(null, "Curso registrado y asociado con éxito");    
+        JOptionPane.showMessageDialog(null, "Curso registrado y asociado con éxito"); 
+        vista.textCodigoCurso.setText("");
+        vista.textNombreCurso.setText("");
       }
       else{
         JOptionPane.showMessageDialog(null, "Se presento un error, favor verifique los datos");   
@@ -313,6 +322,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
         planes.add(nuevoPlan);
         this.cargaEscuelaPropietaria(vista.BoxEscuelaPropietaria, vista.BoxEscuelaPropietariaConsultaPlan); 
         JOptionPane.showMessageDialog(null, "Plan registrado con éxito");
+        vista.textNumeroPlan.setText("");
       }
       else{
         JOptionPane.showMessageDialog(null, "Plan NO registrado verifique los datos");
@@ -624,8 +634,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    * @param codigoCurso: String que representa el código del curso al cual se le asignarán los
    *     requisitos o correquisitos
    */
-  public void cargarRequisitosCorrequitos(JComboBox BoxAsignarRequisito, JComboBox BoxAsignarCorrequisito, 
-              String codigoCurso){
+  public void cargarRequisitosCorrequitos(JComboBox BoxAsignarRequisito, JComboBox BoxAsignarCorrequisito, String codigoCurso){
       
     ResultSet resultado;
     PreparedStatement consultaEscuela;
@@ -654,6 +663,58 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
       }
     }
 
+  }
+  
+  public void cargarRequisitosAuxiliar(JComboBox BoxAsignarRequisito, JComboBox BoxAsignarCorrequisito, String codigoCurso){
+          
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    BoxAsignarCorrequisito.removeAllItems();
+
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM escuela_curso WHERE codigoCurso != (?)");
+      consultaEscuela.setString(1, codigoCurso);
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          BoxAsignarCorrequisito.addItem(resultado.getObject(indice));
+        }   
+      }
+      BoxAsignarRequisito.removeItem(codigoCurso);
+      BoxAsignarCorrequisito.removeItem(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem());
+    }
+    catch(Exception error){ 
+      System.out.println(error);
+    }
+        
+  }
+  
+  public void cargarCorrequisitosAuxiliar(JComboBox BoxAsignarCorrequisito, JComboBox BoxAsignarRequisito, String codigoCurso){
+          
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    BoxAsignarRequisito.removeAllItems();
+
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM escuela_curso WHERE codigoCurso != (?)");
+      consultaEscuela.setString(1, codigoCurso);
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          BoxAsignarRequisito.addItem(resultado.getObject(indice));
+        }   
+      }
+      BoxAsignarCorrequisito.removeItem(codigoCurso);
+      BoxAsignarRequisito.removeItem(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem());
+    }
+    catch(Exception error){ 
+      System.out.println(error);
+    }
+        
   }
 
   
@@ -911,6 +972,80 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }    
   }
   
+   /**
+   *<p>Método cargarCursosPrimeraConsulta: Carga los cursos en un Combobox
+   * 
+   * @param textCodigoPrimerConsulta: Combobox donde se cargarán los cursos del plan
+   */
+  public void cargarCursosPrimeraConsulta(JComboBox textCodigoPrimerConsulta){
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    textCodigoPrimerConsulta.removeAllItems();
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM curso");
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          textCodigoPrimerConsulta.addItem(resultado.getObject(indice));
+        }   
+      } 
+    }
+    catch(Exception error){ 
+      System.out.println(error);
+    }      
+  }
+  
+   /**
+   *<p>Método cargarCursosSegundaConsulta: Carga los cursos en un Combobox
+   * 
+   * @param textCodigoSegundaConsulta: Combobox donde se cargarán los cursos del plan
+   */
+  public void cargarCursosSegundaConsulta(JComboBox textCodigoSegundaConsulta){
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    textCodigoSegundaConsulta.removeAllItems();
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM curso");
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          textCodigoSegundaConsulta.addItem(resultado.getObject(indice));
+        }   
+      } 
+    }
+    catch(Exception error){ 
+      System.out.println(error);
+    }      
+  }
+  
+   /**
+   *<p>Método cargarCursosTerceraConsulta: Carga los cursos en un Combobox
+   * 
+   * @param textCodigoTercerConsulta: Combobox donde se cargarán los cursos del plan
+   */
+  public void cargarCursosTerceraConsulta(JComboBox textCodigoTercerConsulta){
+    ResultSet resultado;
+    PreparedStatement consultaEscuela;
+    Conexion nuevaConexion = new Conexion();
+    Connection conectar = nuevaConexion.conectar();
+    textCodigoTercerConsulta.removeAllItems();
+    try{
+      consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM curso");
+      resultado = consultaEscuela.executeQuery();
+      while(resultado.next()){ 
+        for(int indice = 1; indice<2; indice++){  
+          textCodigoTercerConsulta.addItem(resultado.getObject(indice));
+        }   
+      } 
+    }
+    catch(Exception error){ 
+      System.out.println(error);
+    }      
+  }
   
   
   /**
@@ -935,6 +1070,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
       curso.asignarRequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), 
           String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
       JOptionPane.showMessageDialog(null, "Requisito registrado con éxito");
+      cargarRequisitosAuxiliar(vista.BoxAsignarRequisito, vista.BoxAsignarCorrequisito, String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
     }
     
   }
@@ -961,11 +1097,11 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
       curso.asignarCorrequisito(String.valueOf(vista.BoxCodigoCursoAsignarReqCor.getSelectedItem()), 
           String.valueOf(vista.BoxAsignarCorrequisito.getSelectedItem()));
       JOptionPane.showMessageDialog(null, "Correquisito registrado con éxito");
+      cargarCorrequisitosAuxiliar(vista.BoxAsignarCorrequisito, vista.BoxAsignarRequisito, String.valueOf(vista.BoxAsignarCorrequisito.getSelectedItem()));
     }
   }
   
-  
-  
+
   /**
    *<p>Método llamarMetodoEliminarRequisito: Elimina un requisito de un curso de la base de datos y del
    *     ArrayList requisitos
@@ -986,15 +1122,42 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    *<p>Método llamarMetodoEliminarCursoDePlan: Elimina un curso de un plan de estudios de la base de
    *     datos y del ArrayList cursosBloque en la clase PlanEstudios
    */
-  public void llamarMetodoEliminarCursoDePlan(){   
+  public void llamarMetodoEliminarCursoDePlan(JComboBox boxCursosEliminacionesDos){   
     if (vista.boxCursosEliminacionesDos.getSelectedItem()==(null)){
       JOptionPane.showMessageDialog(null, "Error! No ha seleccionado un curso o el plan aún no cuenta con cursos");
     }
     else{
+      Curso nuevoCurso = buscarCurso(String.valueOf(vista.boxCursosEliminacionesDos.getSelectedItem()));
+      nuevoCurso.eliminarPlanDeCurso(String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+      
       PlanEstudios nuevoPlan = buscarPlanEstudios(String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
       nuevoPlan.eliminarCursoDePlan(String.valueOf(vista.boxCursosEliminacionesDos.getSelectedItem()), 
           String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
-      JOptionPane.showMessageDialog(null, "Curso eliminado con éxito");    
+      
+
+      JOptionPane.showMessageDialog(null, "Curso eliminado con éxito"); 
+      ResultSet tercerResultado;
+      PreparedStatement tercerConsulta;
+    
+      Conexion nuevaConexion = new Conexion();
+      Connection conectar = nuevaConexion.conectar();
+    
+      boxCursosEliminacionesDos.removeAllItems();
+      System.err.println("Eliminé los ítems");
+
+      try{
+        tercerConsulta = conectar.prepareStatement("SELECT codigoCurso FROM curso");
+        tercerResultado = tercerConsulta.executeQuery();
+        while(tercerResultado.next()){ 
+          for(int indice = 1; indice<2; indice++){  
+            boxCursosEliminacionesDos.addItem(tercerResultado.getObject(indice));
+          }   
+        }     
+      }
+      catch(Exception error){ 
+        System.out.println(error);
+      }
+
     }
   }
   
@@ -1042,6 +1205,32 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
 
   }
+  
+  /**
+   * <p>Método validarEntrada: Verifica que los primeros dos caracteres sean letras y los otros cuatro caracteres sean numeros.
+   * 
+   * @param texto: Dato de tipo String que corresponde a una cadena de caracteres ingresada por el usuario en el campo del codigo del curso.
+   * @return comprobante: Dato de tipo boolean, que devuelve true si se cumple las condiciones indicadas, false en caso contrario.
+   */
+  public boolean validarEntrada(String texto){
+    boolean comprobante = true;
+    for (int contador = 0; contador < 2; contador++){
+      char caracter = texto.toUpperCase().charAt(contador);
+      int valorASCII = (int)caracter;
+      if (valorASCII != 165 && (valorASCII < 65 || valorASCII > 90)){
+        comprobante = false;    
+      }
+    }
+    System.err.println("1. Valor bandera 1er for: " + comprobante);
+    for (int contador = 2; contador < 6; contador++){
+      if(!Character.isDigit(texto.charAt(contador))){
+        comprobante = false;   
+      }
+    }
+    System.err.println("2. Valor bandera 2do for: " + comprobante);
+    return comprobante;
+  }
+  
   
   //Instanciaciones de un curso, escuela y plan de estudios
   Curso nuevoCurso = new Curso();
@@ -1277,16 +1466,28 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
       cargarPlanesRegistroCurso(vista.BoxPlanRegistroCurso, String.valueOf(vista.BoxEscuelaPropietaria.getSelectedItem()));     
     }
     
+    else if(evento.getSource() == vista.botonPrimerConsulta){
+      cargarCursosPrimeraConsulta(vista.textCodigoPrimerConsulta);
+    }
+    
+    else if(evento.getSource() == vista.botonSegundaConsulta){
+      cargarCursosSegundaConsulta(vista.textCodigoSegundaConsulta);
+    }
+        
+    else if(evento.getSource() == vista.botonPrimerConsulta){
+      cargarCursosTerceraConsulta(vista.textCodigoTercerConsulta);
+    }
+    
     else if(evento.getSource() == vista.botonBuscarPlanesCurso){
-      primerConsulta(vista.tablaPrimerConsulta, vista.textCodigoPrimerConsulta.getText());    
+      primerConsulta(vista.tablaPrimerConsulta, String.valueOf(vista.textCodigoPrimerConsulta.getSelectedItem()));    
     }
     
     else if(evento.getSource() == vista.botonBuscarRequisitosCurso){
-      segundaConsulta(vista.tablaSegundaConsulta, vista.textCodigoSegundaConsulta.getText());    
+      segundaConsulta(vista.tablaSegundaConsulta, String.valueOf(vista.textCodigoSegundaConsulta.getSelectedItem()));    
     }
     
     else if(evento.getSource() == vista.botonBuscarCorrequisitosCurso){
-      tercerConsulta(vista.tablaTerceraConsulta, vista.textCodigoTercerConsulta.getText());        
+      tercerConsulta(vista.tablaTerceraConsulta, String.valueOf(vista.textCodigoTercerConsulta.getSelectedItem()));        
     }
     
     else if(evento.getSource() == vista.botonEliminaciones){
@@ -1310,7 +1511,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
     
     else if(evento.getSource() == vista.botonEliminarCurso){
-      llamarMetodoEliminarCursoDePlan();
+      llamarMetodoEliminarCursoDePlan(vista.boxCursosEliminacionesDos);
     }
     
     else if(evento.getSource() == vista.botonEliminarCursoDos){
@@ -1342,11 +1543,13 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     else if(evento.getSource() == vista.botonRegistrarRequisito){
       llamarMetodoAsignarRequisito();  
       llamarMetodoAnadirRequisito();
+      //cargarRequisitosAuxiliar(vista.BoxAsignarCorrequisito, String.valueOf(vista.BoxAsignarRequisito.getSelectedItem()));
     }
     
     else if(evento.getSource() == vista.botonRegistrarCorrequisito){
       llamarMetodoAsignarCorrequisito();
       llamarMetodoAnadirCorrequisito();
+      //cargarCorrequisitosAuxiliar(vista.BoxAsignarRequisito, String.valueOf(vista.BoxAsignarCorrequisito.getSelectedItem()));
     }
     
     else if(evento.getSource() == vista.botonCargarCursoAsignarRequisito){

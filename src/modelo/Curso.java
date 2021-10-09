@@ -22,8 +22,9 @@ public class Curso {//Inicio clase Curso
   private ArrayList <PlanEstudios> planesAsociados;
   
   /**
-   * 
-   */
+  *<p> Método Curso: constructor que inicializa los arrayList: requisitos, correquisitos 
+  *    y planes asociados.
+  */
   public Curso(){
   
     requisitos = new ArrayList <Curso>();
@@ -32,13 +33,14 @@ public class Curso {//Inicio clase Curso
     
   }
   
-  /**
-   * 
-   * @param pCodigoCurso
-   * @param pNombreCurso
-   * @param pCantidadCreditos
-   * @param pCantidadHorasLectivas 
-   */
+  /** 
+  *<p> Método Curso: constructor que llama a los métodos set de los atributos y les 
+  *    asigna el valor de cada parámetro.
+  * @param pCodigoCurso: String que representa el código del curso.
+  * @param pNombreCurso: String que representa el nombre del curso.
+  * @param pCantidadCreditos: int que representa la cantidad de créditos del curso.
+  * @param pCantidadHorasLectivas: int que representa las horas lectivas que posee el curso.
+  */
   public Curso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHorasLectivas){
     requisitos = new ArrayList <Curso>();
     correquisitos = new ArrayList <Curso>();
@@ -92,9 +94,10 @@ public class Curso {//Inicio clase Curso
   }
  
   /**
-   * 
-   * @return salida
-   */
+  *<p> Método toString: llama a los métodos get de los atributos para colocarlos en 
+  *    una misma cadena de caracteres.
+  * @return salida: String que posee los valores de cada atributo.
+  */
   public String toString(){
     String salida = "";
     salida+= "Código curso: " + getCodigoCurso()+ "\n";
@@ -105,18 +108,19 @@ public class Curso {//Inicio clase Curso
   }
   
   /**
-   * 
-   * @param pPlan 
-   */
+  *<p> Método asociarPlan: agrega un nuevo plan al array List de planesAsociados.
+  * @param pPlan: Objeto de tipo PlanEstudios que se va a agregar a los planes asociados.
+  */
   public void asociarPlan(PlanEstudios pPlan){
     planesAsociados.add(pPlan);
   }
   
   /**
-   * 
-   * @param pCodigoCurso
-   * @param pCodigoRequisito 
-   */
+  *<p> Método eliminarRequisito: elimina una relación de requisito entre dos cursos,
+  *    usando el ArrayList de requisitos.
+  * @param pCodigoCurso: String que representa el curso que tiene asignado el requisito.
+  * @param pCodigoRequisito: String que representa el código del curso que es requisito. 
+  */
   public void eliminarRequisito(String pCodigoCurso, String pCodigoRequisito){
     int resultado;
     PreparedStatement consultaCurso;
@@ -142,14 +146,26 @@ public class Curso {//Inicio clase Curso
     catch(Exception error){ 
         System.out.println(error);
     }
+  
   }
+
+  public void eliminarPlanDeCurso(String pNumeroPlan){
+      for (int contador = 1; planesAsociados.size() != contador; contador++){
+        if (planesAsociados.get(contador).getNumeroPlan() ==Integer.parseInt(pNumeroPlan)){
+            planesAsociados.remove(planesAsociados.get(contador));
+        }
+      }
+  }
+
+  
   
   /**
-   * 
-   * @param pCodigoCurso
-   * @return salida
-   * @throws Exception 
-   */
+  *<p> Método eliminarCurso: método que verifica si un curso no tiene asociado un plan para 
+  *    eliminarlos.
+  * @param pCodigoCurso: representa el codigo del curso que se quiere eliminar.
+  * @return salida: booleano que representa si un curso se puede eliminar o no.
+  * @throws Exception: Excepción en caso de que la consulta presenta un error.
+  */
   public boolean eliminarCurso(String pCodigoCurso) throws Exception{
     int resultado;
     boolean salida = true;
@@ -157,38 +173,56 @@ public class Curso {//Inicio clase Curso
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar(); 
    
-    if (planesAsociados != null || planesAsociados.isEmpty() == false){
-      for (int indice = 0; planesAsociados.size() != indice; indice++){
-        if (planesAsociados.get(indice) != null){
+    if (planesAsociados.isEmpty()){
+        System.out.println("Array: " + planesAsociados.toString());
+      System.err.println("LOS PLANES NO ESTÁN VACÍOS");  
+      /*for (int indice = 0; planesAsociados.size() != indice; indice++){
+        planesAsociados.remove(this)
+        /*if (planesAsociados.get(indice) != null){
           salida = false;
+          System.err.println("SALIDA FALSE");
           break;
         }
         else{
           salida = true;
+          System.err.println("SALIDA TRUE");
         }
-      }
+      }*/
+      salida = false;
     }
     if (salida == true){ 
+      System.err.println("ENTRÉ AL DELETE");
+      System.err.println("Size" + planesAsociados.size());
+      if(planesAsociados.size() == 1){
+        planesAsociados.remove(0); 
+      }
+      else{
+        for (int indice = 0; planesAsociados.size() != indice; indice++){
+          planesAsociados.remove(indice);        
+        }    
+      }
+
       consultaCurso = conectar.prepareStatement("DELETE FROM curso WHERE codigoCurso = (?)"); 
       consultaCurso.setString(1, pCodigoCurso);
       resultado = consultaCurso.executeUpdate();
     }
  
-    else{
+    /*else{
       salida = false;
-    } 
+    } */
     return salida;
   }
   
   /**
-   * 
-   * @param pCodigoCurso
-   * @param pNombreCurso
-   * @param pCantidadCreditos
-   * @param pCantidadHoras
-   * @param pCodigoEscuela
-   * @return salida
-   */
+  *<p> Método insertarCurso: Método que inserta un curso y lo asocia a una escuela en la base de 
+  *    datos.
+  * @param pCodigoCurso: String que representa el código del curso.
+  * @param pNombreCurso: String que representa el nombre del curso.
+  * @param pCantidadCreditos: int que representa la cantidad de créditos del curso.
+  * @param pCantidadHoras: int que representa la cantidad de horas lectivas.
+  * @param pCodigoEscuela: String que contiene el código de la escuela al que pertenece el curso.
+  * @return salida: booleano que representa el éxito o fracaso de la inserción.
+  */
   public boolean insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, 
       String pCodigoEscuela){
     boolean salida = true;
@@ -214,9 +248,10 @@ public class Curso {//Inicio clase Curso
   }
 
   /**
-   * 
-   * @param pCodigoCurso 
-   */
+  *<p> Método anadirCorrequisito: Método que busca en la base de datos la información del correquisito y lo
+  *    asocia al curso usando el arreglo de correquisitos.
+  *@param pCodigoCurso: String que representa el código del curso que es correquisito.
+  */
   public void anadirCorrequisito(String pCodigoCurso){
       
     PreparedStatement insertar;
@@ -243,10 +278,10 @@ public class Curso {//Inicio clase Curso
   }
    
   /**
-   * 
-   * @param pCodigoCurso
-   * @param pCodigoCorrequisito 
-   */
+  *<p> Método asignarCorrequisito: método que asocia un correquisito a un curso usando la base de datos.
+  * @param pCodigoCurso: String que representa el codigo del curso al que se le asocia el correquisito.
+  * @param pCodigoCorrequisito: String que representa el código del curso que es correquisito.
+  */
   public void asignarCorrequisito(String pCodigoCurso, String pCodigoCorrequisito){
       
     Conexion nuevaConexion = new Conexion();
@@ -264,9 +299,10 @@ public class Curso {//Inicio clase Curso
   }
    
   /**
-   * 
-   * @param pCodigoCurso 
-   */
+  *<p> Método anadirRequisito: Método que busca en la base de datos la información del requisito y lo
+  *    asocia al curso usando el arreglo de requisitos.
+  * @param pCodigoCurso: String que representa el código del curso que es requisito.
+  */
   public void anadirRequisito(String pCodigoCurso){
       
     PreparedStatement insertar;
@@ -275,6 +311,7 @@ public class Curso {//Inicio clase Curso
     Connection conectar = nuevaConexion.conectar();
     try{
       insertar = conectar.prepareCall("{CALL cargarDatosCurso(?)}");
+      //insertar = conectar.prepareStatement("SELECT * FROM curso WHERE codigoCurso != (?)");
       insertar.setString(1, pCodigoCurso);
       resultado = insertar.executeQuery();
       while(resultado.next()){ 
@@ -293,10 +330,10 @@ public class Curso {//Inicio clase Curso
   }
   
   /**
-   * 
-   * @param pCodigoCurso
-   * @param pCodigoRequisito 
-   */
+  *<p> Método asignarRequisito: método que asocia un requisito a un curso usando la base de datos.
+  * @param pCodigoCurso: String que representa el codigo del curso al que se le asocia el requisito.
+  * @param pCodigoRequisito: String que representa el código del curso que es requisito.
+  */
   public void asignarRequisito(String pCodigoCurso, String pCodigoRequisito){
       
     Conexion nuevaConexion = new Conexion();
