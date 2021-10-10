@@ -149,16 +149,21 @@ public class Curso {//Inicio clase Curso
   
   }
 
+  /**
+   * 
+   * @param pNumeroPlan 
+   */
   public void eliminarPlanDeCurso(String pNumeroPlan){
-      for (int contador = 1; planesAsociados.size() != contador; contador++){
-        if (planesAsociados.get(contador).getNumeroPlan() ==Integer.parseInt(pNumeroPlan)){
-            planesAsociados.remove(planesAsociados.get(contador));
-        }
-      }
-  }
+    PlanEstudios planEncontrado = new PlanEstudios();
+    for (int contador = 0; planesAsociados.size() != contador; contador++){
+      if (planesAsociados.get(contador).getNumeroPlan() == Integer.parseInt(pNumeroPlan)){
+         planEncontrado = planesAsociados.get(contador);
+         break;
+      }        
+    }
+    planesAsociados.remove(planEncontrado);
+    }
 
-  
-  
   /**
   *<p> Método eliminarCurso: método que verifica si un curso no tiene asociado un plan para 
   *    eliminarlos.
@@ -172,44 +177,16 @@ public class Curso {//Inicio clase Curso
     PreparedStatement consultaCurso;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar(); 
-   
-    if (planesAsociados.isEmpty()){
-        System.out.println("Array: " + planesAsociados.toString());
-      System.err.println("LOS PLANES NO ESTÁN VACÍOS");  
-      /*for (int indice = 0; planesAsociados.size() != indice; indice++){
-        planesAsociados.remove(this)
-        /*if (planesAsociados.get(indice) != null){
-          salida = false;
-          System.err.println("SALIDA FALSE");
-          break;
-        }
-        else{
-          salida = true;
-          System.err.println("SALIDA TRUE");
-        }
-      }*/
-      salida = false;
-    }
-    if (salida == true){ 
-      System.err.println("ENTRÉ AL DELETE");
-      System.err.println("Size" + planesAsociados.size());
-      if(planesAsociados.size() == 1){
-        planesAsociados.remove(0); 
-      }
-      else{
-        for (int indice = 0; planesAsociados.size() != indice; indice++){
-          planesAsociados.remove(indice);        
-        }    
-      }
-
+    
+    if(planesAsociados.isEmpty()){
       consultaCurso = conectar.prepareStatement("DELETE FROM curso WHERE codigoCurso = (?)"); 
       consultaCurso.setString(1, pCodigoCurso);
       resultado = consultaCurso.executeUpdate();
     }
- 
-    /*else{
-      salida = false;
-    } */
+    else{
+      salida = false;   
+    }
+    
     return salida;
   }
   
@@ -224,7 +201,7 @@ public class Curso {//Inicio clase Curso
   * @return salida: booleano que representa el éxito o fracaso de la inserción.
   */
   public boolean insertarCurso(String pCodigoCurso, String pNombreCurso, int pCantidadCreditos, int pCantidadHoras, 
-      String pCodigoEscuela){
+    String pCodigoEscuela){
     boolean salida = true;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
@@ -351,3 +328,17 @@ public class Curso {//Inicio clase Curso
   }
   
 }//Fin clase Curso
+
+
+      /*for (int indice = 0; planesAsociados.size() != indice; indice++){
+        planesAsociados.remove(this)
+        /*if (planesAsociados.get(indice) != null){
+          salida = false;
+          System.err.println("SALIDA FALSE");
+          break;
+        }
+        else{
+          salida = true;
+          System.err.println("SALIDA TRUE");
+        }
+      }*/

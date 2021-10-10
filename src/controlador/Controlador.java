@@ -951,19 +951,19 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    * @param boxCursosEliminaciones: Combobox donde se cargarán los cursos del plan
    * @param pnumeroPlan: String que representa el código del plan buscado 
    */
-  public void cargarCursosPlan(JComboBox boxCursosEliminaciones, String pnumeroPlan){
+  public void cargarCursosPlan(JComboBox boxCursosEliminacionesPlanDos, String pnumeroPlan){
     ResultSet resultado;
     PreparedStatement consultaEscuela;
     Conexion nuevaConexion = new Conexion();
     Connection conectar = nuevaConexion.conectar();
-    boxCursosEliminaciones.removeAllItems();
+    boxCursosEliminacionesPlanDos.removeAllItems();
     try{
       consultaEscuela = conectar.prepareStatement("SELECT codigoCurso FROM plan_estudios_curso WHERE numeroPlan = (?)");
       consultaEscuela.setString(1, pnumeroPlan);
       resultado = consultaEscuela.executeQuery();
       while(resultado.next()){ 
         for(int indice = 1; indice<2; indice++){  
-          boxCursosEliminaciones.addItem(resultado.getObject(indice));
+          boxCursosEliminacionesPlanDos.addItem(resultado.getObject(indice));
         }   
       } 
     }
@@ -1122,19 +1122,25 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
    *<p>Método llamarMetodoEliminarCursoDePlan: Elimina un curso de un plan de estudios de la base de
    *     datos y del ArrayList cursosBloque en la clase PlanEstudios
    */
-  public void llamarMetodoEliminarCursoDePlan(JComboBox boxCursosEliminacionesDos){   
-    if (vista.boxCursosEliminacionesDos.getSelectedItem()==(null)){
+  public void llamarMetodoEliminarCursoDePlan(JComboBox boxCursosEliminacionesDos, JComboBox boxCursosEliminacionesPlanDos){   
+    if (vista.boxCursosEliminacionesPlanDos.getSelectedItem()==(null)){
       JOptionPane.showMessageDialog(null, "Error! No ha seleccionado un curso o el plan aún no cuenta con cursos");
     }
     else{
-      Curso nuevoCurso = buscarCurso(String.valueOf(vista.boxCursosEliminacionesDos.getSelectedItem()));
-      nuevoCurso.eliminarPlanDeCurso(String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
-      
+        
       PlanEstudios nuevoPlan = buscarPlanEstudios(String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
-      nuevoPlan.eliminarCursoDePlan(String.valueOf(vista.boxCursosEliminacionesDos.getSelectedItem()), 
+      nuevoPlan.eliminarCursoDePlan(String.valueOf(vista.boxCursosEliminacionesPlanDos.getSelectedItem()), 
           String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
       
-
+      Curso nuevoCurso = buscarCurso(String.valueOf(vista.boxCursosEliminacionesPlanDos.getSelectedItem()));
+      try {
+        nuevoCurso.eliminarPlanDeCurso(String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+        boxCursosEliminacionesPlanDos.removeItem(vista.boxCursosEliminacionesPlanDos.getSelectedItem());
+      } 
+      catch (Exception error) {
+            
+      }
+      
       JOptionPane.showMessageDialog(null, "Curso eliminado con éxito"); 
       ResultSet tercerResultado;
       PreparedStatement tercerConsulta;
@@ -1143,7 +1149,6 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
       Connection conectar = nuevaConexion.conectar();
     
       boxCursosEliminacionesDos.removeAllItems();
-      System.err.println("Eliminé los ítems");
 
       try{
         tercerConsulta = conectar.prepareStatement("SELECT codigoCurso FROM curso");
@@ -1155,7 +1160,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
         }     
       }
       catch(Exception error){ 
-        System.out.println(error);
+        //System.out.println(error);
       }
 
     }
@@ -1221,13 +1226,11 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
         comprobante = false;    
       }
     }
-    System.err.println("1. Valor bandera 1er for: " + comprobante);
     for (int contador = 2; contador < 6; contador++){
       if(!Character.isDigit(texto.charAt(contador))){
         comprobante = false;   
       }
     }
-    System.err.println("2. Valor bandera 2do for: " + comprobante);
     return comprobante;
   }
   
@@ -1503,7 +1506,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
     
     else if(evento.getSource() == vista.botonCargarCursosEliminaciones){
-      cargarCursosPlan(vista.boxCursosEliminacionesDos, String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
+      cargarCursosPlan(vista.boxCursosEliminacionesPlanDos, String.valueOf(vista.boxPlanEliminaciones.getSelectedItem()));
     }
     
     else if(evento.getSource() == vista.botonEliminarRequisito){
@@ -1511,12 +1514,14 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     }
     
     else if(evento.getSource() == vista.botonEliminarCurso){
-      llamarMetodoEliminarCursoDePlan(vista.boxCursosEliminacionesDos);
+      llamarMetodoEliminarCursoDePlan(vista.boxCursoEliminacionesDos, vista.boxCursosEliminacionesPlanDos);
+
     }
     
     else if(evento.getSource() == vista.botonEliminarCursoDos){
       try{
         llamarMetodoEliminarCurso();    
+        //llamarMetodoEliminarCursoDePlan(vista.boxCursosEliminacionesDos);
       }
       catch(Exception error){
         System.out.println(error);

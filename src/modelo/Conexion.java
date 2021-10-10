@@ -16,7 +16,7 @@ public class Conexion {
       
     try{
       Class.forName("com.mysql.cj.jdbc.Driver");
-      conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/sgpe","root","Buenas Buenaaas");
+      conectar = DriverManager.getConnection("jdbc:mysql://localhost:3306/sgpe","root","PuSsYlOvEr123");
     }
     catch(ClassNotFoundException | SQLException error){
       System.out.println("NO se pudo conectar a la base de datos, ocurrió el error " + error);

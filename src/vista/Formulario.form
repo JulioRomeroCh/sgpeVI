@@ -2188,7 +2188,7 @@
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="jLabel50" min="-2" pref="95" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="boxCursosEliminacionesDos" min="-2" pref="139" max="-2" attributes="0"/>
+                          <Component id="boxCursosEliminacionesPlanDos" min="-2" pref="139" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                           <Component id="botonEliminarCurso" min="-2" pref="131" max="-2" attributes="0"/>
                           <EmptySpace pref="105" max="32767" attributes="0"/>
@@ -2204,7 +2204,7 @@
                               <Component id="boxPlanEliminaciones" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botonCargarCursosEliminaciones" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel50" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="boxCursosEliminacionesDos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="boxCursosEliminacionesPlanDos" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botonEliminarCurso" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
@@ -2254,12 +2254,15 @@
                     <Property name="text" type="java.lang.String" value="Cursos:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="boxCursosEliminacionesDos">
+                <Component class="javax.swing.JComboBox" name="boxCursosEliminacionesPlanDos">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="0"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boxCursosEliminacionesPlanDosActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                     <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>

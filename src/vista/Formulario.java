@@ -156,7 +156,7 @@ public class Formulario extends javax.swing.JFrame {
         boxPlanEliminaciones = new javax.swing.JComboBox<>();
         botonCargarCursosEliminaciones = new javax.swing.JButton();
         jLabel50 = new javax.swing.JLabel();
-        boxCursosEliminacionesDos = new javax.swing.JComboBox<>();
+        boxCursosEliminacionesPlanDos = new javax.swing.JComboBox<>();
         botonEliminarCurso = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jPanel11 = new javax.swing.JPanel();
@@ -1315,6 +1315,12 @@ public class Formulario extends javax.swing.JFrame {
         jLabel50.setForeground(new java.awt.Color(0, 0, 0));
         jLabel50.setText("Cursos:");
 
+        boxCursosEliminacionesPlanDos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boxCursosEliminacionesPlanDosActionPerformed(evt);
+            }
+        });
+
         botonEliminarCurso.setText("Eliminar curso");
 
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
@@ -1331,7 +1337,7 @@ public class Formulario extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(boxCursosEliminacionesDos, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(boxCursosEliminacionesPlanDos, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(botonEliminarCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(105, Short.MAX_VALUE))
@@ -1345,7 +1351,7 @@ public class Formulario extends javax.swing.JFrame {
                     .addComponent(boxPlanEliminaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonCargarCursosEliminaciones)
                     .addComponent(jLabel50)
-                    .addComponent(boxCursosEliminacionesDos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boxCursosEliminacionesPlanDos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonEliminarCurso))
                 .addGap(51, 51, 51))
         );
@@ -1861,6 +1867,10 @@ public class Formulario extends javax.swing.JFrame {
       }
     }//GEN-LAST:event_textNombreCursoKeyTyped
 
+    private void boxCursosEliminacionesPlanDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boxCursosEliminacionesPlanDosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boxCursosEliminacionesPlanDosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1937,7 +1947,7 @@ public class Formulario extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> boxCodigoPlanConsulta;
     public javax.swing.JComboBox<String> boxCursoEliminaciones;
     public javax.swing.JComboBox<String> boxCursoEliminacionesDos;
-    public javax.swing.JComboBox<String> boxCursosEliminacionesDos;
+    public javax.swing.JComboBox<String> boxCursosEliminacionesPlanDos;
     public javax.swing.JComboBox<String> boxPlanEliminaciones;
     public javax.swing.JComboBox<String> boxRequisitoEliminaciones;
     private javax.swing.JFrame frameConsultaDos;
