@@ -81,11 +81,6 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
     this.cursos = new ArrayList<Curso>();
     this.escuelas = new ArrayList<Escuela>();
     this.planes = new ArrayList<PlanEstudios>();
-    //this.vista.principalRegistrarEscuela.addActionListener(this);
-    //this.plan.cargaCodigosPlanes(vista.BoxCodigoPlanCursoPlan);
-    //this.plan.cargaCodigosCursos(vista.BoxCodigoCursoCursoPlan);
-    //public void cargaPlanesRegistrarCursos(JComboBox BoxPlanRegistroCurso){
-    //this.curso.cargaPlanesRegistrarCursos(vista.BoxPlanRegistroCurso);
   }
   
   /**

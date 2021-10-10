@@ -4,10 +4,6 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
-import modelo.PlanEstudios;
-import modelo.Conexion;
-import modelo.Curso;
 
 public class Escuela {//Inicio de la clase Escuela
   ///
@@ -71,16 +67,6 @@ public class Escuela {//Inicio de la clase Escuela
     salida+= "Código escuela: " + getCodigoEscuela() + "\n";
     salida+= "Nombre escuela: " + getNombreEscuela()+ "\n";
     return salida;
-  }
-  
-  /**
-  *<p> Método crearPlanEstudios: crea un nuevo plan de estudios y lo agrega al array planes.
-  * @param pNumeroPlan: int que representa el número del nuevo plan.
-  * @param pVigenciaPlan: Date que representa la vigencia del plan.
-  */
-  public void crearPlanEstudios(int pNumeroPlan, Date pVigenciaPlan){
-    PlanEstudios nuevoPlan = new PlanEstudios(pNumeroPlan, pVigenciaPlan);
-    planes.add(nuevoPlan);
   }
   
   /**

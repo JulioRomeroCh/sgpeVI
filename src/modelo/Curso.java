@@ -325,16 +325,3 @@ public class Curso {//Inicio clase Curso
   
 }//Fin clase Curso
 
-
-      /*for (int indice = 0; planesAsociados.size() != indice; indice++){
-        planesAsociados.remove(this)
-        /*if (planesAsociados.get(indice) != null){
-          salida = false;
-          System.err.println("SALIDA FALSE");
-          break;
-        }
-        else{
-          salida = true;
-          System.err.println("SALIDA TRUE");
-        }
-      }*/
