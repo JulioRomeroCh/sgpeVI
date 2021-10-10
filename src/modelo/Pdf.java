@@ -4,17 +4,14 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Pdf {//Inicio de la clase PDF
-  
+  ///
   /**
   *<p> Método que crea la estructura del documento pdf, se añaden columnas, coloca los resultados de las consultas en
   *    forma de filas y se añade formato, formando una tabla. Seguidamente guarda el documento en una dirección local.

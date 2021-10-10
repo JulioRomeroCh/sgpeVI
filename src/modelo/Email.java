@@ -1,8 +1,6 @@
 package modelo;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -15,10 +13,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.util.Date;
 
 public class Email {//Inicio de la clase Email
-  
+  ///
   //Atributos de la clase
   private final String usuarioAdmi = "sgpepoojjk@gmail.com";
   private final String contraseña = "sgpe1234";

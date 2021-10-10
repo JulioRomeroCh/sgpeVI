@@ -10,7 +10,7 @@ import modelo.Conexion;
 import modelo.Curso;
 
 public class Escuela {//Inicio de la clase Escuela
-    
+  ///
   //Atributos de la clase  
   private String codigoEscuela;
   private String nombreEscuela;

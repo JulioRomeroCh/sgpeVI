@@ -1,18 +1,14 @@
 package modelo;
 
-import com.mysql.cj.protocol.Resultset;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import vista.Formulario;
+
 
 public class Curso {//Inicio clase Curso
-    
+  /// 
   private String codigoCurso;
   private String nombreCurso;
   private int cantidadCreditos;

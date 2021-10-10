@@ -4,15 +4,12 @@ package modelo;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import javax.swing.JComboBox;
 import modelo.Curso;
 
 public class PlanEstudios {//Inicio clase PlanEstudios
-    
+  /// 
   //Atributos de la clase
   private int numeroPlan;
   private Date vigenciaPlan;

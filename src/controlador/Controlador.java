@@ -3,7 +3,6 @@ package controlador;
 //Se realizan imports fundamentales
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,10 +12,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,7 +28,7 @@ import modelo.Email;
 
 
 public class Controlador implements ActionListener{//Inicio de la clase Controlador
-  
+  //
   //Atributos de la clase
   private ArrayList <Curso> cursos;
   private ArrayList <Escuela> escuelas;
@@ -135,7 +132,7 @@ public class Controlador implements ActionListener{//Inicio de la clase Controla
         }
       }
       catch(Exception error){
-        System.out.println(error);    
+        //System.out.println(error);    
       }
     }
 
